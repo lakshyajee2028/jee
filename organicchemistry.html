@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Organic Chemistry</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Fredoka',sans-serif;
+}
+
+body{
+background:linear-gradient(135deg,#ffecd2,#fcb69f);
+min-height:100vh;
+overflow-x:hidden;
+position:relative;
+}
+
+/* floating organic chemistry shapes */
+
+.shape{
+position:absolute;
+font-size:70px;
+opacity:0.6;
+z-index:-1;
+animation:float 12s infinite ease-in-out;
+}
+
+.red{color:#ff3b3b;}
+.yellow{color:#ffd600;}
+.green{color:#4caf50;}
+.blue{color:#2979ff;}
+.purple{color:#9c27b0;}
+
+.s1{top:120px;left:120px;}
+.s2{top:250px;right:200px;}
+.s3{top:450px;left:260px;}
+.s4{bottom:200px;right:200px;}
+.s5{top:100px;right:80px;}
+.s6{bottom:120px;left:80px;}
+.s7{top:520px;right:60px;}
+.s8{top:350px;left:420px;}
+
+@keyframes float{
+0%{transform:translateY(0);}
+50%{transform:translateY(-50px);}
+100%{transform:translateY(0);}
+}
+
+/* header */
+
+.header{
+text-align:center;
+padding:70px 20px 30px 20px;
+}
+
+.header h1{
+font-size:44px;
+color:#222;
+}
+
+.header p{
+font-size:20px;
+margin-top:10px;
+}
+
+/* chapters */
+
+.chapters{
+padding:40px 8% 80px 8%;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:25px;
+margin-top:30px;
+}
+
+.chapter{
+background:white;
+padding:25px;
+border-radius:20px;
+text-align:center;
+box-shadow:0 10px 20px rgba(0,0,0,0.2);
+transition:0.3s;
+}
+
+.chapter:hover{
+transform:translateY(-10px) scale(1.05);
+}
+
+.chapter h3{
+font-size:20px;
+margin-bottom:12px;
+}
+
+/* glowing button */
+
+.btn{
+display:inline-block;
+padding:10px 20px;
+border-radius:20px;
+background:#ff5722;
+color:white;
+text-decoration:none;
+box-shadow:0 0 10px #ff5722,0 0 25px #ff5722;
+transition:0.3s;
+}
+
+.btn:hover{
+transform:scale(1.08);
+box-shadow:0 0 20px #ff5722,0 0 40px #ff5722;
+}
+
+.back{
+text-align:center;
+margin-top:40px;
+}
+
+.back a{
+text-decoration:none;
+padding:14px 30px;
+background:#6c5ce7;
+color:white;
+border-radius:30px;
+box-shadow:0 0 10px #6c5ce7;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- organic chemistry background icons -->
+
+<div class="shape red s1">⬡</div>
+<div class="shape yellow s2">🧬</div>
+<div class="shape green s3">⚛</div>
+<div class="shape blue s4">🧪</div>
+<div class="shape purple s5">⬡</div>
+<div class="shape red s6">🧬</div>
+<div class="shape yellow s7">⚛</div>
+<div class="shape green s8">🧪</div>
+
+<div class="header">
+<h1>🧬 Organic Chemistry</h1>
+<p>Select a Chapter</p>
+</div>
+
+<div class="chapters">
+
+<div class="grid">
+
+<div class="chapter">
+<h3>General Organic Chemistry (GOC)</h3>
+<a class="btn" href="#">Open</a>
+</div>
+
+<div class="chapter">
+<h3>Isomerism</h3>
+<a class="btn" href="#">Open</a>
+</div>
+
+<div class="chapter">
+<h3>Hydrocarbons</h3>
+<a class="btn" href="#">Open</a>
+</div>
+
+<div class="chapter">
+<h3>Haloalkanes & Haloarenes</h3>
+<a class="btn" href="#">Open</a>
+</div>
+
+<div class="chapter">
+<h3>Alcohols Phenols & Ethers</h3>
+<a class="btn" href="#">Open</a>
+</div>
+
+</div>
+
+<div class="back">
+<a href="chemistrypart.html">⬅ Back to Chemistry</a>
+</div>
+
+</div>
+
+</body>
+</html>

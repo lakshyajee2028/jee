@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Mathematics Lectures</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Fredoka',sans-serif;
+}
+
+body{
+background:linear-gradient(135deg,#ff9a9e,#fad0c4);
+min-height:100vh;
+overflow-x:hidden;
+position:relative;
+}
+
+/* circles */
+
+.shape{
+position:absolute;
+border-radius:50%;
+opacity:0.25;
+z-index:-2;
+animation:move 12s infinite alternate ease-in-out;
+}
+
+.shape1{
+width:230px;
+height:230px;
+background:#ffcc00;
+top:120px;
+left:40px;
+}
+
+.shape2{
+width:260px;
+height:260px;
+background:#00e5ff;
+top:420px;
+right:60px;
+}
+
+.shape3{
+width:170px;
+height:170px;
+background:#ff5ef7;
+bottom:200px;
+left:120px;
+}
+
+/* math symbols */
+
+.symbol{
+position:absolute;
+font-size:60px;
+font-weight:bold;
+opacity:0.6;
+z-index:-1;
+animation:float 14s infinite ease-in-out;
+}
+
+/* colors */
+
+.red{color:#ff3b3b;}
+.yellow{color:#ffd600;}
+.blue{color:#2979ff;}
+.purple{color:#9c27b0;}
+
+/* positions */
+
+.s1{top:120px;left:250px;}
+.s2{top:300px;left:100px;}
+.s3{top:200px;right:200px;}
+.s4{top:450px;right:300px;}
+.s5{top:600px;left:200px;}
+.s6{bottom:200px;right:120px;}
+.s7{bottom:350px;left:350px;}
+.s8{top:150px;right:100px;}
+.s9{bottom:100px;left:80px;}
+.s10{top:500px;right:80px;}
+
+@keyframes move{
+0%{transform:translate(0,0);}
+50%{transform:translate(40px,-40px);}
+100%{transform:translate(-30px,30px);}
+}
+
+@keyframes float{
+0%{transform:translateY(0);}
+50%{transform:translateY(-50px);}
+100%{transform:translateY(0);}
+}
+
+/* header */
+
+.header{
+text-align:center;
+padding:60px 20px 30px 20px;
+}
+
+.header h1{
+font-size:44px;
+color:#222;
+}
+
+.header p{
+font-size:20px;
+margin-top:10px;
+}
+
+/* chapter grid */
+
+.chapters{
+padding:40px 8% 80px 8%;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:25px;
+margin-top:30px;
+}
+
+.chapter{
+background:white;
+padding:25px;
+border-radius:18px;
+text-align:center;
+box-shadow:0 10px 20px rgba(0,0,0,0.2);
+transition:0.3s;
+}
+
+.chapter:hover{
+transform:translateY(-10px) scale(1.05);
+}
+
+.chapter h3{
+font-size:20px;
+margin-bottom:12px;
+}
+
+/* glowing button */
+
+.btn{
+display:inline-block;
+padding:10px 20px;
+border-radius:20px;
+background:#6c5ce7;
+color:white;
+text-decoration:none;
+box-shadow:0 0 10px #6c5ce7,0 0 25px #6c5ce7;
+transition:0.3s;
+}
+
+.btn:hover{
+transform:scale(1.08);
+box-shadow:0 0 20px #6c5ce7,0 0 40px #6c5ce7;
+}
+
+.back{
+text-align:center;
+margin-top:40px;
+}
+
+.back a{
+text-decoration:none;
+padding:14px 30px;
+background:#ff7675;
+color:white;
+border-radius:30px;
+box-shadow:0 0 10px #ff7675;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- circles -->
+
+<div class="shape shape1"></div>
+<div class="shape shape2"></div>
+<div class="shape shape3"></div>
+
+<!-- math symbols -->
+
+<div class="symbol red s1">π</div>
+<div class="symbol yellow s2">+</div>
+<div class="symbol blue s3">∑</div>
+<div class="symbol purple s4">√</div>
+<div class="symbol red s5">∞</div>
+<div class="symbol yellow s6">÷</div>
+<div class="symbol blue s7">×</div>
+<div class="symbol purple s8">≈</div>
+<div class="symbol red s9">∆</div>
+<div class="symbol yellow s10">%</div>
+
+<div class="header">
+<h1>📐 Mathematics Lectures</h1>
+<p>Select a Chapter</p>
+</div>
+
+<div class="chapters">
+
+<div class="grid">
+
+<div class="chapter"><h3>Sets</h3><a class="btn" href="#">Open</a></div>
+<div class="chapter"><h3>Relations & Functions</h3><a class="btn" href="#">Open</a></div>
+<div class="chapter"><h3>Trigonometric Functions</h3><a class="btn" href="#">Open</a></div>
+<div class="chapter"><h3>Complex Numbers</h3><a class="btn" href="#">Open</a></div>
+<div class="chapter"><h3>Quadratic Equations</h3><a class="btn" href="#">Open</a></div>
+<div class="chapter"><h3>Sequences & Series</h3><a class="btn" href="#">Open</a></div>
+<div class="chapter"><h3>Permutations & Combinations</h3><a class="btn" href="#">Open</a></div>
+<div class="chapter"><h3>Binomial Theorem</h3><a class="btn" href="#">Open</a></div>
+<div class="chapter"><h3>Straight Lines</h3><a class="btn" href="#">Open</a></div>
+<div class="chapter"><h3>Circles</h3><a class="btn" href="#">Open</a></div>
+<div class="chapter"><h3>Parabola</h3><a class="btn" href="#">Open</a></div>
+<div class="chapter"><h3>Ellipse</h3><a class="btn" href="#">Open</a></div>
+<div class="chapter"><h3>Hyperbola</h3><a class="btn" href="#">Open</a></div>
+<div class="chapter"><h3>Limits</h3><a class="btn" href="#">Open</a></div>
+<div class="chapter"><h3>Derivatives</h3><a class="btn" href="#">Open</a></div>
+<div class="chapter"><h3>Applications of Derivatives</h3><a class="btn" href="#">Open</a></div>
+<div class="chapter"><h3>Integrals</h3><a class="btn" href="#">Open</a></div>
+<div class="chapter"><h3>Definite Integrals</h3><a class="btn" href="#">Open</a></div>
+<div class="chapter"><h3>Differential Equations</h3><a class="btn" href="#">Open</a></div>
+<div class="chapter"><h3>Vector Algebra</h3><a class="btn" href="#">Open</a></div>
+<div class="chapter"><h3>3D Geometry</h3><a class="btn" href="#">Open</a></div>
+
+</div>
+
+<div class="back">
+<a href="index.html">⬅ Back To Home</a>
+</div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Chemistry Sections</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Fredoka',sans-serif;
+}
+
+body{
+background:linear-gradient(135deg,#ff9a9e,#fad0c4);
+min-height:100vh;
+overflow-x:hidden;
+position:relative;
+}
+
+/* moving background circles */
+
+.shape{
+position:absolute;
+border-radius:50%;
+opacity:0.35;
+z-index:-1;
+animation:move 10s infinite alternate ease-in-out;
+}
+
+.shape1{
+width:200px;
+height:200px;
+background:#ffcc00;
+top:100px;
+left:40px;
+}
+
+.shape2{
+width:250px;
+height:250px;
+background:#00e5ff;
+top:350px;
+right:60px;
+}
+
+.shape3{
+width:160px;
+height:160px;
+background:#ff5ef7;
+bottom:150px;
+left:100px;
+}
+
+@keyframes move{
+0%{transform:translate(0,0);}
+50%{transform:translate(40px,-40px);}
+100%{transform:translate(-30px,30px);}
+}
+
+/* header */
+
+.header{
+text-align:center;
+padding:70px 20px 40px 20px;
+}
+
+.header h1{
+font-size:44px;
+color:#222;
+}
+
+.header p{
+font-size:20px;
+margin-top:10px;
+}
+
+/* section cards */
+
+.sections{
+padding:30px 8% 80px 8%;
+display:flex;
+justify-content:center;
+flex-wrap:wrap;
+gap:35px;
+}
+
+/* card style */
+
+.card{
+width:280px;
+background:white;
+padding:35px;
+border-radius:20px;
+text-align:center;
+box-shadow:0 10px 20px rgba(0,0,0,0.2);
+transition:0.3s;
+}
+
+.card:hover{
+transform:translateY(-12px) scale(1.05);
+}
+
+.card h2{
+font-size:24px;
+margin-bottom:15px;
+}
+
+/* glowing button */
+
+.btn{
+display:inline-block;
+padding:12px 25px;
+border-radius:25px;
+background:#6c5ce7;
+color:white;
+text-decoration:none;
+box-shadow:0 0 12px #6c5ce7,0 0 30px #6c5ce7;
+transition:0.3s;
+}
+
+.btn:hover{
+transform:scale(1.1);
+box-shadow:0 0 20px #6c5ce7,0 0 50px #6c5ce7;
+}
+
+/* back button */
+
+.back{
+text-align:center;
+margin-top:50px;
+}
+
+.back a{
+text-decoration:none;
+padding:14px 30px;
+background:#ff7675;
+color:white;
+border-radius:30px;
+box-shadow:0 0 10px #ff7675;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="shape shape1"></div>
+<div class="shape shape2"></div>
+<div class="shape shape3"></div>
+
+<div class="header">
+
+<h1>⚗ Chemistry Sections</h1>
+
+<p>Select Your Section</p>
+
+</div>
+
+<div class="sections">
+
+<div class="card">
+
+<h2>🧪 Physical Chemistry</h2>
+
+<p>Numerical based chemistry topics</p>
+
+<a class="btn" href="physical.html">Open</a>
+
+</div>
+
+
+<div class="card">
+
+<h2>🧬 Organic Chemistry</h2>
+
+<p>Carbon compounds & reaction mechanisms</p>
+
+<a class="btn" href="organic.html">Open</a>
+
+</div>
+
+
+<div class="card">
+
+<h2>🧱 Inorganic Chemistry</h2>
+
+<p>Periodic table & element chemistry</p>
+
+<a class="btn" href="inorganic.html">Open</a>
+
+</div>
+
+</div>
+
+
+<div class="back">
+
+<a href="index.html">⬅ Back To Home</a>
+
+</div>
+
+</body>
+</html>
