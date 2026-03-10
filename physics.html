@@ -24,6 +24,8 @@ overflow-x:hidden;
 position:relative;
 }
 
+/* moving circles */
+
 .shape{
 position:absolute;
 border-radius:50%;
@@ -62,6 +64,8 @@ left:100px;
 100%{transform:translate(-30px,30px);}
 }
 
+/* header */
+
 .header{
 text-align:center;
 padding:60px 20px 30px 20px;
@@ -77,6 +81,8 @@ font-size:20px;
 margin-top:10px;
 }
 
+/* grid */
+
 .chapters{
 padding:40px 8% 80px 8%;
 }
@@ -87,6 +93,8 @@ grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
 gap:25px;
 margin-top:30px;
 }
+
+/* chapter card */
 
 .chapter{
 background:white;
@@ -106,6 +114,8 @@ font-size:20px;
 margin-bottom:12px;
 }
 
+/* button */
+
 .btn{
 display:inline-block;
 padding:10px 20px;
@@ -115,12 +125,24 @@ color:white;
 text-decoration:none;
 box-shadow:0 0 10px #6c5ce7,0 0 25px #6c5ce7;
 transition:0.3s;
+margin:5px;
+border:none;
+cursor:pointer;
 }
 
 .btn:hover{
 transform:scale(1.08);
 box-shadow:0 0 20px #6c5ce7,0 0 40px #6c5ce7;
 }
+
+/* lecture list */
+
+.lectureBox{
+margin-top:15px;
+display:none;
+}
+
+/* back */
 
 .back{
 text-align:center;
@@ -134,35 +156,6 @@ background:#ff7675;
 color:white;
 border-radius:30px;
 box-shadow:0 0 10px #ff7675;
-}
-
-/* lecture panel */
-
-#lecturePanel{
-display:none;
-padding:40px 8%;
-}
-
-.lectureGrid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
-gap:20px;
-margin-top:30px;
-}
-
-.lectureBtn{
-padding:12px;
-background:white;
-border-radius:15px;
-text-align:center;
-box-shadow:0 8px 18px rgba(0,0,0,0.2);
-text-decoration:none;
-color:black;
-transition:0.3s;
-}
-
-.lectureBtn:hover{
-transform:scale(1.05);
 }
 
 </style>
@@ -183,76 +176,183 @@ transform:scale(1.05);
 
 <div class="grid">
 
-<div class="chapter"><h3>Units & Measurement</h3><a class="btn" onclick="showLectures(11)">Open</a></div>
-<div class="chapter"><h3>Motion in Straight Line</h3><a class="btn" onclick="showLectures(3)">Open</a></div>
-<div class="chapter"><h3>Motion in Plane</h3><a class="btn" onclick="showLectures(14)">Open</a></div>
-<div class="chapter"><h3>Laws of Motion</h3><a class="btn" onclick="showLectures(17)">Open</a></div>
-<div class="chapter"><h3>Work Energy Power</h3><a class="btn" onclick="showLectures(3)">Open</a></div>
-<div class="chapter"><h3>Rotational Motion</h3><a class="btn" onclick="showLectures(16)">Open</a></div>
-<div class="chapter"><h3>Gravitation</h3><a class="btn" onclick="showLectures(15)">Open</a></div>
-<div class="chapter"><h3>Mechanical Properties of Solids</h3><a class="btn" onclick="showLectures(6)">Open</a></div>
-<div class="chapter"><h3>Mechanical Properties of Fluids</h3><a class="btn" onclick="showLectures(14)">Open</a></div>
-<div class="chapter"><h3>Thermal Properties of Matter</h3><a class="btn" onclick="showLectures(16)">Open</a></div>
-<div class="chapter"><h3>Thermodynamics</h3><a class="btn" onclick="showLectures(12)">Open</a></div>
-<div class="chapter"><h3>Kinetic Theory</h3><a class="btn" onclick="showLectures(2)">Open</a></div>
-<div class="chapter"><h3>Oscillations</h3><a class="btn" onclick="showLectures(25)">Open</a></div>
-<div class="chapter"><h3>Waves</h3><a class="btn" onclick="showLectures(6)">Open</a></div>
-<div class="chapter"><h3>Electrostatics</h3><a class="btn" onclick="showLectures(10)">Open</a></div>
-<div class="chapter"><h3>Current Electricity</h3><a class="btn" onclick="showLectures(13)">Open</a></div>
-<div class="chapter"><h3>Magnetism</h3><a class="btn" onclick="showLectures(13)">Open</a></div>
-<div class="chapter"><h3>Modern Physics</h3><a class="btn" onclick="showLectures(5)">Open</a></div>
+<!-- Chapter Template -->
 
+<div class="chapter">
+<h3>Units & Measurement</h3>
+<button class="btn toggleBtn" onclick="toggleChapter(1,this)">Open</button>
+<div class="lectureBox"></div>
+</div>
+
+<div class="chapter">
+<h3>Basic Maths</h3>
+<button class="btn toggleBtn" onclick="toggleChapter(2,this)">Open</button>
+<div class="lectureBox"></div>
+</div>
+
+<div class="chapter">
+<h3>Vectors</h3>
+<button class="btn toggleBtn" onclick="toggleChapter(3,this)">Open</button>
+<div class="lectureBox"></div>
+</div>
+
+<div class="chapter">
+<h3>Motion in a Straight Line</h3>
+<button class="btn toggleBtn" onclick="toggleChapter(4,this)">Open</button>
+<div class="lectureBox"></div>
+</div>
+
+<div class="chapter">
+<h3>Errors and Measurements</h3>
+<button class="btn toggleBtn" onclick="toggleChapter(5,this)">Open</button>
+<div class="lectureBox"></div>
+</div>
+
+<div class="chapter">
+<h3>Rotational Motion</h3>
+<button class="btn toggleBtn" onclick="toggleChapter(6,this)">Open</button>
+<div class="lectureBox"></div>
+</div>
+
+<div class="chapter">
+<h3>Gravitation</h3>
+<button class="btn toggleBtn" onclick="toggleChapter(7,this)">Open</button>
+<div class="lectureBox"></div>
+</div>
+
+<div class="chapter">
+<h3>Mechanical Properties of Solids</h3>
+<button class="btn toggleBtn" onclick="toggleChapter(8,this)">Open</button>
+<div class="lectureBox"></div>
+</div>
+
+<div class="chapter">
+<h3>Mechanical Properties of Fluids</h3>
+<button class="btn toggleBtn" onclick="toggleChapter(9,this)">Open</button>
+<div class="lectureBox"></div>
+</div>
+
+<div class="chapter">
+<h3>Thermal Properties of Matter</h3>
+<button class="btn toggleBtn" onclick="toggleChapter(10,this)">Open</button>
+<div class="lectureBox"></div>
+</div>
+
+<div class="chapter">
+<h3>Thermodynamics</h3>
+<button class="btn toggleBtn" onclick="toggleChapter(11,this)">Open</button>
+<div class="lectureBox"></div>
+</div>
+
+<div class="chapter">
+<h3>Kinetic Theory</h3>
+<button class="btn toggleBtn" onclick="toggleChapter(12,this)">Open</button>
+<div class="lectureBox"></div>
+</div>
+
+<div class="chapter">
+<h3>Oscillations</h3>
+<button class="btn toggleBtn" onclick="toggleChapter(13,this)">Open</button>
+<div class="lectureBox"></div>
+</div>
+
+<div class="chapter">
+<h3>Waves</h3>
+<button class="btn toggleBtn" onclick="toggleChapter(14,this)">Open</button>
+<div class="lectureBox"></div>
+</div>
+
+<div class="chapter">
+<h3>Electrostatics</h3>
+<button class="btn toggleBtn" onclick="toggleChapter(15,this)">Open</button>
+<div class="lectureBox"></div>
+</div>
+
+<div class="chapter">
+<h3>Current Electricity</h3>
+<button class="btn toggleBtn" onclick="toggleChapter(16,this)">Open</button>
+<div class="lectureBox"></div>
+</div>
+
+<div class="chapter">
+<h3>Magnetism</h3>
+<button class="btn toggleBtn" onclick="toggleChapter(17,this)">Open</button>
+<div class="lectureBox"></div>
+</div>
+
+<div class="chapter">
+<h3>Modern Physics</h3>
+<button class="btn toggleBtn" onclick="toggleChapter(18,this)">Open</button>
+<div class="lectureBox"></div>
 </div>
 
 </div>
-
-<!-- lecture section -->
-
-<div id="lecturePanel">
-
-<h2 style="text-align:center">Lectures</h2>
-
-<div class="lectureGrid" id="lectureGrid"></div>
 
 <div class="back">
-<a href="#" onclick="backToChapters()">⬅ Back To Chapters</a>
+<a href="index.html">⬅ Back To Home</a>
 </div>
 
 </div>
 
 <script>
 
-function showLectures(total){
+const lectures = {
 
-document.querySelector(".chapters").style.display="none"
-document.getElementById("lecturePanel").style.display="block"
+1:["https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_67fd01164c87d7cd348601d9","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_67ffa0aff3b0ec74401ca496","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6800f2b9a77c732b65ee917b","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68063853b3e1fc77037396ac","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68308f3654e9071c717f6d20","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_680b9ccdc8e18a66227a2d7d","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_680f7483cc9f5e5a1a085d7d","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6810c4394cb884691e18614b","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_681215bf98dfdb4f9e1540b9","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6818add7edc3eae1486792dd","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6810225720d810c24dcda1b5"],
+2:["https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_681a08f803d44b0d1065f373","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_681b527fae5c29613a8db5d2","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68236a05916d15fc1e00605d"],
+3:["https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68248ded66d95adacec15ac9","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6825fae96a1e3d10a24e52c2","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_682deb08e3c7858e32bc428a","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_682f3ad9df75057cb96c7374","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6831bc625cfa405ffc2669b0","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68345e5b68d05c856c97756c","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6835b2f1c2542a94bbb74313","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_683b1f00c959b8606f9c6ab1","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_683daeadc6c359a2180a7925","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_683f04614c44d8a637c93c0a","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6846d2600eb38b98189def53","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68482366ae3dca7adfef20c7","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68497620d16a1a8025dea117","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_684d85d1d790ca5ef7187c07"],
+4:["https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_685016dc8cfdeeb5fc6d3371","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_685159f36ad6b8808beaed79","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6852ad2e80ec3eb5f59f4d1a","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6853fe35526b421d19c3de09","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6855512d69a598171c57d1a1","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6856a0e75287d754b70cd756","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68594504f10d74681a5c0a8f","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_685a9563a28ef1a53e44fd5a","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_685be7baf6eff4aa2034f979","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_685d382e520031ecc5322e3f","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_685e8b01e46fed2dff021757","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_685fdca350bb51b5055ae179","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68601077854cc494fafbdf28","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_686526ba12eae89296f48195","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68667642e2ac4124c6e8a93d","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_686941bb7fcad19d4943b8d9","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_686e63ccc683c228354917f4"],
+5:["https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68679e857d8ba429447f73fe","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68b1b7c9b6e4a97c0eed7ded","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68c58100401ef7b569e72f8c"],
+6:["LINK","LINK","LINK","LINK","LINK","LINK","LINK","LINK","LINK","LINK","LINK","LINK","LINK","LINK","LINK","LINK"],
+7:["LINK","LINK","LINK","LINK","LINK","LINK","LINK","LINK","LINK","LINK","LINK","LINK","LINK","LINK","LINK"],
+8:["LINK","LINK","LINK","LINK","LINK","LINK"],
+9:["LINK","LINK","LINK","LINK","LINK","LINK","LINK","LINK","LINK","LINK","LINK","LINK","LINK","LINK"],
+10:["LINK","LINK","LINK","LINK","LINK","LINK","LINK","LINK","LINK","LINK","LINK","LINK","LINK","LINK","LINK","LINK"],
+11:["LINK","LINK","LINK","LINK","LINK","LINK","LINK","LINK","LINK","LINK","LINK","LINK"],
+12:["LINK","LINK"],
+13:["LINK","LINK","LINK","LINK","LINK","LINK","LINK","LINK","LINK","LINK","LINK","LINK","LINK","LINK","LINK","LINK","LINK","LINK","LINK","LINK","LINK","LINK","LINK","LINK","LINK"],
+14:["LINK","LINK","LINK","LINK","LINK","LINK"],
+15:["LINK","LINK","LINK","LINK","LINK","LINK","LINK","LINK","LINK","LINK"],
+16:["LINK","LINK","LINK","LINK","LINK","LINK","LINK","LINK","LINK","LINK","LINK","LINK","LINK"],
+17:["LINK","LINK","LINK","LINK","LINK","LINK","LINK","LINK","LINK","LINK","LINK","LINK","LINK"],
+18:["LINK","LINK","LINK","LINK","LINK"]
 
-let grid=document.getElementById("lectureGrid")
-grid.innerHTML=""
+};
 
-for(let i=1;i<=total;i++){
+function toggleChapter(ch,btn){
 
-let btn=document.createElement("a")
-btn.className="lectureBtn"
-btn.innerText="Lecture "+i
-btn.href="#"
+let chapter=btn.parentElement;
+let box=chapter.querySelector(".lectureBox");
 
-grid.appendChild(btn)
+if(box.style.display==="block"){
+
+box.style.display="none";
+btn.innerText="Open";
+return;
 
 }
 
-}
+document.querySelectorAll(".lectureBox").forEach(b=>b.style.display="none");
+document.querySelectorAll(".toggleBtn").forEach(b=>b.innerText="Open");
 
-function backToChapters(){
+box.innerHTML="";
 
-document.getElementById("lecturePanel").style.display="none"
-document.querySelector(".chapters").style.display="block"
+lectures[ch].forEach((link,i)=>{
+
+box.innerHTML+=`
+<a class="btn" href="${link}" target="_blank">
+Lecture ${i+1}
+</a>
+`;
+
+});
+
+box.style.display="block";
+btn.innerText="Close";
 
 }
 
 </script>
-<div class="back">
-<a href="index.html">⬅ Back To Home</a>
-</div>
+
 </body>
 </html>
