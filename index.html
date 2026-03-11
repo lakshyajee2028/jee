@@ -25,13 +25,10 @@ scroll-behavior:smooth;
 }
 
 body{
-
 background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);
 min-height:100vh;
 overflow-x:hidden;
 color:white;
-position:relative;
-
 }
 
 /* particles */
@@ -67,7 +64,20 @@ font-weight:600;
 
 .hero{
 text-align:center;
-padding:90px 20px 40px 20px;
+padding:90px 20px 40px;
+}
+
+/* frame */
+
+.frame{
+display:inline-block;
+padding:25px 55px;
+border-radius:25px;
+border:3px solid #00f7ff;
+background:rgba(0,0,0,0.35);
+box-shadow:0 0 25px #00f7ff,inset 0 0 15px rgba(0,255,255,0.4);
+backdrop-filter:blur(8px);
+margin-bottom:20px;
 }
 
 .hero h2{
@@ -83,37 +93,26 @@ opacity:0.9;
 /* glow button */
 
 .glow-btn{
-
 margin-top:35px;
 padding:18px 42px;
 font-size:18px;
 border:none;
 border-radius:40px;
-
 background:#00f7ff;
 color:black;
-
 cursor:pointer;
-
-box-shadow:0 0 20px #00f7ff,
-0 0 60px #00f7ff;
-
+box-shadow:0 0 20px #00f7ff,0 0 60px #00f7ff;
 transition:0.35s;
 text-decoration:none;
 display:inline-block;
-
 }
 
 .glow-btn:hover{
-
 transform:scale(1.12);
-
-box-shadow:0 0 40px #00f7ff,
-0 0 120px #00f7ff;
-
+box-shadow:0 0 40px #00f7ff,0 0 120px #00f7ff;
 }
 
-/* student image */
+/* student */
 
 .students{
 display:flex;
@@ -121,8 +120,20 @@ justify-content:center;
 margin-top:40px;
 }
 
-.students img{
-width:230px;
+.student-frame{
+width:260px;
+height:260px;
+border-radius:50%;
+display:flex;
+justify-content:center;
+align-items:center;
+border:4px solid #00f7ff;
+box-shadow:0 0 25px #00f7ff,0 0 80px rgba(0,255,255,0.5);
+background:rgba(0,0,0,0.4);
+}
+
+.student-frame img{
+width:180px;
 animation:bounce 3s infinite;
 }
 
@@ -135,7 +146,7 @@ animation:bounce 3s infinite;
 /* subjects */
 
 .subjects{
-padding:70px 8% 80px 8%;
+padding:70px 8%;
 text-align:center;
 }
 
@@ -150,62 +161,102 @@ display:flex;
 justify-content:center;
 flex-wrap:wrap;
 gap:40px;
-margin-top:40px;
+margin-top:50px;
 }
+
+/* upgraded card */
 
 .card{
 
-width:260px;
-padding:35px;
+width:270px;
+padding:40px 30px;
 
-border-radius:20px;
+border-radius:22px;
 
 background:rgba(255,255,255,0.08);
 
-backdrop-filter:blur(10px);
+backdrop-filter:blur(12px);
 
 border:1px solid rgba(255,255,255,0.1);
 
-box-shadow:0 0 20px rgba(0,255,255,0.3);
+box-shadow:0 0 20px rgba(0,255,255,0.25);
 
-transition:0.4s;
+position:relative;
+
+transition:0.45s;
+
+overflow:hidden;
 
 }
+
+/* glowing strip */
+
+.card::before{
+
+content:"";
+
+position:absolute;
+
+top:0;
+left:0;
+
+width:100%;
+height:6px;
+
+background:linear-gradient(90deg,#00f7ff,#ff4d6d,#00f7ff);
+
+}
+
+/* hover */
 
 .card:hover{
 
-transform:translateY(-20px) scale(1.05);
+transform:translateY(-20px) scale(1.07);
 
-box-shadow:0 0 40px #00f7ff;
+box-shadow:0 0 50px #00f7ff;
 
 }
 
+/* subject icon */
+
 .card h3{
-font-size:26px;
-margin-bottom:10px;
+font-size:30px;
+margin-bottom:12px;
 }
 
 .card p{
-opacity:0.8;
+opacity:0.85;
+margin-bottom:15px;
 }
+
+/* button */
 
 .card a{
 
 display:inline-block;
-margin-top:15px;
-padding:10px 20px;
 
-border-radius:20px;
+padding:10px 24px;
 
-background:#ff4d6d;
+border-radius:30px;
 
-color:white;
+background:linear-gradient(45deg,#00f7ff,#00d4ff);
+
+color:black;
+
+font-weight:600;
 
 text-decoration:none;
 
+transition:0.3s;
+
 }
 
-/* motivation section */
+.card a:hover{
+transform:scale(1.1);
+box-shadow:0 0 20px #00f7ff;
+}
+
+/* motivation */
 
 .motivation{
 text-align:center;
@@ -242,40 +293,49 @@ font-size:18px;
 opacity:0.8;
 }
 
-/* mobile */
-
 @media(max-width:768px){
 
 .hero h2{font-size:40px;}
 
-.students img{width:170px;}
+.student-frame{
+width:200px;
+height:200px;
+}
 
-.card{width:85%;}
+.student-frame img{
+width:140px;
+}
+
+.card{
+width:85%;
+}
 
 }
 
 </style>
-
 </head>
 
 <body>
 
 <div id="particles-js"></div>
-
 <div class="progress-bar" id="progressBar"></div>
 
 <div class="logo">📚 JEE 2028</div>
 
 <section class="hero">
 
+<div class="frame">
 <h2>LAKSHYA 🎯<br>JEE 2028</h2>
+</div>
 
 <p>Easy way to watch Physics, Chemistry & Maths lectures in free</p>
 
 <a href="#subjects" class="glow-btn">Start Studying 🚀</a>
 
 <div class="students">
+<div class="student-frame">
 <img src="https://cdn-icons-png.flaticon.com/512/3135/3135755.png">
+</div>
 </div>
 
 </section>
@@ -310,6 +370,8 @@ opacity:0.8;
 
 <section class="motivation">
 
+<div class="frame">
+
 <h2>JEE Motivation 🔥</h2>
 
 <button class="glow-btn" onclick="generateQuote()">Get Motivation 🚀</button>
@@ -318,97 +380,149 @@ opacity:0.8;
 Click the button to get JEE motivation 🚀
 </div>
 
+</div>
+
 </section>
 
 <footer>
-
 Made for JEE Aspirants Only 🚀 <br>
 @team_ps
-
 </footer>
 
 <script>
 
-/* scroll progress */
-
 window.onscroll=function(){
-
 let winScroll=document.body.scrollTop||document.documentElement.scrollTop;
-
 let height=document.documentElement.scrollHeight-document.documentElement.clientHeight;
-
 let scrolled=(winScroll/height)*100;
-
 document.getElementById("progressBar").style.width=scrolled+"%";
-
 }
 
-/* quotes */
-
 const quotes=[
-
 "IIT is not a dream. It is a decision.",
-
 "JEE rewards consistency.",
-
 "When others sleep, toppers study.",
-
 "Discipline beats motivation.",
-
 "Every PYQ solved is one step closer to IIT.",
-
 "Your future IIT campus is waiting.",
-
 "Success in JEE = Hard work + Smart work.",
-
+"Success in JEE starts with daily discipline.",
+"IIT begins with one focused study session.",
+"Consistency today creates IIT tomorrow.",
+"Every concept mastered builds your IIT seat.",
+"Small daily progress leads to big JEE success.",
+"Focus on concepts, ranks will follow.",
+"Dream IIT, work like a machine.",
+"Late nights today, IIT tomorrow.",
+"Every solved question reduces competition.",
+"Your pen is your weapon for JEE.",
+"Hard work today, IIT life tomorrow.",
+"Discipline creates rankers.",
+"Your future IIT classroom is watching.",
+"One chapter today, one step to IIT.",
+"Serious students create serious results.",
+"JEE loves those who never quit.",
+"Concept clarity beats memorization.",
+"Practice more, panic less.",
+"IIT is built on daily sacrifices.",
+"Your rank depends on today's effort.",
+"Stay consistent even when tired.",
+"JEE rewards the stubborn.",
+"Every mock test teaches victory.",
+"Topper mindset beats average effort.",
+"Study now, celebrate in IIT.",
+"Every PYQ is a hidden shortcut.",
+"Rankers solve problems, not excuses.",
+"Focus builds future.",
+"JEE is a marathon, not a sprint.",
+"Work hard silently, rank loudly.",
+"Concept first, speed later.",
+"Consistency beats talent in JEE.",
+"Every mistake improves rank.",
+"Strong basics build AIR.",
+"IIT is earned, not wished.",
+"Daily practice multiplies confidence.",
+"Your rank grows with your effort.",
+"JEE rewards disciplined minds.",
+"Every formula mastered is progress.",
+"Study with purpose, not pressure.",
+"Top ranks love tough practice.",
+"Every mock test sharpens mind.",
+"Success begins with a schedule.",
+"IIT dreams demand IIT effort.",
+"Focus today removes regret tomorrow.",
+"JEE loves focused warriors.",
+"Smart revision creates toppers.",
+"Concepts are the real shortcuts.",
+"Discipline is the real motivation.",
+"Every solved doubt increases confidence.",
+"Rankers revise more than they read.",
+"Hard questions create strong minds.",
+"JEE success is a daily habit.",
+"Every chapter matters.",
+"Practice transforms knowledge into rank.",
+"IIT waits for relentless students.",
+"Focus beats distraction.",
+"Your routine defines your rank.",
+"JEE is conquered by persistence.",
+"Strong concepts create speed.",
+"Consistency builds champions.",
+"Your study table decides your future.",
+"Success in JEE is predictable.",
+"Work ethic creates rank.",
+"Rankers master basics.",
+"Every practice session counts.",
+"Your discipline writes your destiny.",
+"JEE loves patience.",
+"Focus creates toppers.",
+"Daily revision multiplies retention.",
+"Smart work accelerates progress.",
+"Concept mastery creates confidence.",
+"Practice removes fear.",
+"JEE rewards curiosity.",
+"Focus builds momentum.",
+"Rankers love difficult questions.",
+"Every effort compounds.",
+"Learning never wastes time.",
+"Your consistency scares competition.",
+"JEE rewards clarity.",
+"Focus builds sharp thinking.",
+"Your preparation builds pressure resistance.",
+"Hard practice removes exam fear.",
+"JEE loves logical thinkers.",
+"Strong basics dominate exams.",
+"Your effort multiplies daily.",
+"Persistence wins ranks.",
+"Practice increases speed.",
+"Every question solved builds confidence.",
+"JEE rewards preparation.",
+"Concept clarity defeats tricky questions.",
+"Success is hidden in revision.",
+"Your mindset creates your rank.",
+"Every mock test improves strategy.",
+"Consistency removes stress.",
+"Focused practice builds champions.",
+"Your study hours shape your rank.",
+"Discipline turns dreams into IIT.",
+"JEE success is engineered daily.",
+"Practice makes rankers.",
+"Your hard work compounds daily."
 "One more question today, AIR tomorrow."
 
 ];
 
 function generateQuote(){
-
 let random=Math.floor(Math.random()*quotes.length);
-
 document.getElementById("quote").innerText=quotes[random];
-
 }
-
-/* speech */
-
-function speakWelcome(){
-
-let text="Welcome to your JEE 2028 journey";
-
-let speech=new SpeechSynthesisUtterance(text);
-
-speech.rate=0.9;
-
-speechSynthesis.speak(speech);
-
-}
-
-window.addEventListener("load",function(){
-
-setTimeout(function(){speakWelcome();},800);
-
-});
-
-/* particles */
 
 particlesJS("particles-js",{
-
 particles:{
-
 number:{value:70},
-
 size:{value:3},
-
 move:{speed:2},
-
 line_linked:{enable:true,color:"#00f7ff"}
-
 }
-
 });
 
 </script>
