@@ -24,7 +24,7 @@ overflow-x:hidden;
 position:relative;
 }
 
-/* floating organic chemistry shapes */
+/* floating shapes */
 
 .shape{
 position:absolute;
@@ -95,7 +95,7 @@ transition:0.3s;
 }
 
 .chapter:hover{
-transform:translateY(-10px) scale(1.05);
+transform:translateY(-5px);
 }
 
 .chapter h3{
@@ -103,7 +103,7 @@ font-size:20px;
 margin-bottom:12px;
 }
 
-/* glowing button */
+/* buttons */
 
 .btn{
 display:inline-block;
@@ -111,15 +111,34 @@ padding:10px 20px;
 border-radius:20px;
 background:#ff5722;
 color:white;
-text-decoration:none;
-box-shadow:0 0 10px #ff5722,0 0 25px #ff5722;
-transition:0.3s;
+border:none;
+cursor:pointer;
+box-shadow:0 0 10px #ff5722;
 }
 
 .btn:hover{
-transform:scale(1.08);
-box-shadow:0 0 20px #ff5722,0 0 40px #ff5722;
+transform:scale(1.05);
 }
+
+/* lectures */
+
+.lectures{
+display:none;
+margin-top:15px;
+}
+
+.lecture-btn{
+display:block;
+margin:6px 0;
+padding:8px;
+background:#6c5ce7;
+color:white;
+border-radius:12px;
+text-decoration:none;
+font-size:14px;
+}
+
+/* back button */
 
 .back{
 text-align:center;
@@ -140,7 +159,7 @@ box-shadow:0 0 10px #6c5ce7;
 
 <body>
 
-<!-- organic chemistry background icons -->
+<!-- shapes -->
 
 <div class="shape red s1">⬡</div>
 <div class="shape yellow s2">🧬</div>
@@ -160,29 +179,129 @@ box-shadow:0 0 10px #6c5ce7;
 
 <div class="grid">
 
+<!-- Chapter 1 -->
+
 <div class="chapter">
+
 <h3>General Organic Chemistry (GOC)</h3>
-<a class="btn" href="#">Open</a>
+
+<button class="btn toggle">Open</button>
+
+<div class="lectures">
+
+<a class="lecture-btn" href="https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_692842930730c560c0ea255a">Lecture 1</a>
+<a class="lecture-btn" href="https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_692997a9acb84018ead98397">Lecture 2</a>
+<a class="lecture-btn" href="https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_692b010ec6cbb84b510bdc39">Lecture 3</a>
+<a class="lecture-btn" href="https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_692edd02e4bcadf063ca41ad">Lecture 4</a>
+<a class="lecture-btn" href="https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69317ebb22835b01237eb5bd">Lecture 5</a>
+<a class="lecture-btn" href="https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6932cdd3e6b59bcffe42f465">Lecture 6</a>
+<a class="lecture-btn" href="https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_693443b552be7474f8e95c80">Lecture 7</a>
+<a class="lecture-btn" href="https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_693814e23df4de3fdca73625">Lecture 8</a>
+<a class="lecture-btn" href="https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_693ab7f25d681d7bc5198e18">Lecture 9</a>
+<a class="lecture-btn" href="https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_693c08101dd8928bf4f2dc87">Lecture 10</a>
+<a class="lecture-btn" href="https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_693d7e452e56105afe390e82">Lecture 11</a>
+
 </div>
 
+</div>
+
+<!-- Chapter 2 -->
+
 <div class="chapter">
+
 <h3>Isomerism</h3>
-<a class="btn" href="#">Open</a>
+
+<button class="btn toggle">Open</button>
+
+<div class="lectures">
+
+<a class="lecture-btn" href="#">Lecture 1</a>
+<a class="lecture-btn" href="#">Lecture 2</a>
+<a class="lecture-btn" href="#">Lecture 3</a>
+<a class="lecture-btn" href="#">Lecture 4</a>
+<a class="lecture-btn" href="#">Lecture 5</a>
+<a class="lecture-btn" href="#">Lecture 6</a>
+<a class="lecture-btn" href="#">Lecture 7</a>
+<a class="lecture-btn" href="#">Lecture 8</a>
+<a class="lecture-btn" href="#">Lecture 9</a>
+<a class="lecture-btn" href="#">Lecture 10</a>
+<a class="lecture-btn" href="#">Lecture 11</a>
+<a class="lecture-btn" href="#">Lecture 12</a>
+
 </div>
 
+</div>
+
+<!-- Chapter 3 -->
+
 <div class="chapter">
+
 <h3>Hydrocarbons</h3>
-<a class="btn" href="#">Open</a>
+
+<button class="btn toggle">Open</button>
+
+<div class="lectures">
+
+<!-- 16 lectures -->
+
+<a class="lecture-btn" href="#">Lecture 1</a>
+<a class="lecture-btn" href="#">Lecture 2</a>
+<a class="lecture-btn" href="#">Lecture 3</a>
+<a class="lecture-btn" href="#">Lecture 4</a>
+<a class="lecture-btn" href="#">Lecture 5</a>
+<a class="lecture-btn" href="#">Lecture 6</a>
+<a class="lecture-btn" href="#">Lecture 7</a>
+<a class="lecture-btn" href="#">Lecture 8</a>
+<a class="lecture-btn" href="#">Lecture 9</a>
+<a class="lecture-btn" href="#">Lecture 10</a>
+<a class="lecture-btn" href="#">Lecture 11</a>
+<a class="lecture-btn" href="#">Lecture 12</a>
+<a class="lecture-btn" href="#">Lecture 13</a>
+<a class="lecture-btn" href="#">Lecture 14</a>
+<a class="lecture-btn" href="#">Lecture 15</a>
+<a class="lecture-btn" href="#">Lecture 16</a>
+
 </div>
 
+</div>
+
+<!-- Chapter 4 -->
+
 <div class="chapter">
+
 <h3>Haloalkanes & Haloarenes</h3>
-<a class="btn" href="#">Open</a>
+
+<button class="btn toggle">Open</button>
+
+<div class="lectures">
+
+<a class="lecture-btn" href="#">Lecture 1</a>
+<a class="lecture-btn" href="#">Lecture 2</a>
+<a class="lecture-btn" href="#">Lecture 3</a>
+<a class="lecture-btn" href="#">Lecture 4</a>
+<a class="lecture-btn" href="#">Lecture 5</a>
+<a class="lecture-btn" href="#">Lecture 6</a>
+<a class="lecture-btn" href="#">Lecture 7</a>
+
 </div>
 
+</div>
+
+<!-- Chapter 5 -->
+
 <div class="chapter">
+
 <h3>Alcohols Phenols & Ethers</h3>
-<a class="btn" href="#">Open</a>
+
+<button class="btn toggle">Open</button>
+
+<div class="lectures">
+
+<a class="lecture-btn" href="#">Lecture 1</a>
+<a class="lecture-btn" href="#">Lecture 2</a>
+
+</div>
+
 </div>
 
 </div>
@@ -193,6 +312,36 @@ box-shadow:0 0 10px #6c5ce7;
 
 </div>
 
-</body>
+<script>
 
+const buttons=document.querySelectorAll(".toggle")
+
+buttons.forEach(btn=>{
+
+btn.addEventListener("click",function(){
+
+const lectures=this.nextElementSibling
+
+document.querySelectorAll(".lectures").forEach(l=>{
+if(l!==lectures){
+l.style.display="none"
+l.previousElementSibling.innerText="Open"
+}
+})
+
+if(lectures.style.display==="block"){
+lectures.style.display="none"
+this.innerText="Open"
+}else{
+lectures.style.display="block"
+this.innerText="Close"
+}
+
+})
+
+})
+
+</script>
+
+</body>
 </html>
