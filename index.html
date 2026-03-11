@@ -28,59 +28,6 @@ overflow-x:hidden;
 position:relative;
 }
 
-/* LOCK SCREEN */
-
-.lock-screen{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:linear-gradient(135deg,#ff9a9e,#fad0c4);
-display:flex;
-justify-content:center;
-align-items:center;
-flex-direction:column;
-z-index:9999;
-}
-
-.lock-box{
-background:white;
-padding:40px;
-border-radius:20px;
-text-align:center;
-box-shadow:0 10px 25px rgba(0,0,0,0.2);
-}
-
-.lock-box h2{
-margin-bottom:15px;
-}
-
-.lock-box input{
-padding:12px;
-border-radius:10px;
-border:1px solid #ccc;
-width:200px;
-font-size:16px;
-text-align:center;
-}
-
-.lock-box button{
-margin-top:15px;
-padding:10px 25px;
-border:none;
-background:#6c5ce7;
-color:white;
-border-radius:20px;
-cursor:pointer;
-}
-
-#error{
-color:red;
-margin-top:10px;
-font-size:14px;
-}
-
 /* floating background shapes */
 
 .shape{
@@ -249,27 +196,6 @@ font-size:18px;
 
 <body>
 
-<!-- LOCK SCREEN -->
-
-<div class="lock-screen" id="lockScreen">
-
-<div class="lock-box">
-
-<h2>Enter Access Key 🔑</h2>
-
-<input type="password" id="keyInput" placeholder="Enter Key">
-
-<br>
-
-<button onclick="checkKey()">Unlock</button>
-
-<div id="error"></div>
-
-</div>
-
-</div>
-
-
 <div class="shape shape1"></div>
 <div class="shape shape2"></div>
 <div class="shape shape3"></div>
@@ -323,75 +249,8 @@ Start Studying 🚀
 </section>
 
 <footer>
-Made for JEE Aspirants Only 🚀 <br>Developer:- @team_ps
+Made for Team_PS JEE Aspirants Only 🚀 <br> @team_ps
 </footer>
-
-
-<script>
-
-let attempts = 0;
-
-function checkKey(){
-
-let key=document.getElementById("keyInput").value;
-
-if(key==="2028"){
-
-document.getElementById("lockScreen").style.display="none";
-
-}
-
-else{
-
-attempts++;
-
-if(attempts>=3){
-
-lockForTime();
-
-}
-
-document.getElementById("error").innerText="Wrong Key ❌ Contact developer for correct key.";
-
-}
-
-}
-
-function lockForTime(){
-
-let seconds=30;
-
-let error=document.getElementById("error");
-
-let interval=setInterval(function(){
-
-error.innerText="Too many attempts. Try again in "+seconds+" sec";
-
-seconds--;
-
-if(seconds<0){
-
-clearInterval(interval);
-attempts=0;
-error.innerText="";
-
-}
-
-},1000);
-
-}
-
-document.getElementById("keyInput").addEventListener("keypress",function(e){
-
-if(e.key==="Enter"){
-
-checkKey();
-
-}
-
-});
-
-</script>
 
 </body>
 
