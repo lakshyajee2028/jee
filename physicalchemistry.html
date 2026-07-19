@@ -112,11 +112,21 @@ color:white;
 text-decoration:none;
 box-shadow:0 0 10px #00c853,0 0 25px #00c853;
 transition:0.3s;
+margin:5px;
+border:none;
+cursor:pointer;
 }
 
 .btn:hover{
 transform:scale(1.08);
 box-shadow:0 0 20px #00c853,0 0 40px #00c853;
+}
+
+/* lecture list container */
+
+.lectureBox{
+margin-top:15px;
+display:none;
 }
 
 .back{
@@ -138,8 +148,6 @@ box-shadow:0 0 10px #ff7675;
 
 <body>
 
-<!-- chemistry background icons -->
-
 <div class="shape red s1">⚛</div>
 <div class="shape yellow s2">🧪</div>
 <div class="shape green s3">⚗</div>
@@ -159,37 +167,44 @@ box-shadow:0 0 10px #ff7675;
 
 <div class="chapter">
 <h3>Mole Concept</h3>
-<a class="btn" href="#">Open</a>
+<button class="btn toggleBtn" onclick="toggleChapter(1,this)">Open</button>
+<div class="lectureBox"></div>
 </div>
 
 <div class="chapter">
 <h3>Atomic Structure</h3>
-<a class="btn" href="#">Open</a>
+<button class="btn toggleBtn" onclick="toggleChapter(2,this)">Open</button>
+<div class="lectureBox"></div>
 </div>
 
 <div class="chapter">
 <h3>States of Matter</h3>
-<a class="btn" href="#">Open</a>
+<button class="btn toggleBtn" onclick="toggleChapter(3,this)">Open</button>
+<div class="lectureBox"></div>
 </div>
 
 <div class="chapter">
 <h3>Thermodynamics</h3>
-<a class="btn" href="#">Open</a>
+<button class="btn toggleBtn" onclick="toggleChapter(4,this)">Open</button>
+<div class="lectureBox"></div>
 </div>
 
 <div class="chapter">
 <h3>Chemical Equilibrium</h3>
-<a class="btn" href="#">Open</a>
+<button class="btn toggleBtn" onclick="toggleChapter(5,this)">Open</button>
+<div class="lectureBox"></div>
 </div>
 
 <div class="chapter">
 <h3>Ionic Equilibrium</h3>
-<a class="btn" href="#">Open</a>
+<button class="btn toggleBtn" onclick="toggleChapter(6,this)">Open</button>
+<div class="lectureBox"></div>
 </div>
 
 <div class="chapter">
 <h3>Redox Reactions</h3>
-<a class="btn" href="#">Open</a>
+<button class="btn toggleBtn" onclick="toggleChapter(7,this)">Open</button>
+<div class="lectureBox"></div>
 </div>
 
 </div>
@@ -200,6 +215,72 @@ box-shadow:0 0 10px #ff7675;
 
 </div>
 
-</body>
+<script>
 
+// Chapter links database
+const lectures = {
+// Mole Concept placeholder
+1: ["#"], 
+
+// Atomic Structure - 18 Lecture Link spots ready for your custom links
+2: [
+    "https://stream.testuk.org/schedule-details?batchId=698ad3519549b300a5e1cc6a&subjectId=69b569aeeffdf9567d75f816&scheduleId=6a0191586c12456e9078970d&tap=video",
+    "https://stream.testuk.org/schedule-details?batchId=698ad3519549b300a5e1cc6a&subjectId=69b569aeeffdf9567d75f816&scheduleId=6a18a434184c38dbe369096d&tap=video",
+    "https://stream.testuk.org/schedule-details?batchId=698ad3519549b300a5e1cc6a&subjectId=69b569aeeffdf9567d75f816&scheduleId=6a1a94d9ac4384c59473ed99&tap=video",
+    "https://stream.testuk.org/schedule-details?batchId=698ad3519549b300a5e1cc6a&subjectId=69b569aeeffdf9567d75f816&scheduleId=6a1a94d9ac4384c59473ed9a&tap=video",
+    "https://stream.testuk.org/schedule-details?batchId=698ad3519549b300a5e1cc6a&subjectId=69b569aeeffdf9567d75f816&scheduleId=6a1a94d9ac4384c59473ed9b&tap=video",
+    "https://stream.testuk.org/schedule-details?batchId=698ad3519549b300a5e1cc6a&subjectId=69b569aeeffdf9567d75f816&scheduleId=6a1a94d9ac4384c59473ed9c&tap=video",
+    "https://stream.testuk.org/schedule-details?batchId=698ad3519549b300a5e1cc6a&subjectId=69b569aeeffdf9567d75f816&scheduleId=6a1a94d9ac4384c59473ed9e&tap=video",
+    "https://stream.testuk.org/schedule-details?batchId=698ad3519549b300a5e1cc6a&subjectId=69b569aeeffdf9567d75f816&scheduleId=6a2565636b935dcba726b09c&tap=video",
+    "https://stream.testuk.org/schedule-details?batchId=698ad3519549b300a5e1cc6a&subjectId=69b569aeeffdf9567d75f816&scheduleId=6a1a94d9ac4384c59473edac&tap=video",
+    "https://stream.testuk.org/schedule-details?batchId=698ad3519549b300a5e1cc6a&subjectId=69b569aeeffdf9567d75f816&scheduleId=6a1a94d9ac4384c59473edad&tap=video",
+    "https://stream.testuk.org/schedule-details?batchId=698ad3519549b300a5e1cc6a&subjectId=69b569aeeffdf9567d75f816&scheduleId=6a1a94d9ac4384c59473edae&tap=video",
+    "https://stream.testuk.org/schedule-details?batchId=698ad3519549b300a5e1cc6a&subjectId=69b569aeeffdf9567d75f816&scheduleId=6a1a94d9ac4384c59473edaf&tap=video",
+    "https://stream.testuk.org/schedule-details?batchId=698ad3519549b300a5e1cc6a&subjectId=69b569aeeffdf9567d75f816&scheduleId=6a1a94d9ac4384c59473edb0&tap=video",
+    "https://stream.testuk.org/schedule-details?batchId=698ad3519549b300a5e1cc6a&subjectId=69b569aeeffdf9567d75f816&scheduleId=6a2c546d5a440ad1a6b91cd1&tap=video",
+    "https://stream.testuk.org/schedule-details?batchId=698ad3519549b300a5e1cc6a&subjectId=69b569aeeffdf9567d75f816&scheduleId=6a2f7049124c6a628ea5c60f&tap=video",
+    "https://stream.testuk.org/schedule-details?batchId=698ad3519549b300a5e1cc6a&subjectId=69b569aeeffdf9567d75f816&scheduleId=6a303e103b7f8931bd2c9089&tap=video",
+    "https://stream.testuk.org/schedule-details?batchId=698ad3519549b300a5e1cc6a&subjectId=69b569aeeffdf9567d75f816&scheduleId=6a320128737c08c308cf7f2d&tap=video",
+    "https://stream.testuk.org/schedule-details?batchId=698ad3519549b300a5e1cc6a&subjectId=69b569aeeffdf9567d75f816&scheduleId=6a3be5fe5045b54ab0ede43e&tap=video"
+],
+
+3: ["#"], // States of Matter placeholder
+4: ["#"], // Thermodynamics placeholder
+5: ["#"], // Chemical Equilibrium placeholder
+6: ["#"], // Ionic Equilibrium placeholder
+7: ["#"]  // Redox Reactions placeholder
+};
+
+function toggleChapter(ch, btn){
+    let chapter = btn.parentElement;
+    let box = chapter.querySelector(".lectureBox");
+
+    if(box.style.display === "block"){
+        box.style.display = "none";
+        btn.innerText = "Open";
+        return;
+    }
+
+    // Close all other lecture boxes before opening new one
+    document.querySelectorAll(".lectureBox").forEach(b => b.style.display = "none");
+    document.querySelectorAll(".toggleBtn").forEach(b => b.innerText = "Open");
+
+    box.innerHTML = "";
+
+    // Generate buttons dynamically
+    lectures[ch].forEach((link, i) => {
+        box.innerHTML += `
+        <a class="btn" href="${link}" target="_blank">
+        Lecture ${i+1}
+        </a>
+        `;
+    });
+
+    box.style.display = "block";
+    btn.innerText = "Close";
+}
+
+</script>
+
+</body>
 </html>
