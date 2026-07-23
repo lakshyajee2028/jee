@@ -158,6 +158,113 @@ border-radius:30px;
 box-shadow:0 0 10px #ff7675;
 }
 
+/* Dynamic Modal Box CSS */
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-card {
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 20px;
+  text-align: center;
+  width: 90%;
+  max-width: 380px;
+  box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+  transform: scale(0.7);
+  transition: transform 0.3s ease;
+  position: relative;
+}
+
+.modal-overlay.active .modal-card {
+  transform: scale(1);
+}
+
+.modal-card h3 {
+  color: #222;
+  margin-bottom: 5px;
+  font-size: 22px;
+}
+
+.modal-card p.caption {
+  color: #666;
+  font-size: 15px;
+  margin-bottom: 20px;
+  font-weight: 400;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.modal-btn {
+  padding: 12px 24px;
+  border-radius: 25px;
+  border: none;
+  color: white;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 15px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.modal-btn-lec {
+  background: #6c5ce7;
+  box-shadow: 0 4px 15px rgba(108, 92, 231, 0.4);
+}
+
+.modal-btn-lec:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(108, 92, 231, 0.6);
+}
+
+.modal-btn-notes {
+  background: #00b894;
+  box-shadow: 0 4px 15px rgba(0, 184, 148, 0.4);
+}
+
+.modal-btn-notes:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 184, 148, 0.6);
+}
+
+.close-modal {
+  position: absolute;
+  top: 12px;
+  right: 18px;
+  font-size: 22px;
+  color: #aaa;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.close-modal:hover {
+  color: #222;
+}
+
 </style>
 </head>
 
@@ -175,8 +282,6 @@ box-shadow:0 0 10px #ff7675;
 <div class="chapters">
 
 <div class="grid">
-
-<!-- Chapter Template -->
 
 <div class="chapter">
 <h3>Units & Measurement</h3>
@@ -294,66 +399,311 @@ box-shadow:0 0 10px #ff7675;
 
 </div>
 
+<div class="modal-overlay" id="optionModal">
+  <div class="modal-card">
+    <span class="close-modal" onclick="closeModal()">&times;</span>
+    <h3 id="modalTitle">Lecture 1</h3>
+    <p class="caption" id="modalCaption">Lecture Caption Here</p>
+    <div class="modal-buttons">
+      <a id="lectureLink" class="modal-btn modal-btn-lec" href="#" target="_blank">🎥 Lecture</a>
+      <a id="notesLink" class="modal-btn modal-btn-notes" href="#" target="_blank">📄 Notes</a>
+    </div>
+  </div>
+</div>
+
 <script>
 
 const lectures = {
-
-1:["https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_67fd01164c87d7cd348601d9","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_67ffa0aff3b0ec74401ca496","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6800f2b9a77c732b65ee917b","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68063853b3e1fc77037396ac","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68308f3654e9071c717f6d20","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_680b9ccdc8e18a66227a2d7d","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_680f7483cc9f5e5a1a085d7d","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6810c4394cb884691e18614b","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_681215bf98dfdb4f9e1540b9","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6818add7edc3eae1486792dd","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6810225720d810c24dcda1b5"],
-2:["https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_681a08f803d44b0d1065f373","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_681b527fae5c29613a8db5d2","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68236a05916d15fc1e00605d"],
-3:["https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68248ded66d95adacec15ac9","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6825fae96a1e3d10a24e52c2","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_682deb08e3c7858e32bc428a","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_682f3ad9df75057cb96c7374","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6831bc625cfa405ffc2669b0","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68345e5b68d05c856c97756c","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6835b2f1c2542a94bbb74313","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_683b1f00c959b8606f9c6ab1","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_683daeadc6c359a2180a7925","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_683f04614c44d8a637c93c0a","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6846d2600eb38b98189def53","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68482366ae3dca7adfef20c7","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68497620d16a1a8025dea117","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_684d85d1d790ca5ef7187c07"],
-4:["https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_685016dc8cfdeeb5fc6d3371","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_685159f36ad6b8808beaed79","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6852ad2e80ec3eb5f59f4d1a","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6853fe35526b421d19c3de09","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6855512d69a598171c57d1a1","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6856a0e75287d754b70cd756","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68594504f10d74681a5c0a8f","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_685a9563a28ef1a53e44fd5a","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_685be7baf6eff4aa2034f979","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_685d382e520031ecc5322e3f","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_685e8b01e46fed2dff021757","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_685fdca350bb51b5055ae179","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68601077854cc494fafbdf28","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_686526ba12eae89296f48195","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68667642e2ac4124c6e8a93d","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_686941bb7fcad19d4943b8d9","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_686e63ccc683c228354917f4"],
-5:["https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68679e857d8ba429447f73fe","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68b1b7c9b6e4a97c0eed7ded","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68c58100401ef7b569e72f8c"],
-6:["https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_686fd62477e70c6859724e19","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6871288e4ae288b75d941967","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_687139bba0a726f5763bfcfa","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68725de591de0901f8a945e6","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68766cc6dcd5b488ffdedcbe","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6877a7045c364957420f337b","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6878eec9860d649081163512","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_687ba36abde9f0608bacc188","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_687c7d980b758568704ca690","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6880f7e115ee05718ccb9091","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68824a5aa6fd4470347c6409","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68839c2e041328af548ff868","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68849437717cd0b669c95a9a","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_688a3876813cd2f2c3fb939e","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_688b89c25b1f44a293c1d541","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_688ba35e6b90decc907252f7"],
-7:["https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_688cda110017dbdd086d4423","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_688e27c1920a407fef84b41f","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68936fa50ad9771a54d178ce","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6894bf41eb9f9604acfdc28b","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_689612406422707500703e04","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_689852b5996e1fa7bbfcc64d","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_689caa91707f108406b5f94e","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_689dfc8e3090972fe05d7140","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68a09c057ff8e72d08d8898b","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68a5e3cd284d8e1129e7c662","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68a73c9b8f2303c841328a5f","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68a869fcf4c9eb4404bf6696","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68a9b5e4d2acdfc98bb186c5","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68aebd068eb3d9ea2bf49ace","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68b0752a0cf94deb61d8242f"],
-8:["https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68b19e7b53b62293016feeac","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68b2e38bf5e4d709df68b983","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68b3ce41e88a5feadbf52993","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68b6dc5b909e509ffee367e1","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68b859da58eb3597df6755f3","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68b9ab5db2b3092482af3bfa"],
-9:["https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68baf92f819bf28789e5146a","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68bc4c570c4571b8ed9cfa73","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68c190cc915c67753c9b7580","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68c2e3e737b97202348ebe38","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68c413929822708b6076a2ce","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68c565bfc247849cefe591b9","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68caced897daf3a849780a99","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68cc1f935181e059354e40ae","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68cd4ef8b36c6d9e451f6a8f","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68ce9fe0b62a62de7112e5d7","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68d40a3c45bd3c450f538c9b","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68d55772063fa931dc001dc4","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68da9fe1d39975d8efb3f603","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68d91da0e437436e798b3e08"],
-10:["https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68d7da4896c13668ae5884ef","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68da9ecb3867136e8c6de5c7","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68dbf1ec42fcc21b6c3f0dcf","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68dd438962e9b8d285ea277b","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68e67b2d2da9a933e4d30426","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68e7cd4fa5dacee746b5ac70","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68e905c18291e98c2576b224","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68ea5833b03494b238517cf6","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68efb7a89903c64d9d6cdca8","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68f10e1a05addb215e3db7d6","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_690f3a9362c0622ddad2bfdd","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_691094aed89c3181c65e1293","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6914a5d5abdf78926ac574d7","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69181bc0a2f1b9de533071c4","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_691637eebe8b7bab537e4746","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_691c82a0bb00020ba9807952"],
-11:["https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68f2193321d2ce7633fd29d5","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68f33497df5fa3d5a2ac51e7","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68f9cbce1b146f5452d53226","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68f0caeed1e064db3498572e","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68fc9183ebbce13d2bf0a3b7","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69037c1397edb60df45c2cf8","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6904ad5c8b0c300c9ebd2d84","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6905fedd77d499ec35acf059","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_690b63916c0bbb52a2caf901","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_690ccea3fe11c39601199a98","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_690de8dd27315b626ad5e817","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6903859c3fbbff0879b1e7d5"],
-12:["https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68fd196545c98cf7bd62df5c","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6900c9b57aac3ed6cf5141e5"],
-13:["https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_691604e254ae5caaaed2c376","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69172e58bbf532c6f4728cbd","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_691de7a2481301ada9ca4a20","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_691de8ce41658720838e7bfd","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_691f3d84697bb04146087b4f","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69201514c54eb5469bea9b1c","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_692062360deeaf529addece7","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6920819f2df9fdb7c0378fa5","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6921ad3f5820b979d95067b7","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69230f8ca2aa87e3ea3c4834","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_692450ccfa54bd3557dc6abe","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69271a5629e8b802da624e74","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6928460bb8970492d0ff8722","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69286a63e72646415d6e7416","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6929c4f8e30dae9fdd067ceb","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_692d94333df6d7cacfbe2623","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69305cc20225fa98a77d0661","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6931c1f5bf8fce87731e927c","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6932fae6ea5d8c4a629bb376","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6936e19eb9f6948ea4759813","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69398fd9e0eb9756621eeb52","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_693ade66d607e5785f1549c4","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_693c2fa986ed09dc1286b867","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_693e52fb7eaa7fb2cb8f28e7","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69554dd84d2000dcd3560242"],
-14:["https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6940064cc962fdd5c26cfe0b","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6942c8d554790f2c3ac23aa8","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_694417ff1b4ca456fbaffc08","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69456a3c9b3e2b982262eb52","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_694c04b590c8674e648da1d1","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_694d3c7f58b23929e578eb5b"],
-15:["https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_694ea70c8d4d427c6571f4bb","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_694ff33e0d6f31568ad8e18f","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69554bdde36213bac7a28e05","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6956689a99c4cdce68fb9eae","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6957850370a3f05464cf539f","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6959310616152f06ba4b90cb","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_695a0d9373e0a8024b4c380a","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_695e8142eaab550265b479c3","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_695fd1922f16ae00f6112e25","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6960dda424440e7f3eb9edaf"],
-16:["https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_696245ed4652d0729f3b568a","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6967ae7ce472634d323117f7","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6968df4de65c2eca0d505e0b","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_696a3e6cfdd837cb33788286","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_696ba6de26ef432741984d0c","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6970c2505cdd854c94ff7984","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69723aee8960e2d50ef571c5","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6973897dc40670f1998438c9","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6974e1018c44d35e007963d2","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_697513d6141f023f8b020f03","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6979fec09843c9bc5d3759a2","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_697b794b6b88ddd80aafe975","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_697f432063e93ca9f42f7658"],
-17:["https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_697cc754ef583a43dfb3c527","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_697e1847c63bf42a82389957","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69835e65529dbc9fc0fe1247","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6984af505024df3c42c83d55","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6985feb9e659bb662c936dfb","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6987543df8463ed65f575642","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_698844c62d9097f95b6980ce","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_698c9ea8409aa2b66b0ec43b","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_698debaac6323ad6bb7e5658","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_698f3e78f5f1e9069728acc4","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_699092188d2cab00495b5c38","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6991ced436c59d6beb8c4585","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69933d7c5228ba86b836191d"],
-18:["https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6995ba72038ce481adb8d212","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_699712c723baf3ad2ef7a4c9","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6998064f020636d5d14ed8e2","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6999a076916e1b02f9ec8073","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6999dc0e55ff1c2a44ea5b23"]
-
+  1: [
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_67fd01164c87d7cd348601d9", notes: "#", title: "Introduction & Physical Quantities" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_67ffa0aff3b0ec74401ca496", notes: "#", title: "SI Units & System of Units" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6800f2b9a77c732b65ee917b", notes: "#", title: "Dimensional Analysis - Part 1" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68063853b3e1fc77037396ac", notes: "#", title: "Dimensional Analysis - Part 2" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68308f3654e9071c717f6d20", notes: "#", title: "Applications of Dimensions" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_680b9ccdc8e18a66227a2d7d", notes: "#", title: "Limitations of Dimensional Analysis" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_680f7483cc9f5e5a1a085d7d", notes: "#", title: "Significant Figures" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6810c4394cb884691e18614b", notes: "#", title: "Rounding Off Numbers" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_681215bf98dfdb4f9e1540b9", notes: "#", title: "Order of Magnitude" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6818add7edc3eae1486792dd", notes: "#", title: "Practice Questions - Set 1" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6810225720d810c24dcda1b5", notes: "#", title: "PYQs & Doubt Session" }
+  ],
+  2: [
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_681a08f803d44b0d1065f373", notes: "#", title: "Trigonometric Basics" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_681b527fae5c29613a8db5d2", notes: "#", title: "Differentiation Concepts" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68236a05916d15fc1e00605d", notes: "#", title: "Integration Concepts" }
+  ],
+  3: [
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68248ded66d95adacec15ac9", notes: "#", title: "Vector Basics & Addition" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6825fae96a1e3d10a24e52c2", notes: "#", title: "Triangle & Parallelogram Law" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_682deb08e3c7858e32bc428a", notes: "#", title: "Resolution of Vectors" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_682f3ad9df75057cb96c7374", notes: "#", title: "Dot Product" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6831bc625cfa405ffc2669b0", notes: "#", title: "Cross Product" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68345e5b68d05c856c97756c", notes: "#", title: "Vector Problems - Part 1" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6835b2f1c2542a94bbb74313", notes: "#", title: "Vector Problems - Part 2" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_683b1f00c959b8606f9c6ab1", notes: "#", title: "Unit Vectors" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_683daeadc6c359a2180a7925", notes: "#", title: "Lami's Theorem" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_683f04614c44d8a637c93c0a", notes: "#", title: "Position Vector & Displacement" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6846d2600eb38b98189def53", notes: "#", title: "3D Vectors" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68482366ae3dca7adfef20c7", notes: "#", title: "Advanced Vector Problems" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68497620d16a1a8025dea117", notes: "#", title: "PYQs Session" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_684d85d1d790ca5ef7187c07", notes: "#", title: "Chapter Revision" }
+  ],
+  4: [
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_685016dc8cfdeeb5fc6d3371", notes: "#", title: "Distance & Displacement" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_685159f36ad6b8808beaed79", notes: "#", title: "Speed & Velocity" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6852ad2e80ec3eb5f59f4d1a", notes: "#", title: "Acceleration Concepts" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6853fe35526b421d19c3de09", notes: "#", title: "Equations of Motion" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6855512d69a598171c57d1a1", notes: "#", title: "Motion Under Gravity" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6856a0e75287d754b70cd756", notes: "#", title: "Graphs - Part 1 (x-t)" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68594504f10d74681a5c0a8f", notes: "#", title: "Graphs - Part 2 (v-t & a-t)" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_685a9563a28ef1a53e44fd5a", notes: "#", title: "Relative Motion - 1D" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_685be7baf6eff4aa2034f979", notes: "#", title: "Calculus in Kinematics" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_685d382e520031ecc5322e3f", notes: "#", title: "Non-uniform Acceleration" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_685e8b01e46fed2dff021757", notes: "#", title: "Stopping Distance & Reaction Time" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_685fdca350bb51b5055ae179", notes: "#", title: "Galileo's Law of Odd Numbers" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68601077854cc494fafbdf28", notes: "#", title: "Problem Solving - Set 1" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_686526ba12eae89296f48195", notes: "#", title: "Problem Solving - Set 2" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68667642e2ac4124c6e8a93d", notes: "#", title: "Advanced Problems" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_686941bb7fcad19d4943b8d9", notes: "#", title: "Previous Year Questions" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_686e63ccc683c228354917f4", notes: "#", title: "Chapter Summary" }
+  ],
+  5: [
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68679e857d8ba429447f73fe", notes: "#", title: "Types of Errors & Combination" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68b1b7c9b6e4a97c0eed7ded", notes: "#", title: "Vernier Caliper" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68c58100401ef7b569e72f8c", notes: "#", title: "Screw Gauge" }
+  ],
+  6: [
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_686fd62477e70c6859724e19", notes: "#", title: "2D Kinematics Basics" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6871288e4ae288b75d941967", notes: "#", title: "Projectile Motion Intro" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_687139bba0a726f5763bfcfa", notes: "#", title: "Time of Flight & Range" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68725de591de0901f8a945e6", notes: "#", title: "Equation of Trajectory" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68766cc6dcd5b488ffdedcbe", notes: "#", title: "Horizontal Projectile" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6877a7045c364957420f337b", notes: "#", title: "Projectile on Inclined Plane" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6878eec9860d649081163512", notes: "#", title: "Relative Motion - 2D" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_687ba36abde9f0608bacc188", notes: "#", title: "River-Swimmer Problems" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_687c7d980b758568704ca690", notes: "#", title: "Rain-Man Problems" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6880f7e115ee05718ccb9091", notes: "#", title: "Wind-Airplane Problems" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68824a5aa6fd4470347c6409", notes: "#", title: "Condition for Collision" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68839c2e041328af548ff868", notes: "#", title: "Shortest Distance Concept" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68849437717cd0b669c95a9a", notes: "#", title: "Advanced Problems - Part 1" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_688a3876813cd2f2c3fb939e", notes: "#", title: "Advanced Problems - Part 2" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_688b89c25b1f44a293c1d541", notes: "#", title: "PYQs Analysis" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_688ba35e6b90decc907252f7", notes: "#", title: "Chapter Revision" }
+  ],
+  7: [
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_688cda110017dbdd086d4423", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_688ce53eb59cb25a5b32dbfc", title: "Laws of Motion 01 : Inertia, Force || Introduction to NLM || NO DPP ||" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_688e27c1920a407fef84b41f", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_688e2ab7f7cedfef163227be", title: "Laws of Motion 02 : Mg, N,T Force || FBD || NO DPP" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68936fa50ad9771a54d178ce", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_68937ab3c72f6b97454560f1", title: "Laws of Motion 03 : Pulley System || NO DPP" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6894bf41eb9f9604acfdc28b", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6894c691ccc309fb150ac578", title: "Laws of Motion 04 : Question Practice on Equilibrium based" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_689612406422707500703e04", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_68961825d7d4c696a4c548fc", title: "Laws of Motion 05 : Question Practice on F = ma" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_689852b5996e1fa7bbfcc64d", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6897c58cb4df2556a6eb1ff6", title: "Laws of Motion 06 : Pseudo Force || NO DPP || Extra Lecture || Recorded" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_689caa91707f108406b5f94e", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_689cb585659765e33d5c7f04", title: "Laws of Motion 07 : Pseudo Force (Part Two) || NO DPP" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_689dfc8e3090972fe05d7140", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_689e03e2e86971c2a160f26e", title: "Laws of Motion 08 : Question Practice || Spring Force" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68a09c057ff8e72d08d8898b", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_68a0aa9cf3d4745150227dd1", title: "Laws of Motion 09 : Constraint Motion" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68a5e3cd284d8e1129e7c662", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_68a5ec84945975cce47cfeac", title: "Laws of Motion 10 : Wedge Constraint and Question Practice ||" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68a73c9b8f2303c841328a5f", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_68a742568a9e169e2d18e06f", title: "Laws of Motion 11 : Question Practice NLM || Rescheduled @6:20PM" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68a869fcf4c9eb4404bf6696", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_68a867ca7ed4ed803154b92a", title: "Laws of Motion 12 : Friction (Static and Kinetic) || NO DPP" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68a9b5e4d2acdfc98bb186c5", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_68a9c0f8215af563731b2df1", title: "Laws of Motion 13 : Friction Question Practice || NO DPP" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68aebd068eb3d9ea2bf49ace", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_68aeed1a605e4ea5c8444504", title: "Laws of Motion 14 : Mini Lecture || NO DPP || Extra Lecture || Recorded" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68b0752a0cf94deb61d8242f", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_68b07ff8dd768356d1051060", title: "Laws of Motion 15 : Friction || NO DPP || Rescheduled @06:25 PM" }
+  ],
+  8: [
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68b19e7b53b62293016feeac", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_68b1a524ef64a05937826561", title: "Circular Motion 01 : Friction Question Discussion (PYQ +..." },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68b2e38bf5e4d709df68b983", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_68b2e6e73ca50505496a4fc5", title: "Circular Motion 02 : Angular Velocity || Angular Displacement ..." },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68b3ce41e88a5feadbf52993", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_68b421e25eb8bdaa3f40a809", title: "Circular Motion 03 : Question Practice || NO DPP || Extra Lecture ||" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68b6dc5b909e509ffee367e1", notes: "#", title: "Circular Motion 04 : Revision || NO DPP || Only Video" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68b859da58eb3597df6755f3", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_68b865e9f5e4ab49a1e17b98", title: "Circular Motion 05 : Circular Motion Dynamics || Banking of" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68b9ab5db2b3092482af3bfa", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_68b9b0c1036e00cfc64a1e05", title: "Circular Motion 06 : Angular Velocity || Revision Circular Motion" }
+  ],
+  9: [
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68baf92f819bf28789e5146a", notes: "#", title: "Work Done by Constant Force" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68bc4c570c4571b8ed9cfa73", notes: "#", title: "Work Done by Variable Force" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68c190cc915c67753c9b7580", notes: "#", title: "Kinetic Energy & Work-Energy Theorem" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68c2e3e737b97202348ebe38", notes: "#", title: "Potential Energy & Conservative Forces" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68c413929822708b6076a2ce", notes: "#", title: "Conservation of Mechanical Energy" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68c565bfc247849cefe591b9", notes: "#", title: "Spring Potential Energy" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68caced897daf3a849780a99", notes: "#", title: "Power Concepts" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68cc1f935181e059354e40ae", notes: "#", title: "Equilibrium & Potential Energy Curves" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68cd4ef8b36c6d9e451f6a8f", notes: "#", title: "Collisions - 1D Elastic" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68ce9fe0b62a62de7112e5d7", notes: "#", title: "Inelastic Collisions" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68d40a3c45bd3c450f538c9b", notes: "#", title: "Collisions in 2D" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68d55772063fa931dc001dc4", notes: "#", title: "Coefficient of Restitution" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68da9fe1d39975d8efb3f603", notes: "#", title: "Advanced Problems" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68d91da0e437436e798b3e08", notes: "#", title: "PYQs Session" }
+  ],
+  10: [
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68d7da4896c13668ae5884ef", notes: "#", title: "Center of Mass - Discrete Systems" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68da9ecb3867136e8c6de5c7", notes: "#", title: "COM - Continuous Bodies" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68dbf1ec42fcc21b6c3f0dcf", notes: "#", title: "Motion of Center of Mass" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68dd438962e9b8d285ea277b", notes: "#", title: "Conservation of Linear Momentum" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68e67b2d2da9a933e4d30426", notes: "#", title: "Impulse Concepts" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68e7cd4fa5dacee746b5ac70", notes: "#", title: "Explosion Problems" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68e905c18291e98c2576b224", notes: "#", title: "Cavity Problems in COM" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68ea5833b03494b238517cf6", notes: "#", title: "Variable Mass System (Rocket Motion)" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68efb7a89903c64d9d6cdca8", notes: "#", title: "COM Frame Problems" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68f10e1a05addb215e3db7d6", notes: "#", title: "Spring-Block COM Problems" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_690f3a9362c0622ddad2bfdd", notes: "#", title: "Man-Plank Problems" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_691094aed89c3181c65e1293", notes: "#", title: "Impact & Collisions in COM" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6914a5d5abdf78926ac574d7", notes: "#", title: "Advanced Problems - Part 1" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69181bc0a2f1b9de533071c4", notes: "#", title: "Advanced Problems - Part 2" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_691637eebe8b7bab537e4746", notes: "#", title: "PYQs Session" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_691c82a0bb00020ba9807952", notes: "#", title: "Chapter Revision" }
+  ],
+  11: [
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68f2193321d2ce7633fd29d5", notes: "#", title: "Temperature & Scales" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68f33497df5fa3d5a2ac51e7", notes: "#", title: "Thermal Expansion - Solids" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68f9cbce1b146f5452d53226", notes: "#", title: "Thermal Expansion - Liquids" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68f0caeed1e064db3498572e", notes: "#", title: "Calorimetry Principles" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68fc9183ebbce13d2bf0a3b7", notes: "#", title: "Latent Heat & Phase Change" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69037c1397edb60df45c2cf8", notes: "#", title: "Heat Transfer - Conduction" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6904ad5c8b0c300c9ebd2d84", notes: "#", title: "Thermal Resistance & Combination" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6905fedd77d499ec35acf059", notes: "#", title: "Convection Basics" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_690b63916c0bbb52a2caf901", notes: "#", title: "Radiation & Stefan's Law" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_690ccea3fe11c39601199a98", notes: "#", title: "Wien's Displacement Law" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_690de8dd27315b626ad5e817", notes: "#", title: "Newton's Law of Cooling" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6903859c3fbbff0879b1e7d5", notes: "#", title: "PYQs Session" }
+  ],
+  12: [
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68fd196545c98cf7bd62df5c", notes: "#", title: "Stress, Strain & Young's Modulus" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6900c9b57aac3ed6cf5141e5", notes: "#", title: "Bulk & Shear Modulus, Wire Problems" }
+  ],
+  13: [
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_691604e254ae5caaaed2c376", notes: "#", title: "Moment of Inertia Intro" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69172e58bbf532c6f4728cbd", notes: "#", title: "Parallel & Perpendicular Axis Theorem" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_691de7a2481301ada9ca4a20", notes: "#", title: "MOI of Standard Bodies" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_691de8ce41658720838e7bfd", notes: "#", title: "Cavity Problems in MOI" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_691f3d84697bb04146087b4f", notes: "#", title: "Torque Concepts" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69201514c54eb5469bea9b1c", notes: "#", title: "Rotational Equilibrium" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_692062360deeaf529addece7", notes: "#", title: "Toppling Problems" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6920819f2df9fdb7c0378fa5", notes: "#", title: "Angular Acceleration & Newton's 2nd Law" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6921ad3f5820b979d95067b7", notes: "#", title: "Angular Momentum Basics" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69230f8ca2aa87e3ea3c4834", notes: "#", title: "Conservation of Angular Momentum" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_692450ccfa54bd3557dc6abe", notes: "#", title: "Rotational Kinetic Energy" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69271a5629e8b802da624e74", notes: "#", title: "Work-Energy in Rotation" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6928460bb8970492d0ff8722", notes: "#", title: "Pure Rolling Kinematics" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69286a63e72646415d6e7416", notes: "#", title: "Pure Rolling Dynamics" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6929c4f8e30dae9fdd067ceb", notes: "#", title: "Rolling on Inclined Plane" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_692d94333df6d7cacfbe2623", notes: "#", title: "Instantaneous Center of Rotation (ICOR)" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69305cc20225fa98a77d0661", notes: "#", title: "Friction in Pure Rolling" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6931c1f5bf8fce87731e927c", notes: "#", title: "Angular Impulse" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6932fae6ea5d8c4a629bb376", notes: "#", title: "Collision with Rigid Bodies" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6936e19eb9f6948ea4759813", notes: "#", title: "Advanced Problems - 1" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69398fd9e0eb9756621eeb52", notes: "#", title: "Advanced Problems - 2" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_693ade66d607e5785f1549c4", notes: "#", title: "Advanced Problems - 3" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_693c2fa986ed09dc1286b867", notes: "#", title: "PYQs - Set 1" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_693e52fb7eaa7fb2cb8f28e7", notes: "#", title: "PYQs - Set 2" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69554dd84d2000dcd3560242", notes: "#", title: "Complete Chapter Revision" }
+  ],
+  14: [
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6940064cc962fdd5c26cfe0b", notes: "#", title: "Ideal Gas Laws & KTG" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6942c8d554790f2c3ac23aa8", notes: "#", title: "Degrees of Freedom & Equipartition" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_694417ff1b4ca456fbaffc08", notes: "#", title: "Zeroth & First Law of Thermodynamics" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69456a3c9b3e2b982262eb52", notes: "#", title: "Thermodynamic Processes (Isothermal, Adiabatic)" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_694c04b590c8674e648da1d1", notes: "#", title: "Cyclic Processes & Heat Engines" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_694d3c7f58b23929e578eb5b", notes: "#", title: "Carnot Engine & Refrigerator" }
+  ],
+  15: [
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_694ea70c8d4d427c6571f4bb", notes: "#", title: "SHM Basics & Equations" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_694ff33e0d6f31568ad8e18f", notes: "#", title: "Velocity, Acceleration & Energy in SHM" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69554bdde36213bac7a28e05", notes: "#", title: "Spring-Mass Systems" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6956689a99c4cdce68fb9eae", notes: "#", title: "Simple Pendulum" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6957850370a3f05464cf539f", notes: "#", title: "Physical & Torsional Pendulum" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6959310616152f06ba4b90cb", notes: "#", title: "Superposition of SHM" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_695a0d9373e0a8024b4c380a", notes: "#", title: "Damped & Forced Oscillations" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_695e8142eaab550265b479c3", notes: "#", title: "Advanced SHM Problems" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_695fd1922f16ae00f6112e25", notes: "#", title: "PYQs Analysis" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6960dda424440e7f3eb9edaf", notes: "#", title: "Chapter Revision" }
+  ],
+  16: [
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_696245ed4652d0729f3b568a", notes: "#", title: "Wave Motion & Wave Equation" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6967ae7ce472634d323117f7", notes: "#", title: "Speed of Transverse Waves" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6968df4de65c2eca0d505e0b", notes: "#", title: "Energy & Power in Waves" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_696a3e6cfdd837cb33788286", notes: "#", title: "Interference & Superposition" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_696ba6de26ef432741984d0c", notes: "#", title: "Standing Waves on Stretched String" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6970c2505cdd854c94ff7984", notes: "#", title: "Sound Waves & Speed of Sound" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69723aee8960e2d50ef571c5", notes: "#", title: "Organ Pipes (Open & Closed)" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6973897dc40670f1998438c9", notes: "#", title: "Beats Phenomenon" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6974e1018c44d35e007963d2", notes: "#", title: "Doppler Effect - Case 1" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_697513d6141f023f8b020f03", notes: "#", title: "Doppler Effect - Case 2" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6979fec09843c9bc5d3759a2", notes: "#", title: "End Correction & Resonance Tube" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_697b794b6b88ddd80aafe975", notes: "#", title: "Advanced Problems" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_697f432063e93ca9f42f7658", notes: "#", title: "PYQs Session" }
+  ],
+  17: [
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_697cc754ef583a43dfb3c527", notes: "#", title: "Fluid Pressure & Pascal's Law" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_697e1847c63bf42a82389957", notes: "#", title: "Hydrostatic Paradox & Manometer" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69835e65529dbc9fc0fe1247", notes: "#", title: "Archimedes' Principle & Buoyancy" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6984af505024df3c42c83d55", notes: "#", title: "Fluid Dynamics & Continuity Equation" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6985feb9e659bb662c936dfb", notes: "#", title: "Bernoulli's Principle & Applications" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6987543df8463ed65f575642", notes: "#", title: "Torricelli's Law & Efflux" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_698844c62d9097f95b6980ce", notes: "#", title: "Venturimeter & Viscosity" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_698c9ea8409aa2b66b0ec43b", notes: "#", title: "Stoke's Law & Terminal Velocity" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_698debaac6323ad6bb7e5658", notes: "#", title: "Surface Tension Concepts" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_698f3e78f5f1e9069728acc4", notes: "#", title: "Surface Energy & Excess Pressure" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_699092188d2cab00495b5c38", notes: "#", title: "Capillarity & Angle of Contact" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6991ced436c59d6beb8c4585", notes: "#", title: "Advanced Problems" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69933d7c5228ba86b836191d", notes: "#", title: "PYQs Session" }
+  ],
+  18: [
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6995ba72038ce481adb8d212", notes: "#", title: "Newton's Law of Gravitation" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_699712c723baf3ad2ef7a4c9", notes: "#", title: "Acceleration due to Gravity (g)" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6998064f020636d5d14ed8e2", notes: "#", title: "Gravitational Field & Potential" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6999a076916e1b02f9ec8073", notes: "#", title: "Escape Velocity & Orbital Velocity" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6999dc0e55ff1c2a44ea5b23", notes: "#", title: "Kepler's Laws of Planetary Motion" }
+  ]
 };
 
-function toggleChapter(ch,btn){
+function toggleChapter(ch, btn) {
+  let chapter = btn.parentElement;
+  let box = chapter.querySelector(".lectureBox");
 
-let chapter=btn.parentElement;
-let box=chapter.querySelector(".lectureBox");
+  if (box.style.display === "block") {
+    box.style.display = "none";
+    btn.innerText = "Open";
+    return;
+  }
 
-if(box.style.display==="block"){
+  document.querySelectorAll(".lectureBox").forEach(b => b.style.display = "none");
+  document.querySelectorAll(".toggleBtn").forEach(b => b.innerText = "Open");
 
-box.style.display="none";
-btn.innerText="Open";
-return;
+  box.innerHTML = "";
 
+  if (lectures[ch]) {
+    lectures[ch].forEach((item, i) => {
+      box.innerHTML += `
+        <button class="btn" onclick="openModal(${ch}, ${i})">
+          Lecture ${i + 1}
+        </button>
+      `;
+    });
+  }
+
+  box.style.display = "block";
+  btn.innerText = "Close";
 }
 
-document.querySelectorAll(".lectureBox").forEach(b=>b.style.display="none");
-document.querySelectorAll(".toggleBtn").forEach(b=>b.innerText="Open");
+function openModal(ch, index) {
+  let item = lectures[ch][index];
+  document.getElementById("modalTitle").innerText = `Lecture ${index + 1}`;
+  document.getElementById("modalCaption").innerText = item.title || "No Caption Available";
+  document.getElementById("lectureLink").href = item.lec || "#";
+  document.getElementById("notesLink").href = item.notes || "#";
 
-box.innerHTML="";
+  document.getElementById("optionModal").classList.add("active");
+}
 
-lectures[ch].forEach((link,i)=>{
+function closeModal() {
+  document.getElementById("optionModal").classList.remove("active");
+}
 
-box.innerHTML+=`
-<a class="btn" href="${link}" target="_blank">
-Lecture ${i+1}
-</a>
-`;
-
-});
-
-box.style.display="block";
-btn.innerText="Close";
-
+window.onclick = function(event) {
+  let modal = document.getElementById("optionModal");
+  if (event.target == modal) {
+    closeModal();
+  }
 }
 
 </script>
 
 </body>
 </html>
-
