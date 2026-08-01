@@ -1,198 +1,573 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inorganic Chemistry</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet" />
+    <style>
+        /* ─── RESET & BASE ─── */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Fredoka', sans-serif;
+        }
 
-<title>Inorganic Chemistry</title>
+        body {
+            background: linear-gradient(135deg, #c2ffd8, #465efb);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            padding-bottom: 60px;
+        }
 
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
+        /* ─── FLOATING SYMBOLS ─── */
+        .shape {
+            position: absolute;
+            font-size: 70px;
+            opacity: 0.5;
+            z-index: 0;
+            pointer-events: none;
+            animation: float 14s infinite ease-in-out;
+        }
+        .red { color: #ff3b3b; }
+        .yellow { color: #ffd600; }
+        .green { color: #4caf50; }
+        .blue { color: #2979ff; }
+        .purple { color: #9c27b0; }
+        .orange { color: #ff6f00; }
+        .pink { color: #e91e63; }
 
-<style>
+        .s1 { top: 120px; left: 120px; }
+        .s2 { top: 250px; right: 200px; }
+        .s3 { top: 450px; left: 260px; }
+        .s4 { bottom: 200px; right: 200px; }
+        .s5 { top: 100px; right: 80px; }
+        .s6 { bottom: 120px; left: 80px; }
+        .s7 { top: 520px; right: 60px; }
+        .s8 { top: 350px; left: 420px; }
+        .s9 { bottom: 320px; left: 50px; }
+        .s10 { top: 180px; left: 50%; }
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Fredoka',sans-serif;
-}
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-55px) rotate(6deg); }
+            100% { transform: translateY(0) rotate(0deg); }
+        }
 
-body{
-background:linear-gradient(135deg,#c2ffd8,#465efb);
-min-height:100vh;
-overflow-x:hidden;
-position:relative;
-}
+        /* ─── HEADER ─── */
+        .header {
+            text-align: center;
+            padding: 70px 20px 30px 20px;
+            position: relative;
+            z-index: 1;
+        }
+        .header h1 {
+            font-size: 48px;
+            color: #1a1a2e;
+            letter-spacing: 1px;
+        }
+        .header h1 span {
+            background: rgba(255, 255, 255, 0.25);
+            padding: 0 12px;
+            border-radius: 16px;
+        }
+        .header p {
+            font-size: 22px;
+            margin-top: 10px;
+            color: #1a1a2e;
+            font-weight: 400;
+            opacity: 0.85;
+        }
 
-/* floating inorganic chemistry symbols */
+        /* ─── CHAPTERS WRAPPER ─── */
+        .chapters {
+            padding: 20px 6% 40px 6%;
+            position: relative;
+            z-index: 1;
+        }
 
-.shape{
-position:absolute;
-font-size:70px;
-opacity:0.6;
-z-index:-1;
-animation:float 12s infinite ease-in-out;
-}
+        /* ─── CHAPTER CARD ─── */
+        .chapter-card {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(4px);
+            border-radius: 28px;
+            padding: 28px 30px 34px;
+            margin-bottom: 25px;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.15);
+            transition: 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+        .chapter-card:hover {
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.22);
+        }
 
-.red{color:#ff3b3b;}
-.yellow{color:#ffd600;}
-.green{color:#4caf50;}
-.blue{color:#2979ff;}
-.purple{color:#9c27b0;}
+        /* ─── CHAPTER HEAD (clickable accordion) ─── */
+        .chapter-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            padding-bottom: 16px;
+            margin-bottom: 22px;
+            cursor: pointer;
+            user-select: none;
+            border-bottom: 2px dashed rgba(0, 0, 0, 0.10);
+            transition: 0.2s;
+        }
+        .chapter-head h2 {
+            font-size: 28px;
+            color: #1a1a2e;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .chapter-head h2 .badge {
+            background: #2962ff;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 600;
+            padding: 4px 16px;
+            border-radius: 40px;
+            letter-spacing: 0.3px;
+        }
+        .chapter-head .lec-count {
+            font-size: 18px;
+            color: #555;
+            background: rgba(0, 0, 0, 0.06);
+            padding: 6px 20px;
+            border-radius: 40px;
+            font-weight: 600;
+        }
+        .toggle-icon {
+            font-size: 22px;
+            transition: transform 0.35s ease;
+            margin-left: 8px;
+            color: #2962ff;
+        }
+        /* collapsed state: hide grid + rotate icon */
+        .chapter-card.collapsed .lecture-grid {
+            display: none;
+        }
+        .chapter-card.collapsed .toggle-icon {
+            transform: rotate(-90deg);
+        }
 
-.s1{top:120px;left:120px;}
-.s2{top:250px;right:200px;}
-.s3{top:450px;left:260px;}
-.s4{bottom:200px;right:200px;}
-.s5{top:100px;right:80px;}
-.s6{bottom:120px;left:80px;}
-.s7{top:520px;right:60px;}
-.s8{top:350px;left:420px;}
+        /* ─── LECTURE GRID ─── */
+        .lecture-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 22px 18px;
+        }
 
-@keyframes float{
-0%{transform:translateY(0);}
-50%{transform:translateY(-50px);}
-100%{transform:translateY(0);}
-}
+        /* ─── LECTURE WRAPPER (button + notes) ─── */
+        .lec-btn-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-/* header */
+        /* ─── LECTURE BUTTON ─── */
+        .lec-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: #f0f4ff;
+            border-radius: 18px;
+            padding: 16px 8px 14px;
+            text-decoration: none;
+            color: #1a1a2e;
+            border: 2px solid rgba(41, 98, 255, 0.15);
+            transition: 0.25s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+            min-height: 120px;
+            position: relative;
+            gap: 6px;
+            width: 100%;
+        }
+        .lec-btn:hover {
+            transform: translateY(-6px) scale(1.02);
+            border-color: #2962ff;
+            box-shadow: 0 12px 28px rgba(41, 98, 255, 0.25);
+            background: #ffffff;
+        }
 
-.header{
-text-align:center;
-padding:70px 20px 30px 20px;
-}
+        .lec-btn .thumb {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: linear-gradient(135deg, #dce3ff, #b3c6ff);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            font-weight: 600;
+            color: #1a1a2e;
+            transition: 0.3s;
+            margin-bottom: 4px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+        .lec-btn .thumb .play-icon {
+            font-size: 22px;
+            opacity: 0.7;
+        }
+        .lec-btn .thumb .lec-num {
+            background: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            padding: 2px 12px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 600;
+            position: absolute;
+            bottom: 6px;
+            right: 6px;
+            backdrop-filter: blur(2px);
+        }
+        .lec-btn .label {
+            font-weight: 600;
+            font-size: 15px;
+            letter-spacing: 0.2px;
+            margin-top: 2px;
+        }
 
-.header h1{
-font-size:44px;
-color:#222;
-}
+        /* different accent colours per chapter (just for fun) */
+        .chapter-card:nth-child(1) .lec-btn .thumb { background: linear-gradient(135deg, #ffdde1, #f8b4c8); }
+        .chapter-card:nth-child(2) .lec-btn .thumb { background: linear-gradient(135deg, #d4f1ff, #9acbff); }
+        .chapter-card:nth-child(3) .lec-btn .thumb { background: linear-gradient(135deg, #d5f5e3, #8edbb7); }
+        .chapter-card:nth-child(4) .lec-btn .thumb { background: linear-gradient(135deg, #fce4d6, #fbc8a8); }
+        .chapter-card:nth-child(5) .lec-btn .thumb { background: linear-gradient(135deg, #e8d5f5, #d4b3f0); }
+        .chapter-card:nth-child(6) .lec-btn .thumb { background: linear-gradient(135deg, #fff3c9, #ffe082); }
 
-.header p{
-font-size:20px;
-margin-top:10px;
-}
+        /* ─── NOTES LINK (PDF) ─── */
+        .notes-link {
+            font-size: 13px;
+            font-weight: 600;
+            color: #1a1a2e;
+            background: #eef2ff;
+            padding: 5px 16px;
+            border-radius: 30px;
+            text-decoration: none;
+            border: 1px solid #b3c6ff;
+            transition: 0.2s;
+            margin-top: 8px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            letter-spacing: 0.3px;
+            width: auto;
+        }
+        .notes-link:hover {
+            background: #dce3ff;
+            border-color: #2962ff;
+            transform: scale(1.04);
+        }
 
-/* chapters */
+        /* ─── BACK BUTTON ─── */
+        .back-row {
+            text-align: center;
+            margin-top: 30px;
+            position: relative;
+            z-index: 1;
+        }
+        .back-row a {
+            text-decoration: none;
+            padding: 16px 40px;
+            background: #ff7675;
+            color: #fff;
+            border-radius: 50px;
+            font-size: 20px;
+            font-weight: 600;
+            box-shadow: 0 0 20px rgba(255, 118, 117, 0.4);
+            transition: 0.3s;
+            display: inline-block;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .back-row a:hover {
+            transform: scale(1.06);
+            box-shadow: 0 0 35px rgba(255, 118, 117, 0.6);
+            background: #ff5e5c;
+        }
 
-.chapters{
-padding:40px 8% 80px 8%;
-}
-
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:25px;
-margin-top:30px;
-}
-
-.chapter{
-background:white;
-padding:25px;
-border-radius:20px;
-text-align:center;
-box-shadow:0 10px 20px rgba(0,0,0,0.2);
-transition:0.3s;
-}
-
-.chapter:hover{
-transform:translateY(-10px) scale(1.05);
-}
-
-.chapter h3{
-font-size:20px;
-margin-bottom:12px;
-}
-
-/* glowing button */
-
-.btn{
-display:inline-block;
-padding:10px 20px;
-border-radius:20px;
-background:#2962ff;
-color:white;
-text-decoration:none;
-box-shadow:0 0 10px #2962ff,0 0 25px #2962ff;
-transition:0.3s;
-}
-
-.btn:hover{
-transform:scale(1.08);
-box-shadow:0 0 20px #2962ff,0 0 40px #2962ff;
-}
-
-.back{
-text-align:center;
-margin-top:40px;
-}
-
-.back a{
-text-decoration:none;
-padding:14px 30px;
-background:#ff7675;
-color:white;
-border-radius:30px;
-box-shadow:0 0 10px #ff7675;
-}
-
-</style>
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 700px) {
+            .header h1 { font-size: 32px; }
+            .header p { font-size: 18px; }
+            .chapter-head h2 { font-size: 22px; }
+            .lecture-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 16px; }
+            .lec-btn { min-height: 100px; padding: 12px 6px 10px; }
+            .lec-btn .thumb { aspect-ratio: 16 / 10; }
+            .shape { display: none; }
+        }
+        @media (max-width: 480px) {
+            .chapters { padding: 10px 4% 30px 4%; }
+            .chapter-card { padding: 18px 16px 24px; }
+            .lecture-grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 12px; }
+            .lec-btn { min-height: 86px; padding: 10px 4px 8px; }
+            .lec-btn .thumb .lec-num { font-size: 11px; padding: 1px 8px; }
+            .lec-btn .label { font-size: 13px; }
+            .notes-link { font-size: 11px; padding: 3px 12px; }
+        }
+    </style>
 </head>
-
 <body>
 
-<!-- inorganic chemistry background icons -->
+    <!-- ─── FLOATING BACKGROUND ─── -->
+    <div class="shape red s1">Na</div>
+    <div class="shape yellow s2">Fe</div>
+    <div class="shape green s3">Cu</div>
+    <div class="shape blue s4">Zn</div>
+    <div class="shape purple s5">⚛</div>
+    <div class="shape red s6">🧪</div>
+    <div class="shape yellow s7">Cl</div>
+    <div class="shape green s8">K</div>
+    <div class="shape orange s9">Mg</div>
+    <div class="shape pink s10">H</div>
 
-<div class="shape red s1">Na</div>
-<div class="shape yellow s2">Fe</div>
-<div class="shape green s3">Cu</div>
-<div class="shape blue s4">Zn</div>
-<div class="shape purple s5">⚛</div>
-<div class="shape red s6">🧪</div>
-<div class="shape yellow s7">Cl</div>
-<div class="shape green s8">K</div>
+    <!-- ─── HEADER ─── -->
+    <div class="header">
+        <h1><span>🧪 Inorganic Chemistry</span></h1>
+        <p>Click on a chapter to expand · Lectures + Notes (PDF)</p>
+    </div>
 
-<div class="header">
-<h1>🧪 Inorganic Chemistry</h1>
-<p>Select a Chapter</p>
-</div>
+    <!-- ─── CHAPTERS ─── -->
+    <div class="chapters">
 
-<div class="chapters">
+        <!-- ========================================================= -->
+        <!-- 1. PERIODIC TABLE (14) -->
+        <!-- ========================================================= -->
+        <div class="chapter-card collapsed">
+            <div class="chapter-head">
+                <h2>📊 Periodic Table <span class="badge">14</span> <span class="toggle-icon">▼</span></h2>
+                <span class="lec-count">14 Lectures</span>
+            </div>
+            <div class="lecture-grid">
+                <!-- LECTURE 1 -->
+                <div class="lec-btn-wrapper">
+                    <a href="#" class="lec-btn" title="Add video link">
+                        <div class="thumb"><span class="play-icon">▶</span><span class="lec-num">L-01</span></div>
+                        <span class="label">Lecture 1</span>
+                    </a>
+                    <a href="#" class="notes-link" title="Add PDF link manually">📄 Notes (PDF)</a>
+                </div>
+                <!-- LECTURE 2 -->
+                <div class="lec-btn-wrapper">
+                    <a href="#" class="lec-btn" title="Add video link"><div class="thumb"><span class="play-icon">▶</span><span class="lec-num">L-02</span></div><span class="label">Lecture 2</span></a>
+                    <a href="#" class="notes-link" title="Add PDF link manually">📄 Notes (PDF)</a>
+                </div>
+                <!-- LECTURE 3 -->
+                <div class="lec-btn-wrapper">
+                    <a href="#" class="lec-btn" title="Add video link"><div class="thumb"><span class="play-icon">▶</span><span class="lec-num">L-03</span></div><span class="label">Lecture 3</span></a>
+                    <a href="#" class="notes-link" title="Add PDF link manually">📄 Notes (PDF)</a>
+                </div>
+                <!-- LECTURE 4 -->
+                <div class="lec-btn-wrapper">
+                    <a href="#" class="lec-btn" title="Add video link"><div class="thumb"><span class="play-icon">▶</span><span class="lec-num">L-04</span></div><span class="label">Lecture 4</span></a>
+                    <a href="#" class="notes-link" title="Add PDF link manually">📄 Notes (PDF)</a>
+                </div>
+                <!-- LECTURE 5 -->
+                <div class="lec-btn-wrapper">
+                    <a href="#" class="lec-btn" title="Add video link"><div class="thumb"><span class="play-icon">▶</span><span class="lec-num">L-05</span></div><span class="label">Lecture 5</span></a>
+                    <a href="#" class="notes-link" title="Add PDF link manually">📄 Notes (PDF)</a>
+                </div>
+                <!-- LECTURE 6 -->
+                <div class="lec-btn-wrapper">
+                    <a href="#" class="lec-btn" title="Add video link"><div class="thumb"><span class="play-icon">▶</span><span class="lec-num">L-06</span></div><span class="label">Lecture 6</span></a>
+                    <a href="#" class="notes-link" title="Add PDF link manually">📄 Notes (PDF)</a>
+                </div>
+                <!-- LECTURE 7 -->
+                <div class="lec-btn-wrapper">
+                    <a href="#" class="lec-btn" title="Add video link"><div class="thumb"><span class="play-icon">▶</span><span class="lec-num">L-07</span></div><span class="label">Lecture 7</span></a>
+                    <a href="#" class="notes-link" title="Add PDF link manually">📄 Notes (PDF)</a>
+                </div>
+                <!-- LECTURE 8 -->
+                <div class="lec-btn-wrapper">
+                    <a href="#" class="lec-btn" title="Add video link"><div class="thumb"><span class="play-icon">▶</span><span class="lec-num">L-08</span></div><span class="label">Lecture 8</span></a>
+                    <a href="#" class="notes-link" title="Add PDF link manually">📄 Notes (PDF)</a>
+                </div>
+                <!-- LECTURE 9 -->
+                <div class="lec-btn-wrapper">
+                    <a href="#" class="lec-btn" title="Add video link"><div class="thumb"><span class="play-icon">▶</span><span class="lec-num">L-09</span></div><span class="label">Lecture 9</span></a>
+                    <a href="#" class="notes-link" title="Add PDF link manually">📄 Notes (PDF)</a>
+                </div>
+                <!-- LECTURE 10 -->
+                <div class="lec-btn-wrapper">
+                    <a href="#" class="lec-btn" title="Add video link"><div class="thumb"><span class="play-icon">▶</span><span class="lec-num">L-10</span></div><span class="label">Lecture 10</span></a>
+                    <a href="#" class="notes-link" title="Add PDF link manually">📄 Notes (PDF)</a>
+                </div>
+                <!-- LECTURE 11 -->
+                <div class="lec-btn-wrapper">
+                    <a href="#" class="lec-btn" title="Add video link"><div class="thumb"><span class="play-icon">▶</span><span class="lec-num">L-11</span></div><span class="label">Lecture 11</span></a>
+                    <a href="#" class="notes-link" title="Add PDF link manually">📄 Notes (PDF)</a>
+                </div>
+                <!-- LECTURE 12 -->
+                <div class="lec-btn-wrapper">
+                    <a href="#" class="lec-btn" title="Add video link"><div class="thumb"><span class="play-icon">▶</span><span class="lec-num">L-12</span></div><span class="label">Lecture 12</span></a>
+                    <a href="#" class="notes-link" title="Add PDF link manually">📄 Notes (PDF)</a>
+                </div>
+                <!-- LECTURE 13 -->
+                <div class="lec-btn-wrapper">
+                    <a href="#" class="lec-btn" title="Add video link"><div class="thumb"><span class="play-icon">▶</span><span class="lec-num">L-13</span></div><span class="label">Lecture 13</span></a>
+                    <a href="#" class="notes-link" title="Add PDF link manually">📄 Notes (PDF)</a>
+                </div>
+                <!-- LECTURE 14 -->
+                <div class="lec-btn-wrapper">
+                    <a href="#" class="lec-btn" title="Add video link"><div class="thumb"><span class="play-icon">▶</span><span class="lec-num">L-14</span></div><span class="label">Lecture 14</span></a>
+                    <a href="#" class="notes-link" title="Add PDF link manually">📄 Notes (PDF)</a>
+                </div>
+            </div>
+        </div>
 
-<div class="grid">
+        <!-- ========================================================= -->
+        <!-- 2. CHEMICAL BONDING (25) -->
+        <!-- ========================================================= -->
+        <div class="chapter-card collapsed">
+            <div class="chapter-head">
+                <h2>🔗 Chemical Bonding <span class="badge">25</span> <span class="toggle-icon">▼</span></h2>
+                <span class="lec-count">25 Lectures</span>
+            </div>
+            <div class="lecture-grid">
+                <!-- generate 1–25 with notes -->
+                <div class="lec-btn-wrapper"><a href="#" class="lec-btn"><div class="thumb"><span class="play-icon">▶</span><span class="lec-num">L-01</span></div><span class="label">Lecture 1</span></a><a href="#" class="notes-link">📄 Notes (PDF)</a></div>
+                <div class="lec-btn-wrapper"><a href="#" class="lec-btn"><div class="thumb"><span class="play-icon">▶</span><span class="lec-num">L-02</span></div><span class="label">Lecture 2</span></a><a href="#" class="notes-link">📄 Notes (PDF)</a></div>
+                <div class="lec-btn-wrapper"><a href="#" class="lec-btn"><div class="thumb"><span class="play-icon">▶</span><span class="lec-num">L-03</span></div><span class="label">Lecture 3</span></a><a href="#" class="notes-link">📄 Notes (PDF)</a></div>
+                <div class="lec-btn-wrapper"><a href="#" class="lec-btn"><div class="thumb"><span class="play-icon">▶</span><span class="lec-num">L-04</span></div><span class="label">Lecture 4</span></a><a href="#" class="notes-link">📄 Notes (PDF)</a></div>
+                <div class="lec-btn-wrapper"><a href="#" class="lec-btn"><div class="thumb"><span class="play-icon">▶</span><span class="lec-num">L-05</span></div><span class="label">Lecture 5</span></a><a href="#" class="notes-link">📄 Notes (PDF)</a></div>
+                <div class="lec-btn-wrapper"><a href="#" class="lec-btn"><div class="thumb"><span class="play-icon">▶</span><span class="lec-num">L-06</span></div><span class="label">Lecture 6</span></a><a href="#" class="notes-link">📄 Notes (PDF)</a></div>
+                <div class="lec-btn-wrapper"><a href="#" class="lec-btn"><div class="thumb"><span class="play-icon">▶</span><span class="lec-num">L-07</span></div><span class="label">Lecture 7</span></a><a href="#" class="notes-link">📄 Notes (PDF)</a></div>
+                <div class="lec-btn-wrapper"><a href="#" class="lec-btn"><div class="thumb"><span class="play-icon">▶</span><span class="lec-num">L-08</span></div><span class="label">Lecture 8</span></a><a href="#" class="notes-link">📄 Notes (PDF)</a></div>
+                <div class="lec-btn-wrapper"><a href="#" class="lec-btn"><div class="thumb"><span class="play-icon">▶</span><span class="lec-num">L-09</span></div><span class="label">Lecture 9</span></a><a href="#" class="notes-link">📄 Notes (PDF)</a></div>
+                <div class="lec-btn-wrapper"><a href="#" class="lec-btn"><div class="thumb"><span class="play-icon">▶</span><span class="lec-num">L-10</span></div><span class="label">Lecture 10</span></a><a href="#" class="notes-link">📄 Notes (PDF)</a></div>
+                <div class="lec-btn-wrapper"><a href="#" class="lec-btn"><div class="thumb"><span class="play-icon">▶</span><span class="lec-num">L-11</span></div><span class="label">Lecture 11</span></a><a href="#" class="notes-link">📄 Notes (PDF)</a></div>
+                <div class="lec-btn-wrapper"><a href="#" class="lec-btn"><div class="thumb"><span class="play-icon">▶</span><span class="lec-num">L-12</span></div><span class="label">Lecture 12</span></a><a href="#" class="notes-link">📄 Notes (PDF)</a></div>
+                <div class="lec-btn-wrapper"><a href="#" class="lec-btn"><div class="thumb"><span class="play-icon">▶</span><span class="lec-num">L-13</span></div><span class="label">Lecture 13</span></a><a href="#" class="notes-link">📄 Notes (PDF)</a></div>
+                <div class="lec-btn-wrapper"><a href="#" class="lec-btn"><div class="thumb"><span class="play-icon">▶</span><span class="lec-num">L-14</span></div><span class="label">Lecture 14</span></a><a href="#" class="notes-link">📄 Notes (PDF)</a></div>
+                <div class="lec-btn-wrapper"><a href="#" class="lec-btn"><div class="thumb"><span class="play-icon">▶</span><span class="lec-num">L-15</span></div><span class="label">Lecture 15</span></a><a href="#" class="notes-link">📄 Notes (PDF)</a></div>
+                <div class="lec-btn-wrapper"><a href="#" class="lec-btn"><div class="thumb"><span class="play-icon">▶</span><span class="lec-num">L-16</span></div><span class="label">Lecture 16</span></a><a href="#" class="notes-link">📄 Notes (PDF)</a></div>
+                <div class="lec-btn-wrapper"><a href="#" class="lec-btn"><div class="thumb"><span class="play-icon">▶</span><span class="lec-num">L-17</span></div><span class="label">Lecture 17</span></a><a href="#" class="notes-link">📄 Notes (PDF)</a></div>
+                <div class="lec-btn-wrapper"><a href="#" class="lec-btn"><div class="thumb"><span class="play-icon">▶</span><span class="lec-num">L-18</span></div><span class="label">Lecture 18</span></a><a href="#" class="notes-link">📄 Notes (PDF)</a></div>
+                <div class="lec-btn-wrapper"><a href="#" class="lec-btn"><div class="thumb"><span class="play-icon">▶</span><span class="lec-num">L-19</span></div><span class="label">Lecture 19</span></a><a href="#" class="notes-link">📄 Notes (PDF)</a></div>
+                <div class="lec-btn-wrapper"><a href="#" class="lec-btn"><div class="thumb"><span class="play-icon">▶</span><span class="lec-num">L-20</span></div><span class="label">Lecture 20</span></a><a href="#" class="notes-link">📄 Notes (PDF)</a></div>
+                <div class="lec-btn-wrapper"><a href="#" class="lec-btn"><div class="thumb"><span class="play-icon">▶</span><span class="lec-num">L-21</span></div><span class="label">Lecture 21</span></a><a href="#" class="notes-link">📄 Notes (PDF)</a></div>
+                <div class="lec-btn-wrapper"><a href="#" class="lec-btn"><div class="thumb"><span class="play-icon">▶</span><span class="lec-num">L-22</span></div><span class="label">Lecture 22</span></a><a href="#" class="notes-link">📄 Notes (PDF)</a></div>
+                <div class="lec-btn-wrapper"><a href="#" class="lec-btn"><div class="thumb"><span class="play-icon">▶</span><span class="lec-num">L-23</span></div><span class="label">Lecture 23</span></a><a href="#" class="notes-link">📄 Notes (PDF)</a></div>
+                <div class="lec-btn-wrapper"><a href="#" class="lec-btn"><div class="thumb"><span class="play-icon">▶</span><span class="lec-num">L-24</span></div><span class="label">Lecture 24</span></a><a href="#" class="notes-link">📄 Notes (PDF)</a></div>
+                <div class="lec-btn-wrapper"><a href="#" class="lec-btn"><div class="thumb"><span class="play-icon">▶</span><span class="lec-num">L-25</span></div><span class="label">Lecture 25</span></a><a href="#" class="notes-link">📄 Notes (PDF)</a></div>
+            </div>
+        </div>
 
-<div class="chapter">
-<h3>Periodic Table</h3>
-<a class="btn" href="#">Open</a>
-</div>
+        <!-- ========================================================= -->
+        <!-- 3. p-BLOCK ELEMENTS (8) -->
+        <!-- ========================================================= -->
+        <div class="chapter-card collapsed">
+            <div class="chapter-head">
+                <h2>🧪 p-Block Elements <span class="badge">8</span> <span class="toggle-icon">▼</span></h2>
+                <span class="lec-count">8 Lectures</span>
+            </div>
+            <div class="lecture-grid">
+                <div class="lec-btn-wrapper"><a href="#" class="lec-btn"><div class="thumb"><span class="play-icon">▶</span><span class="lec-num">L-01</span></div><span class="label">Lecture 1</span></a><a href="#" class="notes-link">📄 Notes (PDF)</a></div>
+                <div class="lec-btn-wrapper"><a href="#" class="lec-btn"><div class="thumb"><span class="play-icon">▶</span><span class="lec-num">L-02</span></div><span class="label">Lecture 2</span></a><a href="#" class="notes-link">📄 Notes (PDF)</a></div>
+                <div class="lec-btn-wrapper"><a href="#" class="lec-btn"><div class="thumb"><span class="play-icon">▶</span><span class="lec-num">L-03</span></div><span class="label">Lecture 3</span></a><a href="#" class="notes-link">📄 Notes (PDF)</a></div>
+                <div class="lec-btn-wrapper"><a href="#" class="lec-btn"><div class="thumb"><span class="play-icon">▶</span><span class="lec-num">L-04</span></div><span class="label">Lecture 4</span></a><a href="#" class="notes-link">📄 Notes (PDF)</a></div>
+                <div class="lec-btn-wrapper"><a href="#" class="lec-btn"><div class="thumb"><span class="play-icon">▶</span><span class="lec-num">L-05</span></div><span class="label">Lecture 5</span></a><a href="#" class="notes-link">📄 Notes (PDF)</a></div>
+                <div class="lec-btn-wrapper"><a href="#" class="lec-btn"><div class="thumb"><span class="play-icon">▶</span><span class="lec-num">L-06</span></div><span class="label">Lecture 6</span></a><a href="#" class="notes-link">📄 Notes (PDF)</a></div>
+                <div class="lec-btn-wrapper"><a href="#" class="lec-btn"><div class="thumb"><span class="play-icon">▶</span><span class="lec-num">L-07</span></div><span class="label">Lecture 7</span></a><a href="#" class="notes-link">📄 Notes (PDF)</a></div>
+                <div class="lec-btn-wrapper"><a href="#" class="lec-btn"><div class="thumb"><span class="play-icon">▶</span><span class="lec-num">L-08</span></div><span class="label">Lecture 8</span></a><a href="#" class="notes-link">📄 Notes (PDF)</a></div>
+            </div>
+        </div>
 
-<div class="chapter">
-<h3>Chemical Bonding</h3>
-<a class="btn" href="#">Open</a>
-</div>
+        <!-- ========================================================= -->
+        <!-- 4. s-BLOCK ELEMENTS (3) -->
+        <!-- ========================================================= -->
+        <div class="chapter-card collapsed">
+            <div class="chapter-head">
+                <h2>⚡ s-Block Elements <span class="badge">3</span> <span class="toggle-icon">▼</span></h2>
+                <span class="lec-count">3 Lectures</span>
+            </div>
+            <div class="lecture-grid">
+                <div class="lec-btn-wrapper"><a href="#" class="lec-btn"><div class="thumb"><span class="play-icon">▶</span><span class="lec-num">L-01</span></div><span class="label">Lecture 1</span></a><a href="#" class="notes-link">📄 Notes (PDF)</a></div>
+                <div class="lec-btn-wrapper"><a href="#" class="lec-btn"><div class="thumb"><span class="play-icon">▶</span><span class="lec-num">L-02</span></div><span class="label">Lecture 2</span></a><a href="#" class="notes-link">📄 Notes (PDF)</a></div>
+                <div class="lec-btn-wrapper"><a href="#" class="lec-btn"><div class="thumb"><span class="play-icon">▶</span><span class="lec-num">L-03</span></div><span class="label">Lecture 3</span></a><a href="#" class="notes-link">📄 Notes (PDF)</a></div>
+            </div>
+        </div>
 
-<div class="chapter">
-<h3>Coordination Compounds</h3>
-<a class="btn" href="#">Open</a>
-</div>
+        <!-- ========================================================= -->
+        <!-- 5. HYDROGEN (1) -->
+        <!-- ========================================================= -->
+        <div class="chapter-card collapsed">
+            <div class="chapter-head">
+                <h2>💧 Hydrogen <span class="badge">1</span> <span class="toggle-icon">▼</span></h2>
+                <span class="lec-count">1 Lecture</span>
+            </div>
+            <div class="lecture-grid">
+                <div class="lec-btn-wrapper"><a href="#" class="lec-btn"><div class="thumb"><span class="play-icon">▶</span><span class="lec-num">L-01</span></div><span class="label">Lecture 1</span></a><a href="#" class="notes-link">📄 Notes (PDF)</a></div>
+            </div>
+        </div>
 
-<div class="chapter">
-<h3>p-Block Elements</h3>
-<a class="btn" href="#">Open</a>
-</div>
+        <!-- ========================================================= -->
+        <!-- 6. JWALA (4 Lectures - example) -->
+        <!-- ========================================================= -->
+        <div class="chapter-card collapsed">
+            <div class="chapter-head">
+                <h2>🔥 JWALA <span class="badge">4</span> <span class="toggle-icon">▼</span></h2>
+                <span class="lec-count">4 Lectures</span>
+            </div>
+            <div class="lecture-grid">
+                <div class="lec-btn-wrapper"><a href="#" class="lec-btn"><div class="thumb"><span class="play-icon">▶</span><span class="lec-num">L-01</span></div><span class="label">Lecture 1</span></a><a href="#" class="notes-link">📄 Notes (PDF)</a></div>
+                <div class="lec-btn-wrapper"><a href="#" class="lec-btn"><div class="thumb"><span class="play-icon">▶</span><span class="lec-num">L-02</span></div><span class="label">Lecture 2</span></a><a href="#" class="notes-link">📄 Notes (PDF)</a></div>
+                <div class="lec-btn-wrapper"><a href="#" class="lec-btn"><div class="thumb"><span class="play-icon">▶</span><span class="lec-num">L-03</span></div><span class="label">Lecture 3</span></a><a href="#" class="notes-link">📄 Notes (PDF)</a></div>
+                <div class="lec-btn-wrapper"><a href="#" class="lec-btn"><div class="thumb"><span class="play-icon">▶</span><span class="lec-num">L-04</span></div><span class="label">Lecture 4</span></a><a href="#" class="notes-link">📄 Notes (PDF)</a></div>
+            </div>
+        </div>
 
-<div class="chapter">
-<h3>d & f Block Elements</h3>
-<a class="btn" href="#">Open</a>
-</div>
+        <!-- ─── BACK BUTTON ─── -->
+        <div class="back-row">
+            <a href="chemistrysection.html">⬅ Back to Chemistry</a>
+        </div>
 
-</div>
+    </div>
 
-<div class="back">
-<a href="chemistrysection.html">⬅ Back to Chemistry</a>
-</div>
+    <!-- ─── JAVASCRIPT: EXCLUSIVE ACCORDION ─── -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.chapter-card');
 
-</div>
+            // By default, all cards are collapsed (class already added in HTML).
+            // If you want the first one open by default, uncomment the next line:
+            // cards[0]?.classList.remove('collapsed');
+
+            cards.forEach(card => {
+                const head = card.querySelector('.chapter-head');
+                if (!head) return;
+
+                head.addEventListener('click', function(e) {
+                    // If the clicked card is currently collapsed, we will open it.
+                    // If it is open, we will close it.
+                    const isCurrentlyCollapsed = card.classList.contains('collapsed');
+
+                    // 1. Close all other cards
+                    cards.forEach(otherCard => {
+                        if (otherCard !== card) {
+                            otherCard.classList.add('collapsed');
+                        }
+                    });
+
+                    // 2. Toggle the clicked card:
+                    // If it was collapsed -> open it (remove collapsed)
+                    // If it was open -> close it (add collapsed) -> because we want toggle behavior
+                    if (isCurrentlyCollapsed) {
+                        card.classList.remove('collapsed');
+                    } else {
+                        card.classList.add('collapsed');
+                    }
+                });
+            });
+        });
+    </script>
 
 </body>
-
 </html>
