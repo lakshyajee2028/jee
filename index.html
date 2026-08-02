@@ -1,530 +1,988 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>JEE 2028</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
-
-<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-
-<style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Fredoka',sans-serif;
-}
-
-html{
-scroll-behavior:smooth;
-}
-
-body{
-background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);
-min-height:100vh;
-overflow-x:hidden;
-color:white;
-}
-
-/* particles */
-
-#particles-js{
-position:fixed;
-width:100%;
-height:100%;
-z-index:-1;
-}
-
-/* scroll progress */
-
-.progress-bar{
-position:fixed;
-top:0;
-left:0;
-height:5px;
-background:#00f7ff;
-width:0%;
-z-index:999;
-}
-
-/* logo */
-
-.logo{
-padding:20px 8%;
-font-size:34px;
-font-weight:600;
-}
-
-/* hero */
-
-.hero{
-text-align:center;
-padding:90px 20px 40px;
-}
-
-/* frame */
-
-.frame{
-display:inline-block;
-padding:25px 55px;
-border-radius:25px;
-border:3px solid #00f7ff;
-background:rgba(0,0,0,0.35);
-box-shadow:0 0 25px #00f7ff,inset 0 0 15px rgba(0,255,255,0.4);
-backdrop-filter:blur(8px);
-margin-bottom:20px;
-}
-
-.hero h2{
-font-size:56px;
-}
-
-.hero p{
-margin-top:12px;
-font-size:20px;
-opacity:0.9;
-}
-
-/* glow button */
-
-.glow-btn{
-margin-top:35px;
-padding:18px 42px;
-font-size:18px;
-border:none;
-border-radius:40px;
-background:#00f7ff;
-color:black;
-cursor:pointer;
-box-shadow:0 0 20px #00f7ff,0 0 60px #00f7ff;
-transition:0.35s;
-text-decoration:none;
-display:inline-block;
-}
-
-.glow-btn:hover{
-transform:scale(1.12);
-box-shadow:0 0 40px #00f7ff,0 0 120px #00f7ff;
-}
-
-/* student */
-
-.students{
-display:flex;
-justify-content:center;
-margin-top:40px;
-}
-
-.student-frame{
-width:260px;
-height:260px;
-border-radius:50%;
-display:flex;
-justify-content:center;
-align-items:center;
-border:4px solid #00f7ff;
-box-shadow:0 0 25px #00f7ff,0 0 80px rgba(0,255,255,0.5);
-background:rgba(0,0,0,0.4);
-}
-
-.student-frame img{
-width:180px;
-animation:bounce 3s infinite;
-}
-
-@keyframes bounce{
-0%{transform:translateY(0)}
-50%{transform:translateY(-15px)}
-100%{transform:translateY(0)}
-}
-
-/* subjects */
-
-.subjects{
-padding:70px 8%;
-text-align:center;
-}
-
-.subjects h2{
-font-size:40px;
-}
-
-/* cards */
-
-.cards{
-display:flex;
-justify-content:center;
-flex-wrap:wrap;
-gap:40px;
-margin-top:50px;
-}
-
-/* upgraded card */
-
-.card{
-
-width:270px;
-padding:40px 30px;
-
-border-radius:22px;
-
-background:rgba(255,255,255,0.08);
-
-backdrop-filter:blur(12px);
-
-border:1px solid rgba(255,255,255,0.1);
-
-box-shadow:0 0 20px rgba(0,255,255,0.25);
-
-position:relative;
-
-transition:0.45s;
-
-overflow:hidden;
-
-}
-
-/* glowing strip */
-
-.card::before{
-
-content:"";
-
-position:absolute;
-
-top:0;
-left:0;
-
-width:100%;
-height:6px;
-
-background:linear-gradient(90deg,#00f7ff,#ff4d6d,#00f7ff);
-
-}
-
-/* hover */
-
-.card:hover{
-
-transform:translateY(-20px) scale(1.07);
-
-box-shadow:0 0 50px #00f7ff;
-
-}
-
-/* subject icon */
-
-.card h3{
-font-size:30px;
-margin-bottom:12px;
-}
-
-.card p{
-opacity:0.85;
-margin-bottom:15px;
-}
-
-/* button */
-
-.card a{
-
-display:inline-block;
-
-padding:10px 24px;
-
-border-radius:30px;
-
-background:linear-gradient(45deg,#00f7ff,#00d4ff);
-
-color:black;
-
-font-weight:600;
-
-text-decoration:none;
-
-transition:0.3s;
-
-}
-
-.card a:hover{
-transform:scale(1.1);
-box-shadow:0 0 20px #00f7ff;
-}
-
-/* motivation */
-
-.motivation{
-text-align:center;
-padding:70px 20px;
-}
-
-.quote-box{
-
-margin-top:25px;
-
-font-size:22px;
-
-background:rgba(0,0,0,0.4);
-
-padding:25px 30px;
-
-border-radius:15px;
-
-border:1px solid rgba(255,255,255,0.1);
-
-max-width:700px;
-
-margin-left:auto;
-margin-right:auto;
-
-}
-
-/* footer */
-
-footer{
-text-align:center;
-padding:40px;
-font-size:18px;
-opacity:0.8;
-}
-
-@media(max-width:768px){
-
-.hero h2{font-size:40px;}
-
-.student-frame{
-width:200px;
-height:200px;
-}
-
-.student-frame img{
-width:140px;
-}
-
-.card{
-width:85%;
-}
-
-}
-
-</style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🔐 JEE 2028 — Secure Entry</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js">
+    </script>
+    <style>
+        /* ---------- RESET & GLOBAL ---------- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Fredoka', sans-serif;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            min-height: 100vh;
+            overflow-x: hidden;
+            color: #fff;
+        }
+
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        /* ---------- GATE ---------- */
+        #gateContainer {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        #gateContainer.hidden {
+            opacity: 0;
+            transform: scale(0.95);
+            pointer-events: none;
+            display: none;
+        }
+
+        .glass-card {
+            position: relative;
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(24px) saturate(1.4);
+            border-radius: 56px;
+            padding: 48px 40px 40px;
+            max-width: 460px;
+            width: 100%;
+            text-align: center;
+            border: 1.5px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+            transition: box-shadow 0.5s ease;
+            overflow: hidden;
+            cursor: default;
+        }
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 58px;
+            padding: 2px;
+            background: conic-gradient(from 0deg, #00f7ff, #a78bfa, #ff4d6d, #00f7ff);
+            background-size: 300% 300%;
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            animation: spinBorder 8s linear infinite;
+            opacity: 0.5;
+            transition: opacity 0.5s;
+        }
+        .glass-card:hover::before {
+            opacity: 0.9;
+        }
+        @keyframes spinBorder {
+            0% {
+                background-position: 0% 50%;
+            }
+            100% {
+                background-position: 300% 50%;
+            }
+        }
+        .glass-card:hover {
+            box-shadow: 0 40px 100px rgba(0, 247, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .lock-icon {
+            font-size: 56px;
+            display: block;
+            margin-bottom: 4px;
+            animation: floatIcon 3s ease-in-out infinite;
+        }
+        @keyframes floatIcon {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+
+        .glass-card h2 {
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            background: linear-gradient(135deg, #00f7ff, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 2px;
+        }
+        .sub {
+            font-size: 15px;
+            opacity: 0.6;
+            margin-bottom: 28px;
+            letter-spacing: 2px;
+            font-weight: 400;
+        }
+
+        /* ---------- INPUT ---------- */
+        .input-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 60px;
+            padding: 4px 4px 4px 24px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: border-color 0.4s, box-shadow 0.4s;
+        }
+        .input-row:focus-within {
+            border-color: rgba(0, 247, 255, 0.5);
+            box-shadow: 0 0 30px rgba(0, 247, 255, 0.08);
+        }
+        .input-row input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #fff;
+            font-size: 18px;
+            padding: 16px 0;
+            letter-spacing: 1.5px;
+        }
+        .input-row input::placeholder {
+            color: rgba(255, 255, 255, 0.25);
+            letter-spacing: 2px;
+        }
+        .input-row button {
+            background: linear-gradient(135deg, #00f7ff, #00b4d8);
+            border: none;
+            border-radius: 60px;
+            padding: 14px 30px;
+            font-size: 17px;
+            font-weight: 600;
+            color: #0f0c29;
+            cursor: pointer;
+            transition: all 0.35s ease;
+            box-shadow: 0 0 30px rgba(0, 247, 255, 0.15);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            letter-spacing: 0.3px;
+            /* ensure click works */
+            pointer-events: auto;
+            position: relative;
+            z-index: 5;
+        }
+        .input-row button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 50px rgba(0, 247, 255, 0.3);
+        }
+        .input-row button:active {
+            transform: scale(0.95);
+        }
+
+        .error-msg {
+            color: #ff6b8a;
+            font-size: 14px;
+            margin-top: 14px;
+            min-height: 24px;
+            opacity: 0;
+            transition: opacity 0.35s ease;
+        }
+        .error-msg.show {
+            opacity: 1;
+        }
+
+        /* ---------- PANDA ---------- */
+        .panda-area {
+            margin-top: 26px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 160px;
+            cursor: default;
+        }
+        .panda-svg {
+            width: 150px;
+            height: 150px;
+            display: block;
+            filter: drop-shadow(0 8px 30px rgba(0, 247, 255, 0.12));
+            transition: filter 0.5s;
+            cursor: default;
+        }
+        .panda-svg:hover {
+            filter: drop-shadow(0 8px 50px rgba(0, 247, 255, 0.25));
+        }
+
+        .pupil {
+            transition: cx 0.1s ease-out, cy 0.1s ease-out;
+        }
+        .hand-panda {
+            transition: transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transform-origin: center;
+        }
+        .hand-panda.cover {
+            transform: translate(-4px, -48px) rotate(-18deg) scale(1.15);
+        }
+        .hand-panda.cover-r {
+            transform: translate(4px, -48px) rotate(18deg) scale(1.15);
+        }
+        .smile-path {
+            transition: d 0.5s ease;
+        }
+
+        .status-line {
+            margin-top: 14px;
+            font-size: 14px;
+            opacity: 0.5;
+            letter-spacing: 1px;
+            min-height: 24px;
+            transition: all 0.4s;
+        }
+        .status-line.success {
+            color: #00f7ff;
+            opacity: 1;
+        }
+
+        .entry-success {
+            display: none;
+            text-align: center;
+            padding: 18px 10px 0;
+        }
+        .entry-success .big {
+            font-size: 48px;
+            margin-bottom: 4px;
+        }
+        .entry-success h3 {
+            font-size: 26px;
+            background: linear-gradient(135deg, #00f7ff, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .entry-success p {
+            opacity: 0.6;
+            margin-top: 2px;
+            font-size: 15px;
+        }
+
+        @keyframes shake {
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+            20% {
+                transform: translateX(-10px);
+            }
+            40% {
+                transform: translateX(10px);
+            }
+            60% {
+                transform: translateX(-6px);
+            }
+            80% {
+                transform: translateX(6px);
+            }
+        }
+        .shake {
+            animation: shake 0.45s ease;
+        }
+
+        /* ---------- RESPONSIVE ---------- */
+        @media (max-width: 480px) {
+            .glass-card {
+                padding: 30px 18px 28px;
+                border-radius: 40px;
+            }
+            .glass-card h2 {
+                font-size: 24px;
+            }
+            .input-row {
+                flex-wrap: wrap;
+                background: transparent;
+                border: none;
+                padding: 0;
+                gap: 10px;
+            }
+            .input-row input {
+                width: 100%;
+                background: rgba(255, 255, 255, 0.05);
+                border-radius: 60px;
+                padding: 14px 20px;
+                border: 1px solid rgba(255, 255, 255, 0.08);
+                text-align: center;
+            }
+            .input-row button {
+                width: 100%;
+                justify-content: center;
+                padding: 16px;
+            }
+            .panda-svg {
+                width: 120px;
+                height: 120px;
+            }
+            .panda-area {
+                height: 130px;
+            }
+        }
+
+        /* ---------- MAIN SITE WRAPPER ---------- */
+        #mainSiteWrapper {
+            display: none;
+            position: relative;
+            z-index: 1;
+            animation: siteFade 0.8s ease;
+        }
+        @keyframes siteFade {
+            0% {
+                opacity: 0;
+                transform: scale(0.97);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* ===== ORIGINAL SITE STYLES (verbatim) ===== */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 5px;
+            background: #00f7ff;
+            width: 0%;
+            z-index: 999;
+        }
+        .logo {
+            padding: 20px 8%;
+            font-size: 34px;
+            font-weight: 600;
+        }
+        .hero {
+            text-align: center;
+            padding: 90px 20px 40px;
+        }
+        .frame {
+            display: inline-block;
+            padding: 25px 55px;
+            border-radius: 25px;
+            border: 3px solid #00f7ff;
+            background: rgba(0, 0, 0, 0.35);
+            box-shadow: 0 0 25px #00f7ff, inset 0 0 15px rgba(0, 255, 255, 0.4);
+            backdrop-filter: blur(8px);
+            margin-bottom: 20px;
+        }
+        .hero h2 {
+            font-size: 56px;
+        }
+        .hero p {
+            margin-top: 12px;
+            font-size: 20px;
+            opacity: 0.9;
+        }
+        .glow-btn {
+            margin-top: 35px;
+            padding: 18px 42px;
+            font-size: 18px;
+            border: none;
+            border-radius: 40px;
+            background: #00f7ff;
+            color: black;
+            cursor: pointer;
+            box-shadow: 0 0 20px #00f7ff, 0 0 60px #00f7ff;
+            transition: 0.35s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .glow-btn:hover {
+            transform: scale(1.12);
+            box-shadow: 0 0 40px #00f7ff, 0 0 120px #00f7ff;
+        }
+        .students {
+            display: flex;
+            justify-content: center;
+            margin-top: 40px;
+        }
+        .student-frame {
+            width: 260px;
+            height: 260px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 4px solid #00f7ff;
+            box-shadow: 0 0 25px #00f7ff, 0 0 80px rgba(0, 255, 255, 0.5);
+            background: rgba(0, 0, 0, 0.4);
+        }
+        .student-frame img {
+            width: 180px;
+            animation: bounce 3s infinite;
+        }
+        @keyframes bounce {
+            0% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-15px);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+        .subjects {
+            padding: 70px 8%;
+            text-align: center;
+        }
+        .subjects h2 {
+            font-size: 40px;
+        }
+        .cards {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-top: 50px;
+        }
+        .card {
+            width: 270px;
+            padding: 40px 30px;
+            border-radius: 22px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.25);
+            position: relative;
+            transition: 0.45s;
+            overflow: hidden;
+        }
+        .card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(90deg, #00f7ff, #ff4d6d, #00f7ff);
+        }
+        .card:hover {
+            transform: translateY(-20px) scale(1.07);
+            box-shadow: 0 0 50px #00f7ff;
+        }
+        .card h3 {
+            font-size: 30px;
+            margin-bottom: 12px;
+        }
+        .card p {
+            opacity: 0.85;
+            margin-bottom: 15px;
+        }
+        .card a {
+            display: inline-block;
+            padding: 10px 24px;
+            border-radius: 30px;
+            background: linear-gradient(45deg, #00f7ff, #00d4ff);
+            color: black;
+            font-weight: 600;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        .card a:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px #00f7ff;
+        }
+        .motivation {
+            text-align: center;
+            padding: 70px 20px;
+        }
+        .quote-box {
+            margin-top: 25px;
+            font-size: 22px;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 25px 30px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        footer {
+            text-align: center;
+            padding: 40px;
+            font-size: 18px;
+            opacity: 1; /* changed from 0.8 to make fully visible */
+        }
+        footer a {
+            color: #00f7ff; /* bright cyan */
+            text-decoration: none;
+            font-weight: 600;
+        }
+        footer a:hover {
+            text-shadow: 0 0 20px #00f7ff;
+        }
+        @media (max-width: 768px) {
+            .hero h2 {
+                font-size: 40px;
+            }
+            .student-frame {
+                width: 200px;
+                height: 200px;
+            }
+            .student-frame img {
+                width: 140px;
+            }
+            .card {
+                width: 85%;
+            }
+        }
+    </style>
 </head>
-
 <body>
 
-<div id="particles-js"></div>
-<div class="progress-bar" id="progressBar"></div>
+    <!-- PARTICLES -->
+    <div id="particles-js"></div>
 
-<div class="logo">📚 JEE 2028</div>
+    <!-- GATE -->
+    <div id="gateContainer">
+        <div class="glass-card" id="entryCard">
+            <span class="lock-icon" id="lockIcon">🔐</span>
+            <h2>Secure Entry</h2>
+            <div class="sub" id="subText">Enter the access key</div>
 
-<section class="hero">
+            <div class="input-row" id="inputRow">
+                <input type="password" id="passInput" placeholder="• • • • • •" autocomplete="off" spellcheck="false" />
+                <button id="enterBtn">↵ Enter</button>
+            </div>
 
-<div class="frame">
-<h2>LAKSHYA 🎯<br>JEE 2028</h2>
-</div>
+            <div class="error-msg" id="errorMsg">✗ Incorrect password</div>
 
-<p>Easy way to watch Physics, Chemistry & Maths lectures in free</p>
+            <!-- PANDA -->
+            <div class="panda-area" id="pandaArea">
+                <svg class="panda-svg" viewBox="0 0 200 200" id="pandaSvg">
+                    <!-- Ears -->
+                    <ellipse cx="36" cy="44" rx="22" ry="20" fill="#1a1a1a" />
+                    <ellipse cx="164" cy="44" rx="22" ry="20" fill="#1a1a1a" />
+                    <ellipse cx="36" cy="44" rx="12" ry="10" fill="#4a4a4a" />
+                    <ellipse cx="164" cy="44" rx="12" ry="10" fill="#4a4a4a" />
+                    <!-- Head -->
+                    <circle cx="100" cy="88" r="72" fill="#f5f5f5" />
+                    <!-- Eye patches -->
+                    <ellipse cx="68" cy="86" rx="26" ry="30" fill="#1a1a1a" />
+                    <ellipse cx="132" cy="86" rx="26" ry="30" fill="#1a1a1a" />
+                    <!-- Eyes -->
+                    <circle cx="72" cy="86" r="14" fill="#fff" />
+                    <circle cx="128" cy="86" r="14" fill="#fff" />
+                    <!-- Pupils -->
+                    <circle class="pupil" id="pupilL" cx="72" cy="86" r="7.5" fill="#1a1a2e" />
+                    <circle class="pupil" id="pupilR" cx="128" cy="86" r="7.5" fill="#1a1a2e" />
+                    <!-- Highlights -->
+                    <circle cx="68" cy="80" r="3.5" fill="rgba(255,255,255,0.8)" />
+                    <circle cx="124" cy="80" r="3.5" fill="rgba(255,255,255,0.8)" />
+                    <!-- Nose -->
+                    <ellipse cx="100" cy="108" rx="12" ry="8" fill="#1a1a1a" />
+                    <!-- Blush -->
+                    <ellipse cx="56" cy="112" rx="14" ry="10" fill="#ffb3b3" opacity="0.55" />
+                    <ellipse cx="144" cy="112" rx="14" ry="10" fill="#ffb3b3" opacity="0.55" />
+                    <!-- Smile -->
+                    <path class="smile-path" id="smilePath" d="M 74 122 Q 100 142 126 122" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="round" />
+                    <!-- Hands -->
+                    <g id="handsGroup">
+                        <ellipse class="hand-panda" id="handL" cx="44" cy="148" rx="20" ry="16" fill="#1a1a1a" transform="rotate(-28 44 148)" />
+                        <circle cx="34" cy="156" r="5" fill="#1a1a1a" />
+                        <circle cx="42" cy="162" r="5" fill="#1a1a1a" />
+                        <circle cx="52" cy="158" r="5" fill="#1a1a1a" />
+                        <ellipse class="hand-panda" id="handR" cx="156" cy="148" rx="20" ry="16" fill="#1a1a1a" transform="rotate(28 156 148)" />
+                        <circle cx="166" cy="156" r="5" fill="#1a1a1a" />
+                        <circle cx="158" cy="162" r="5" fill="#1a1a1a" />
+                        <circle cx="148" cy="158" r="5" fill="#1a1a1a" />
+                    </g>
+                    <circle cx="60" cy="68" r="4" fill="#1a1a1a" opacity="0.3" />
+                    <circle cx="140" cy="68" r="4" fill="#1a1a1a" opacity="0.3" />
+                </svg>
+            </div>
 
-<a href="#subjects" class="glow-btn">Start Studying 🚀</a>
+            <div class="status-line" id="statusLine">🐼 watching …</div>
 
-<div class="students">
-<div class="student-frame">
-<img src="https://cdn-icons-png.flaticon.com/512/3135/3135755.png">
-</div>
-</div>
+            <div class="entry-success" id="successBlock">
+                <div class="big">🎉</div>
+                <h3>Access Granted</h3>
+                <p>Welcome to JEE 2028 🚀</p>
+            </div>
+        </div>
+    </div>
 
-</section>
+    <!-- MAIN SITE -->
+    <div id="mainSiteWrapper">
+        <!-- ===== ORIGINAL WEBSITE (unchanged) ===== -->
+        <div class="progress-bar" id="progressBar"></div>
+        <div class="logo">📚 JEE 2028</div>
+        <section class="hero">
+            <div class="frame">
+                <h2>LAKSHYA 🎯<br />JEE 2028</h2>
+            </div>
+            <p>Easy way to watch Physics, Chemistry &amp; Maths lectures in free</p>
+            <a href="#subjects" class="glow-btn">Start Studying 🚀</a>
+            <div class="students">
+                <div class="student-frame">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3135/3135755.png" alt="student" />
+                </div>
+            </div>
+        </section>
+        <section class="subjects" id="subjects">
+            <h2>Choose Your Subject</h2>
+            <div class="cards">
+                <div class="card">
+                    <h3>📘 Physics</h3>
+                    <p>Mechanics, Thermodynamics</p>
+                    <a href="physics.html">Enter</a>
+                </div>
+                <div class="card">
+                    <h3>⚗ Chemistry</h3>
+                    <p>Physical, Organic, Inorganic</p>
+                    <a href="chemistrysection.html">Enter</a>
+                </div>
+                <div class="card">
+                    <h3>📐 Maths</h3>
+                    <p>Algebra, Calculus</p>
+                    <a href="maths.html">Enter</a>
+                </div>
+            </div>
+        </section>
+        <section class="motivation">
+            <div class="frame">
+                <h2>JEE Motivation 🔥</h2>
+                <button class="glow-btn" onclick="generateQuote()">Get Motivation 🚀</button>
+                <div class="quote-box" id="quote">
+                    Click the button to get JEE motivation 🚀
+                </div>
+            </div>
+        </section>
+        <footer>
+            By <a href="https://Priyanshusingh.pages.dev" target="_blank">PRIYANSHU SINGH</a> 🚀 <br />
+        </footer>
 
-<section class="subjects" id="subjects">
+        <!-- ORIGINAL SCRIPTS -->
+        <script>
+            window.onscroll = function() {
+                let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                let scrolled = (winScroll / height) * 100;
+                document.getElementById("progressBar").style.width = scrolled + "%";
+            };
 
-<h2>Choose Your Subject</h2>
+            const quotes = [
+                "IIT is not a dream. It is a decision.",
+                "JEE rewards consistency.",
+                "When others sleep, toppers study.",
+                "Discipline beats motivation.",
+                "Every PYQ solved is one step closer to IIT.",
+                "Your future IIT campus is waiting.",
+                "Success in JEE = Hard work + Smart work.",
+                "Success in JEE starts with daily discipline.",
+                "IIT begins with one focused study session.",
+                "Consistency today creates IIT tomorrow.",
+                "Every concept mastered builds your IIT seat.",
+                "Small daily progress leads to big JEE success.",
+                "Focus on concepts, ranks will follow.",
+                "Dream IIT, work like a machine.",
+                "Late nights today, IIT tomorrow.",
+                "Every solved question reduces competition.",
+                "Your pen is your weapon for JEE.",
+                "Hard work today, IIT life tomorrow.",
+                "Discipline creates rankers.",
+                "Your future IIT classroom is watching.",
+                "One chapter today, one step to IIT.",
+                "Serious students create serious results.",
+                "JEE loves those who never quit.",
+                "Concept clarity beats memorization.",
+                "Practice more, panic less.",
+                "IIT is built on daily sacrifices.",
+                "Your rank depends on today's effort.",
+                "Stay consistent even when tired.",
+                "JEE rewards the stubborn.",
+                "Every mock test teaches victory.",
+                "Topper mindset beats average effort.",
+                "Study now, celebrate in IIT.",
+                "Every PYQ is a hidden shortcut.",
+                "Rankers solve problems, not excuses.",
+                "Focus builds future.",
+                "JEE is a marathon, not a sprint.",
+                "Work hard silently, rank loudly.",
+                "Concept first, speed later.",
+                "Consistency beats talent in JEE.",
+                "Every mistake improves rank.",
+                "Strong basics build AIR.",
+                "IIT is earned, not wished.",
+                "Daily practice multiplies confidence.",
+                "Your rank grows with your effort.",
+                "JEE rewards disciplined minds.",
+                "Every formula mastered is progress.",
+                "Study with purpose, not pressure.",
+                "Top ranks love tough practice.",
+                "Every mock test sharpens mind.",
+                "Success begins with a schedule.",
+                "IIT dreams demand IIT effort.",
+                "Focus today removes regret tomorrow.",
+                "JEE loves focused warriors.",
+                "Smart revision creates toppers.",
+                "Concepts are the real shortcuts.",
+                "Discipline is the real motivation.",
+                "Every solved doubt increases confidence.",
+                "Rankers revise more than they read.",
+                "Hard questions create strong minds.",
+                "JEE success is a daily habit.",
+                "Every chapter matters.",
+                "Practice transforms knowledge into rank.",
+                "IIT waits for relentless students.",
+                "Focus beats distraction.",
+                "Your routine defines your rank.",
+                "JEE is conquered by persistence.",
+                "Strong concepts create speed.",
+                "Consistency builds champions.",
+                "Your study table decides your future.",
+                "Success in JEE is predictable.",
+                "Work ethic creates rank.",
+                "Rankers master basics.",
+                "Every practice session counts.",
+                "Your discipline writes your destiny.",
+                "JEE loves patience.",
+                "Focus creates toppers.",
+                "Daily revision multiplies retention.",
+                "Smart work accelerates progress.",
+                "Concept mastery creates confidence.",
+                "Practice removes fear.",
+                "JEE rewards curiosity.",
+                "Focus builds momentum.",
+                "Rankers love difficult questions.",
+                "Every effort compounds.",
+                "Learning never wastes time.",
+                "Your consistency scares competition.",
+                "JEE rewards clarity.",
+                "Focus builds sharp thinking.",
+                "Your preparation builds pressure resistance.",
+                "Hard practice removes exam fear.",
+                "JEE loves logical thinkers.",
+                "Strong basics dominate exams.",
+                "Your effort multiplies daily.",
+                "Persistence wins ranks.",
+                "Practice increases speed.",
+                "Every question solved builds confidence.",
+                "JEE rewards preparation.",
+                "Concept clarity defeats tricky questions.",
+                "Success is hidden in revision.",
+                "Your mindset creates your rank.",
+                "Every mock test improves strategy.",
+                "Consistency removes stress.",
+                "Focused practice builds champions.",
+                "Your study hours shape your rank.",
+                "Discipline turns dreams into IIT.",
+                "JEE success is engineered daily.",
+                "Practice makes rankers.",
+                "Your hard work compounds daily.",
+                "One more question today, AIR tomorrow."
+            ];
 
-<div class="cards">
+            function generateQuote() {
+                let random = Math.floor(Math.random() * quotes.length);
+                document.getElementById("quote").innerText = quotes[random];
+            }
+        </script>
+    </div>
 
-<div class="card">
-<h3>📘 Physics</h3>
-<p>Mechanics, Thermodynamics</p>
-<a href="physics.html">Enter</a>
-</div>
+    <!-- ===== GATE LOGIC ===== -->
+    <script>
+        const ENCODED_PASS = "cHNjb3Jl";
+        const STORAGE_KEY = "jee2028_access_time";
+        const EXPIRY_HOURS = 24;
 
-<div class="card">
-<h3>⚗ Chemistry</h3>
-<p>Physical, Organic, Inorganic</p>
-<a href="chemistrysection.html">Enter</a>
-</div>
+        const gateContainer = document.getElementById('gateContainer');
+        const mainSiteWrapper = document.getElementById('mainSiteWrapper');
+        const passInput = document.getElementById('passInput');
+        const enterBtn = document.getElementById('enterBtn');
+        const errorMsg = document.getElementById('errorMsg');
+        const statusLine = document.getElementById('statusLine');
+        const lockIcon = document.getElementById('lockIcon');
+        const subText = document.getElementById('subText');
+        const inputRow = document.getElementById('inputRow');
+        const successBlock = document.getElementById('successBlock');
+        const entryCard = document.getElementById('entryCard');
 
-<div class="card">
-<h3>📐 Maths</h3>
-<p>Algebra, Calculus</p>
-<a href="maths.html">Enter</a>
-</div>
+        const pupilL = document.getElementById('pupilL');
+        const pupilR = document.getElementById('pupilR');
+        const handL = document.getElementById('handL');
+        const handR = document.getElementById('handR');
+        const smilePath = document.getElementById('smilePath');
+        const pandaSvg = document.getElementById('pandaSvg');
 
-</div>
+        let isUnlocked = false;
+        let errorTimeout = null;
 
-</section>
+        // ----- 24h check -----
+        function hasValidAccess() {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            if (!stored) return false;
+            const accessTime = parseInt(stored, 10);
+            const now = Date.now();
+            const diffHours = (now - accessTime) / (1000 * 60 * 60);
+            return diffHours < EXPIRY_HOURS;
+        }
 
-<section class="motivation">
+        function grantAccess() {
+            localStorage.setItem(STORAGE_KEY, String(Date.now()));
+        }
 
-<div class="frame">
+        function showMainSite() {
+            gateContainer.classList.add('hidden');
+            mainSiteWrapper.style.display = 'block';
+            if (typeof particlesJS === 'function') {
+                particlesJS('particles-js', {
+                    particles: {
+                        number: { value: 70 },
+                        size: { value: 3 },
+                        move: { speed: 2 },
+                        line_linked: { enable: true, color: '#00f7ff' }
+                    }
+                });
+            }
+            window.scrollTo(0, 0);
+        }
 
-<h2>JEE Motivation 🔥</h2>
+        // ----- Focus helper -----
+        function focusInput() {
+            if (!isUnlocked) {
+                passInput.focus({ preventScroll: true });
+            }
+        }
 
-<button class="glow-btn" onclick="generateQuote()">Get Motivation 🚀</button>
+        // ----- Init -----
+        (function init() {
+            if (hasValidAccess()) {
+                showMainSite();
+                return;
+            }
+            setTimeout(() => passInput.focus({ preventScroll: true }), 100);
+            if (typeof particlesJS === 'function') {
+                particlesJS('particles-js', {
+                    particles: {
+                        number: { value: 70 },
+                        size: { value: 3 },
+                        move: { speed: 2 },
+                        line_linked: { enable: true, color: '#00f7ff' }
+                    }
+                });
+            }
+        })();
 
-<div class="quote-box" id="quote">
-Click the button to get JEE motivation 🚀
-</div>
+        // ----- Click on card / panda area -> focus input -----
+        entryCard.addEventListener('click', focusInput);
+        document.getElementById('pandaArea').addEventListener('click', focusInput);
 
-</div>
+        // ----- Eye tracking -----
+        function updateEyes(clientX, clientY) {
+            if (isUnlocked) return;
+            const rect = pandaSvg.getBoundingClientRect();
+            const cx = rect.left + rect.width / 2;
+            const cy = rect.top + rect.height / 2;
+            let dx = clientX - cx;
+            let dy = clientY - cy;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            const maxMove = 8;
+            if (dist > 1) {
+                const scale = Math.min(1, dist / 160);
+                const move = maxMove * scale;
+                const angle = Math.atan2(dy, dx);
+                const px = Math.cos(angle) * move;
+                const py = Math.sin(angle) * move;
+                pupilL.setAttribute('cx', 72 + px);
+                pupilL.setAttribute('cy', 86 + py);
+                pupilR.setAttribute('cx', 128 + px);
+                pupilR.setAttribute('cy', 86 + py);
+            } else {
+                pupilL.setAttribute('cx', 72);
+                pupilL.setAttribute('cy', 86);
+                pupilR.setAttribute('cx', 128);
+                pupilR.setAttribute('cy', 86);
+            }
+        }
 
-</section>
+        document.addEventListener('mousemove', (e) => updateEyes(e.clientX, e.clientY));
+        document.addEventListener('touchmove', (e) => {
+            const t = e.touches[0];
+            if (t) updateEyes(t.clientX, t.clientY);
+        }, { passive: true });
 
-<footer>
-  By <a href="https://Priyanshusingh.pages.dev" target="_blank">PRIYANSHU SINGH</a> 🚀 <br>
-</footer>
+        // ----- Panda covers eyes -----
+        function coverEyes() {
+            handL.classList.add('cover');
+            handR.classList.add('cover-r');
+            smilePath.setAttribute('d', 'M 72 122 Q 100 148 128 122');
+            statusLine.textContent = '🙈 shhh … access granted!';
+            statusLine.classList.add('success');
+        }
 
-<script>
+        // ----- Password check -----
+        function checkPassword() {
+            console.log('Enter button clicked'); // debug
+            if (isUnlocked) return;
+            const input = passInput.value.trim();
+            if (!input) {
+                showError('Please enter the key');
+                return;
+            }
+            const storedPass = atob(ENCODED_PASS);
+            if (input === storedPass) {
+                isUnlocked = true;
+                errorMsg.classList.remove('show');
+                grantAccess();
+                inputRow.style.display = 'none';
+                lockIcon.textContent = '✅';
+                subText.textContent = 'Access confirmed';
+                coverEyes();
+                successBlock.style.display = 'block';
+                setTimeout(() => {
+                    showMainSite();
+                }, 2500);
+            } else {
+                showError('✗ Incorrect password');
+                passInput.classList.add('shake');
+                setTimeout(() => { passInput.classList.remove('shake'); }, 500);
+                passInput.value = '';
+                passInput.focus({ preventScroll: true });
+            }
+        }
 
-window.onscroll=function(){
-let winScroll=document.body.scrollTop||document.documentElement.scrollTop;
-let height=document.documentElement.scrollHeight-document.documentElement.clientHeight;
-let scrolled=(winScroll/height)*100;
-document.getElementById("progressBar").style.width=scrolled+"%";
-}
+        function showError(msg) {
+            errorMsg.textContent = msg;
+            errorMsg.classList.add('show');
+            clearTimeout(errorTimeout);
+            errorTimeout = setTimeout(() => {
+                errorMsg.classList.remove('show');
+            }, 2800);
+        }
 
-const quotes=[
-"IIT is not a dream. It is a decision.",
-"JEE rewards consistency.",
-"When others sleep, toppers study.",
-"Discipline beats motivation.",
-"Every PYQ solved is one step closer to IIT.",
-"Your future IIT campus is waiting.",
-"Success in JEE = Hard work + Smart work.",
-"Success in JEE starts with daily discipline.",
-"IIT begins with one focused study session.",
-"Consistency today creates IIT tomorrow.",
-"Every concept mastered builds your IIT seat.",
-"Small daily progress leads to big JEE success.",
-"Focus on concepts, ranks will follow.",
-"Dream IIT, work like a machine.",
-"Late nights today, IIT tomorrow.",
-"Every solved question reduces competition.",
-"Your pen is your weapon for JEE.",
-"Hard work today, IIT life tomorrow.",
-"Discipline creates rankers.",
-"Your future IIT classroom is watching.",
-"One chapter today, one step to IIT.",
-"Serious students create serious results.",
-"JEE loves those who never quit.",
-"Concept clarity beats memorization.",
-"Practice more, panic less.",
-"IIT is built on daily sacrifices.",
-"Your rank depends on today's effort.",
-"Stay consistent even when tired.",
-"JEE rewards the stubborn.",
-"Every mock test teaches victory.",
-"Topper mindset beats average effort.",
-"Study now, celebrate in IIT.",
-"Every PYQ is a hidden shortcut.",
-"Rankers solve problems, not excuses.",
-"Focus builds future.",
-"JEE is a marathon, not a sprint.",
-"Work hard silently, rank loudly.",
-"Concept first, speed later.",
-"Consistency beats talent in JEE.",
-"Every mistake improves rank.",
-"Strong basics build AIR.",
-"IIT is earned, not wished.",
-"Daily practice multiplies confidence.",
-"Your rank grows with your effort.",
-"JEE rewards disciplined minds.",
-"Every formula mastered is progress.",
-"Study with purpose, not pressure.",
-"Top ranks love tough practice.",
-"Every mock test sharpens mind.",
-"Success begins with a schedule.",
-"IIT dreams demand IIT effort.",
-"Focus today removes regret tomorrow.",
-"JEE loves focused warriors.",
-"Smart revision creates toppers.",
-"Concepts are the real shortcuts.",
-"Discipline is the real motivation.",
-"Every solved doubt increases confidence.",
-"Rankers revise more than they read.",
-"Hard questions create strong minds.",
-"JEE success is a daily habit.",
-"Every chapter matters.",
-"Practice transforms knowledge into rank.",
-"IIT waits for relentless students.",
-"Focus beats distraction.",
-"Your routine defines your rank.",
-"JEE is conquered by persistence.",
-"Strong concepts create speed.",
-"Consistency builds champions.",
-"Your study table decides your future.",
-"Success in JEE is predictable.",
-"Work ethic creates rank.",
-"Rankers master basics.",
-"Every practice session counts.",
-"Your discipline writes your destiny.",
-"JEE loves patience.",
-"Focus creates toppers.",
-"Daily revision multiplies retention.",
-"Smart work accelerates progress.",
-"Concept mastery creates confidence.",
-"Practice removes fear.",
-"JEE rewards curiosity.",
-"Focus builds momentum.",
-"Rankers love difficult questions.",
-"Every effort compounds.",
-"Learning never wastes time.",
-"Your consistency scares competition.",
-"JEE rewards clarity.",
-"Focus builds sharp thinking.",
-"Your preparation builds pressure resistance.",
-"Hard practice removes exam fear.",
-"JEE loves logical thinkers.",
-"Strong basics dominate exams.",
-"Your effort multiplies daily.",
-"Persistence wins ranks.",
-"Practice increases speed.",
-"Every question solved builds confidence.",
-"JEE rewards preparation.",
-"Concept clarity defeats tricky questions.",
-"Success is hidden in revision.",
-"Your mindset creates your rank.",
-"Every mock test improves strategy.",
-"Consistency removes stress.",
-"Focused practice builds champions.",
-"Your study hours shape your rank.",
-"Discipline turns dreams into IIT.",
-"JEE success is engineered daily.",
-"Practice makes rankers.",
-"Your hard work compounds daily.",
-"One more question today, AIR tomorrow."
-];
+        // ----- Events -----
+        // Click + touch for mobile
+        enterBtn.addEventListener('click', checkPassword);
+        enterBtn.addEventListener('touchstart', function(e) {
+            e.preventDefault(); // avoid double fire
+            checkPassword();
+        });
 
-function generateQuote(){
-let random=Math.floor(Math.random()*quotes.length);
-document.getElementById("quote").innerText=quotes[random];
-}
+        passInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                checkPassword();
+            }
+        });
+        passInput.addEventListener('input', () => {
+            errorMsg.classList.remove('show');
+        });
 
-particlesJS("particles-js",{
-particles:{
-number:{value:70},
-size:{value:3},
-move:{speed:2},
-line_linked:{enable:true,color:"#00f7ff"}
-}
-});
-
-</script>
+        console.log('🐼 Secure gate ready. Password: pscore | 24h localStorage');
+    </script>
 
 </body>
 </html>
-
