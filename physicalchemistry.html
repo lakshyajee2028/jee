@@ -1,523 +1,1021 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Physical Chemistry</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ── RESET & BASE ── */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Fredoka', sans-serif;
+        }
 
-<title>Physical Chemistry</title>
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0b1a2e, #1a3a5c, #0d2b44);
+            overflow-x: hidden;
+            position: relative;
+            padding-bottom: 40px;
+        }
 
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
+        /* ── ANIMATED BACKGROUND PARTICLES ── */
+        .bg-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
 
-<style>
+        .bg-particles span {
+            position: absolute;
+            display: block;
+            width: 6px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 50%;
+            animation: drift linear infinite;
+        }
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Fredoka',sans-serif;
-}
+        .bg-particles span:nth-child(1) {
+            left: 10%;
+            animation-duration: 18s;
+            animation-delay: 0s;
+            width: 10px;
+            height: 10px;
+        }
+        .bg-particles span:nth-child(2) {
+            left: 20%;
+            animation-duration: 22s;
+            animation-delay: 2s;
+            width: 5px;
+            height: 5px;
+        }
+        .bg-particles span:nth-child(3) {
+            left: 30%;
+            animation-duration: 20s;
+            animation-delay: 4s;
+            width: 12px;
+            height: 12px;
+        }
+        .bg-particles span:nth-child(4) {
+            left: 45%;
+            animation-duration: 25s;
+            animation-delay: 1s;
+            width: 7px;
+            height: 7px;
+        }
+        .bg-particles span:nth-child(5) {
+            left: 55%;
+            animation-duration: 19s;
+            animation-delay: 3s;
+            width: 9px;
+            height: 9px;
+        }
+        .bg-particles span:nth-child(6) {
+            left: 68%;
+            animation-duration: 23s;
+            animation-delay: 0.5s;
+            width: 6px;
+            height: 6px;
+        }
+        .bg-particles span:nth-child(7) {
+            left: 78%;
+            animation-duration: 21s;
+            animation-delay: 5s;
+            width: 11px;
+            height: 11px;
+        }
+        .bg-particles span:nth-child(8) {
+            left: 88%;
+            animation-duration: 24s;
+            animation-delay: 2.5s;
+            width: 8px;
+            height: 8px;
+        }
+        .bg-particles span:nth-child(9) {
+            left: 92%;
+            animation-duration: 17s;
+            animation-delay: 3.5s;
+            width: 4px;
+            height: 4px;
+        }
+        .bg-particles span:nth-child(10) {
+            left: 50%;
+            animation-duration: 26s;
+            animation-delay: 6s;
+            width: 14px;
+            height: 14px;
+        }
 
-body{
-background:linear-gradient(135deg,#89f7fe,#66a6ff);
-min-height:100vh;
-overflow-x:hidden;
-position:relative;
-}
+        @keyframes drift {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-10vh) scale(1);
+                opacity: 0;
+            }
+        }
 
-/* floating chemistry shapes */
+        /* ── FLOATING SHAPES (original preserved) ── */
+        .shape {
+            position: absolute;
+            font-size: 70px;
+            opacity: 0.30;
+            z-index: 0;
+            animation: float 12s infinite ease-in-out;
+            pointer-events: none;
+            filter: drop-shadow(0 0 30px rgba(255, 255, 255, 0.05));
+        }
 
-.shape{
-position:absolute;
-font-size:70px;
-opacity:0.55;
-z-index:-1;
-animation:float 12s infinite ease-in-out;
-}
+        .red {
+            color: #ff6b6b;
+        }
+        .yellow {
+            color: #ffd93d;
+        }
+        .green {
+            color: #6bcb77;
+        }
+        .purple {
+            color: #a66cff;
+        }
 
-.red{color:#ff4d4d;}
-.yellow{color:#ffd54f;}
-.green{color:#4caf50;}
-.purple{color:#9c27b0;}
+        .s1 {
+            top: 120px;
+            left: 120px;
+        }
+        .s2 {
+            top: 260px;
+            right: 180px;
+        }
+        .s3 {
+            top: 450px;
+            left: 250px;
+        }
+        .s4 {
+            bottom: 200px;
+            right: 200px;
+        }
+        .s5 {
+            top: 100px;
+            right: 80px;
+        }
+        .s6 {
+            bottom: 120px;
+            left: 80px;
+        }
+        .s7 {
+            top: 520px;
+            right: 60px;
+        }
 
-.s1{top:120px;left:120px;}
-.s2{top:260px;right:180px;}
-.s3{top:450px;left:250px;}
-.s4{bottom:200px;right:200px;}
-.s5{top:100px;right:80px;}
-.s6{bottom:120px;left:80px;}
-.s7{top:520px;right:60px;}
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg) scale(1);
+            }
+            33% {
+                transform: translateY(-35px) rotate(8deg) scale(1.05);
+            }
+            66% {
+                transform: translateY(15px) rotate(-5deg) scale(0.95);
+            }
+            100% {
+                transform: translateY(0) rotate(0deg) scale(1);
+            }
+        }
 
-@keyframes float{
-0%{transform:translateY(0);}
-50%{transform:translateY(-50px);}
-100%{transform:translateY(0);}
-}
+        /* ── GLOW ORB (decorative) ── */
+        .glow-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            pointer-events: none;
+            z-index: 0;
+            animation: orbPulse 8s ease-in-out infinite alternate;
+        }
 
-/* header */
+        .glow-orb.orb1 {
+            width: 400px;
+            height: 400px;
+            top: -150px;
+            right: -100px;
+            background: rgba(100, 200, 255, 0.12);
+        }
 
-.header{
-text-align:center;
-padding:70px 20px 30px 20px;
-}
+        .glow-orb.orb2 {
+            width: 500px;
+            height: 500px;
+            bottom: -200px;
+            left: -150px;
+            background: rgba(160, 100, 255, 0.10);
+            animation-delay: 4s;
+        }
 
-.header h1{
-font-size:44px;
-color:#222;
-}
+        @keyframes orbPulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(1.3);
+                opacity: 1;
+            }
+        }
 
-.header p{
-font-size:20px;
-margin-top:10px;
-}
+        /* ── HEADER ── */
+        .header {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 70px 20px 30px 20px;
+        }
 
-/* chapters */
+        .header h1 {
+            font-size: 52px;
+            font-weight: 700;
+            color: #ffffff;
+            text-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+            letter-spacing: 0.5px;
+        }
 
-.chapters{
-padding:40px 8% 80px 8%;
-}
+        .header h1 .emoji {
+            display: inline-block;
+            animation: emojiFloat 3s ease-in-out infinite;
+        }
 
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:25px;
-margin-top:30px;
-}
+        @keyframes emojiFloat {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
 
-.chapter{
-background:white;
-padding:25px;
-border-radius:20px;
-text-align:center;
-box-shadow:0 10px 20px rgba(0,0,0,0.2);
-transition:0.3s;
-}
+        .header p {
+            font-size: 20px;
+            margin-top: 10px;
+            color: rgba(255, 255, 255, 0.75);
+            font-weight: 400;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
+        }
 
-.chapter:hover{
-transform:translateY(-10px) scale(1.05);
-}
+        .header .underline {
+            display: inline-block;
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, #00c853, #29b6f6);
+            border-radius: 10px;
+            margin-top: 14px;
+            box-shadow: 0 0 30px rgba(0, 200, 83, 0.3);
+        }
 
-.chapter h3{
-font-size:20px;
-margin-bottom:12px;
-}
+        /* ── CHAPTERS GRID ── */
+        .chapters {
+            position: relative;
+            z-index: 1;
+            padding: 30px 8% 60px 8%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
 
-/* glowing button */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 28px;
+            margin-top: 30px;
+        }
 
-.btn{
-display:inline-block;
-padding:10px 20px;
-border-radius:20px;
-background:#00c853;
-color:white;
-text-decoration:none;
-box-shadow:0 0 10px #00c853,0 0 25px #00c853;
-transition:0.3s;
-margin:5px;
-border:none;
-cursor:pointer;
-}
+        /* ── CHAPTER CARD ── */
+        .chapter {
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            border-radius: 24px;
+            padding: 28px 20px 24px;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
 
-.btn:hover{
-transform:scale(1.08);
-box-shadow:0 0 20px #00c853,0 0 40px #00c853;
-}
+        .chapter::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), transparent 60%);
+            border-radius: 24px;
+            pointer-events: none;
+        }
 
-/* lecture list container */
+        .chapter:hover {
+            transform: translateY(-12px) scale(1.02);
+            border-color: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.4), 0 0 40px rgba(0, 200, 83, 0.05);
+        }
 
-.lectureBox{
-margin-top:15px;
-display:none;
-}
+        .chapter .icon-wrap {
+            font-size: 38px;
+            margin-bottom: 10px;
+            display: block;
+            filter: drop-shadow(0 4px 20px rgba(255, 255, 255, 0.05));
+        }
 
-.back{
-text-align:center;
-margin-top:40px;
-}
+        .chapter h3 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 16px;
+            letter-spacing: 0.3px;
+            position: relative;
+            z-index: 1;
+        }
 
-.back a{
-text-decoration:none;
-padding:14px 30px;
-background:#ff7675;
-color:white;
-border-radius:30px;
-box-shadow:0 0 10px #ff7675;
-}
+        .chapter .btn {
+            display: inline-block;
+            padding: 10px 28px;
+            border-radius: 30px;
+            background: linear-gradient(135deg, #00c853, #00e676);
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 200, 83, 0.35);
+            position: relative;
+            z-index: 1;
+            letter-spacing: 0.3px;
+        }
 
-/* Dynamic Modal Box CSS */
+        .chapter .btn:hover {
+            transform: scale(1.07);
+            box-shadow: 0 6px 35px rgba(0, 200, 83, 0.55), 0 0 60px rgba(0, 200, 83, 0.15);
+        }
 
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(5px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
-}
+        .chapter .btn:active {
+            transform: scale(0.95);
+        }
 
-.modal-overlay.active {
-  opacity: 1;
-  visibility: visible;
-}
+        /* ── LECTURE BOX ── */
+        .lectureBox {
+            margin-top: 18px;
+            display: none;
+            animation: fadeSlide 0.4s ease;
+            position: relative;
+            z-index: 1;
+        }
 
-.modal-card {
-  background: #ffffff;
-  padding: 30px;
-  border-radius: 20px;
-  text-align: center;
-  width: 90%;
-  max-width: 380px;
-  box-shadow: 0 15px 30px rgba(0,0,0,0.3);
-  transform: scale(0.7);
-  transition: transform 0.3s ease;
-  position: relative;
-}
+        @keyframes fadeSlide {
+            0% {
+                opacity: 0;
+                transform: translateY(-10px) scale(0.96);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
 
-.modal-overlay.active .modal-card {
-  transform: scale(1);
-}
+        .lectureBox .btn {
+            background: rgba(255, 255, 255, 0.10);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            padding: 8px 18px;
+            font-size: 13px;
+            margin: 5px 4px;
+            border-radius: 30px;
+            color: #fff;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.06);
+        }
 
-.modal-card h3 {
-  color: #222;
-  margin-bottom: 5px;
-  font-size: 22px;
-}
+        .lectureBox .btn:hover {
+            background: rgba(41, 182, 246, 0.25);
+            border-color: rgba(41, 182, 246, 0.4);
+            transform: translateY(-3px) scale(1.04);
+            box-shadow: 0 8px 30px rgba(41, 182, 246, 0.15);
+        }
 
-.modal-card p.caption {
-  color: #666;
-  font-size: 15px;
-  margin-bottom: 20px;
-  font-weight: 400;
-}
+        /* ── BACK BUTTON ── */
+        .back {
+            text-align: center;
+            margin-top: 50px;
+            position: relative;
+            z-index: 1;
+        }
 
-.modal-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  margin-top: 15px;
-}
+        .back a {
+            text-decoration: none;
+            padding: 14px 34px;
+            background: rgba(255, 118, 117, 0.15);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 118, 117, 0.20);
+            color: #ffb3b3;
+            border-radius: 40px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-block;
+            font-size: 16px;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
 
-.modal-btn {
-  padding: 12px 24px;
-  border-radius: 25px;
-  border: none;
-  color: white;
-  font-weight: 600;
-  text-decoration: none;
-  font-size: 15px;
-  cursor: pointer;
-  transition: 0.3s;
-}
+        .back a:hover {
+            background: rgba(255, 118, 117, 0.25);
+            border-color: rgba(255, 118, 117, 0.4);
+            transform: translateY(-4px) scale(1.03);
+            box-shadow: 0 8px 40px rgba(255, 118, 117, 0.15);
+            color: #fff;
+        }
 
-.modal-btn-lec {
-  background: #00c853;
-  box-shadow: 0 4px 15px rgba(0, 200, 83, 0.4);
-}
+        /* ── MODAL ── */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
 
-.modal-btn-lec:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 200, 83, 0.6);
-}
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
 
-.modal-btn-notes {
-  background: #29b6f6;
-  box-shadow: 0 4px 15px rgba(41, 182, 246, 0.4);
-}
+        .modal-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            padding: 36px 32px 32px;
+            border-radius: 28px;
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5);
+            transform: scale(0.8) translateY(30px);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+        }
 
-.modal-btn-notes:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(41, 182, 246, 0.6);
-}
+        .modal-overlay.active .modal-card {
+            transform: scale(1) translateY(0);
+        }
 
-.close-modal {
-  position: absolute;
-  top: 12px;
-  right: 18px;
-  font-size: 22px;
-  color: #aaa;
-  cursor: pointer;
-  font-weight: bold;
-}
+        .modal-card .close-modal {
+            position: absolute;
+            top: 14px;
+            right: 20px;
+            font-size: 26px;
+            color: rgba(255, 255, 255, 0.4);
+            cursor: pointer;
+            font-weight: 400;
+            transition: all 0.3s ease;
+            line-height: 1;
+        }
 
-.close-modal:hover {
-  color: #222;
-}
+        .modal-card .close-modal:hover {
+            color: #fff;
+            transform: rotate(90deg);
+        }
 
-</style>
+        .modal-card .modal-icon {
+            font-size: 44px;
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        .modal-card h3 {
+            color: #ffffff;
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 4px;
+            letter-spacing: 0.3px;
+        }
+
+        .modal-card .caption {
+            color: rgba(255, 255, 255, 0.60);
+            font-size: 15px;
+            font-weight: 400;
+            margin-bottom: 22px;
+            line-height: 1.5;
+            max-width: 90%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .modal-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .modal-btn {
+            padding: 13px 30px;
+            border-radius: 40px;
+            border: none;
+            color: #fff;
+            font-weight: 600;
+            font-size: 15px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex: 1 1 auto;
+            min-width: 120px;
+            letter-spacing: 0.3px;
+        }
+
+        .modal-btn-lec {
+            background: linear-gradient(135deg, #00c853, #00e676);
+            box-shadow: 0 4px 25px rgba(0, 200, 83, 0.35);
+        }
+
+        .modal-btn-lec:hover {
+            transform: translateY(-4px) scale(1.04);
+            box-shadow: 0 8px 40px rgba(0, 200, 83, 0.5);
+        }
+
+        .modal-btn-notes {
+            background: linear-gradient(135deg, #29b6f6, #4fc3f7);
+            box-shadow: 0 4px 25px rgba(41, 182, 246, 0.35);
+        }
+
+        .modal-btn-notes:hover {
+            transform: translateY(-4px) scale(1.04);
+            box-shadow: 0 8px 40px rgba(41, 182, 246, 0.5);
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 34px;
+            }
+            .header p {
+                font-size: 17px;
+            }
+            .grid {
+                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+                gap: 18px;
+            }
+            .chapters {
+                padding: 20px 5% 40px 5%;
+            }
+            .chapter {
+                padding: 20px 14px 18px;
+            }
+            .chapter h3 {
+                font-size: 17px;
+            }
+            .shape {
+                font-size: 44px;
+                opacity: 0.20;
+            }
+            .s1 {
+                top: 80px;
+                left: 20px;
+            }
+            .s2 {
+                top: 180px;
+                right: 20px;
+            }
+            .s3 {
+                top: 350px;
+                left: 30px;
+            }
+            .s4 {
+                bottom: 140px;
+                right: 30px;
+            }
+            .s5 {
+                top: 60px;
+                right: 10px;
+            }
+            .s6 {
+                bottom: 80px;
+                left: 10px;
+            }
+            .s7 {
+                top: 420px;
+                right: 10px;
+            }
+            .modal-card {
+                padding: 28px 20px 24px;
+                max-width: 340px;
+            }
+            .modal-card h3 {
+                font-size: 20px;
+            }
+            .modal-btn {
+                padding: 11px 20px;
+                font-size: 14px;
+                min-width: 90px;
+            }
+            .back a {
+                padding: 12px 24px;
+                font-size: 14px;
+            }
+            .glow-orb.orb1 {
+                width: 200px;
+                height: 200px;
+                top: -80px;
+                right: -60px;
+            }
+            .glow-orb.orb2 {
+                width: 260px;
+                height: 260px;
+                bottom: -100px;
+                left: -80px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 26px;
+            }
+            .grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
+            }
+            .chapter {
+                padding: 16px 10px 14px;
+                border-radius: 18px;
+            }
+            .chapter h3 {
+                font-size: 14px;
+            }
+            .chapter .btn {
+                padding: 7px 16px;
+                font-size: 12px;
+            }
+            .chapter .icon-wrap {
+                font-size: 28px;
+            }
+            .lectureBox .btn {
+                font-size: 11px;
+                padding: 6px 12px;
+                margin: 3px 3px;
+            }
+            .modal-card {
+                padding: 22px 16px 20px;
+                max-width: 300px;
+            }
+            .modal-card h3 {
+                font-size: 18px;
+            }
+            .modal-card .caption {
+                font-size: 13px;
+            }
+            .modal-btn {
+                padding: 10px 16px;
+                font-size: 13px;
+                min-width: 70px;
+            }
+            .shape {
+                font-size: 30px;
+            }
+        }
+    </style>
 </head>
-
 <body>
 
-<div class="shape red s1">⚛</div>
-<div class="shape yellow s2">🧪</div>
-<div class="shape green s3">⚗</div>
-<div class="shape purple s4">🧬</div>
-<div class="shape red s5">⚛</div>
-<div class="shape yellow s6">🧪</div>
-<div class="shape green s7">⚗</div>
-
-<div class="header">
-<h1>⚗ Physical Chemistry</h1>
-<p>Select a Chapter</p>
-</div>
-
-<div class="chapters">
-
-<div class="grid">
-
-<div class="chapter">
-<h3>Mole Concept</h3>
-<button class="btn toggleBtn" onclick="toggleChapter(1,this)">Open</button>
-<div class="lectureBox"></div>
-</div>
-
-<div class="chapter">
-<h3>Atomic Structure</h3>
-<button class="btn toggleBtn" onclick="toggleChapter(2,this)">Open</button>
-<div class="lectureBox"></div>
-</div>
-
-<div class="chapter">
-<h3>States of Matter</h3>
-<button class="btn toggleBtn" onclick="toggleChapter(3,this)">Open</button>
-<div class="lectureBox"></div>
-</div>
-
-<div class="chapter">
-<h3>Thermodynamics</h3>
-<button class="btn toggleBtn" onclick="toggleChapter(4,this)">Open</button>
-<div class="lectureBox"></div>
-</div>
-
-<div class="chapter">
-<h3>Chemical Equilibrium</h3>
-<button class="btn toggleBtn" onclick="toggleChapter(5,this)">Open</button>
-<div class="lectureBox"></div>
-</div>
-
-<div class="chapter">
-<h3>Ionic Equilibrium</h3>
-<button class="btn toggleBtn" onclick="toggleChapter(6,this)">Open</button>
-<div class="lectureBox"></div>
-</div>
-
-<div class="chapter">
-<h3>Redox Reactions</h3>
-<button class="btn toggleBtn" onclick="toggleChapter(7,this)">Open</button>
-<div class="lectureBox"></div>
-</div>
-
-<div class="chapter">
-<h3>Revision</h3>
-<button class="btn toggleBtn" onclick="toggleChapter(8,this)">Open</button>
-<div class="lectureBox"></div>
-</div>
-
-</div>
-
-<div class="back">
-<a href="chemistrysection.html">⬅ Back to Chemistry</a>
-</div>
-
-</div>
-
-<div class="modal-overlay" id="optionModal">
-  <div class="modal-card">
-    <span class="close-modal" onclick="closeModal()">&times;</span>
-    <h3 id="modalTitle">Lecture 1</h3>
-    <p class="caption" id="modalCaption">Lecture Title Here</p>
-    <div class="modal-buttons">
-      <a id="lectureLink" class="modal-btn modal-btn-lec" href="#" target="_blank">🎥 Lecture</a>
-      <a id="notesLink" class="modal-btn modal-btn-notes" href="#" target="_blank">📄 Notes</a>
+    <!-- ─── ANIMATED BG PARTICLES ─── -->
+    <div class="bg-particles">
+        <span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span><span></span>
     </div>
-  </div>
-</div>
 
-<script>
+    <!-- ─── GLOW ORBS ─── -->
+    <div class="glow-orb orb1"></div>
+    <div class="glow-orb orb2"></div>
 
-// Chapter links & captions database
-const lectures = {
+    <!-- ─── FLOATING SHAPES (fully preserved) ─── -->
+    <div class="shape red s1">⚛</div>
+    <div class="shape yellow s2">🧪</div>
+    <div class="shape green s3">⚗</div>
+    <div class="shape purple s4">🧬</div>
+    <div class="shape red s5">⚛</div>
+    <div class="shape yellow s6">🧪</div>
+    <div class="shape green s7">⚗</div>
 
-  // 1: Mole Concept (21 Lectures)
-  1: [
-    { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_69de3abe81686cb766f6e3d7", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_69de32611ddfd200b425334b", title: "How to Study Physical Chemistry Effectively, Introduction, Matter and Its Classification" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_69e0d43e85357b7c92cd22dc", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_69e0d7102ce2c7a9a68de522", title: "Matter and Its Classification, Properties of Matter" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_69e2456a0672d5538792c49e", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_69e2472aba2a490f79471341", title: "Properties of Matter, Measurement of Properties, Mass and Weight, Volume, Temperature, Scientific Notation" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_69e76bb6aa753ae2b6c92f2b", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_69e2472aba2a490f79471341", title: "Homework Discussion, Scientific Notation, Precision and Accuracy, Atoms and Molecules" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_69ea0f2e01a802ad21dc6cf6", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_69ea10374775a439b265360f", title: "Atoms and Molecules || Ions || Formula of a Compound" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_69eb80a446eb626fd860b518", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_69eb82b4bad235a7fe617bc5", title: "Laws of Chemical Combinations" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_69f0a9a4e2423c508e014cff", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_69f0ab259caaa624a1cbdceb", title: "Gay-Lussac's Law of Gaseous Volume || Avogadro's Law || Law of Reciprocal Proportion" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_69f3492758c73c43dae33766", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_69f34a3834708c62da2ac23c", title: "Homework Discussion || Relative Atomic Mass, Relative Molecular Mass || Mole Concept" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_69f88f99f8d0f31c3325f005", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_69f89068c081f7955a95ae2d", title: "Gram Atomic Mass || Gram Molecular Mass || Mole Concept" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_69fb33ed8d2a8b0731017838", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_69fb374fc180537bb466e4d9", title: "Mole Concept" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_69fca42848b1e94bc46aba1b", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_69fca5036e40ee5be468c8ce", title: "Mole Concept || Percentage Composition" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_69fdf6bb36d446acf68fd619", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_69fdfb5f44b7e99c7e6caa1a", title: "Percentage Composition, Concepts Related to Density, Empirical and Molecular Formula" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a01d083186f5fbd91234311", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a01cc01aa02a2904845733b", title: "Empirical and Molecular Formula || Balancing of Chemical Reaction, Stoichiometry and Stoichiometric Calculations" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a031c5c41269b30df4fcfb7", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a031e4a300f35151f318b5e", title: "Stoichiometry and Stoichiometric Calculations, Contraction in Volume, Limiting Reagent" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a05e1e7d61c89e23f556eea", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a05e2fcc428e5eebc6ab4a0", title: "Contraction in Volume || Limiting Reagent" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a07008a350d58a1668188b0", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a0702db11f129cd7bbf0cc0", title: "Question Based on Percentage Yield, Questions Based on Percentage Purity" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a0b055cfa261ab5d322a517", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a0b064ba7ab576ebde541c1", title: "Concentration Terms, Percentage, Mole Fraction" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a0c5830282f633097a2056d", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a0c5911e5e5ba9edfeebe23", title: "Concentration Terms || Molarity" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a0f1bb50a3050959ab9c18e", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a0f1f2ea3518721035725a6", title: "Molarity || Molality" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a106d04af5010cc3ce16abb", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a106db0dedf9255a0cd436f", title: "Formality || Ppm, Ppb || Strength of Solution || Question Based on Sequential Reactions, POAC" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a1440276df6907a5c6e7dc0", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a1442d6430e5c2de3296077", title: "POAC || Questions Based on Parallel Reactions, Percentage Labelling of Oleum" }
-  ],
+    <!-- ─── HEADER ─── -->
+    <div class="header">
+        <h1><span class="emoji">⚗</span> Physical Chemistry</h1>
+        <p>Select a Chapter</p>
+        <div class="underline"></div>
+    </div>
 
-  // 2: Atomic Structure (18 Lectures)
-  2: [
-    { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a1590261b11946cf3de1298", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a159213910f710406a2ca89", title: "Structure of Atom 01 : Introduction || Basic Terms || Discovery of Electron, Proton and Neutron" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a19a286c6c3b85fc1206351", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a1d7a83dd982441174a41d9", title: "Structure of Atom 02 : Discovery of Electron, Proton and Neutron, Atomic Models, Thomson Atomic Model" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a1d8df97cbbf5fe86ae554f", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a1d8f721f510f7654330c7f", title: "Structure of Atom 03 : Rutherford's Atomic Model" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a1ee02bb28676796d78c51d", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a1ee225b43ceaf89f2c11db", title: "Structure of Atom 04 : Rutherford's Atomic Model, Dual Nature of Electromagnetic Radiations" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a20327621d55fbf63c598fb", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a2033c11f510f765439da5d", title: "Structure of Atom 05 : Dual Nature of Electromagnetic Radiations, Electromagnetic Radiation, Particle Nature of Electromagnetic Radiation" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a216bd08d1156f2e510051d", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a216d7da3b742e0b85bc433", title: "Structure of Atom 06 : Particle Nature of Electromagnetic Radiation, Planck's Quantum Theory, Photoelectric Effect" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a2426572eec42fd79b522ed", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a2428930953c5638882b552", title: "Structure of Atom 07 : Photoelectric Effect" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a255e9e93453c7a2f72b9be", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a25683a5058eb67f89ec341", title: "Structure of Atom 08 : Photoelectric Effect, What is Spectrum" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a26c5f7864a7a37a1d0f179", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a26c7e5c2e49baa1ab8d2b6", title: "Structure of Atom 09 : Black Body Radiation, Bohr's Atomic Model" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a281632d7fcbc0927aca04e", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a281c41a7dfcdd777b650e7", title: "Structure of Atom 10 : Bohr's Atomic Model" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a29680b1e7bc4a0d8f77796", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a296bd288b3ef9091009b19", title: "Structure of Atom 11 : Bohr's Atomic Model, Spectrum of Hydrogen" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a2ab9f21fcaa6b7d864dd27", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a2abbcad7b0dcd77c3ac209", title: "Structure of Atom 12 : Spectrum of Hydrogen, Dual Nature of Matter" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a2c0b0fb3f6ba3091913868", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a2c0cf4bc37eb3937685421", title: "Structure of Atom 13 : Dual Nature of Matter || Heisenberg's Uncertainty Principle" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a2d5d260d2cc33c16ab611e", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a2d5f4324bf6ccd6a32835c", title: "Structure of Atom 14 : Heisenberg's Uncertainty Principle || Quantum Mechanical Model" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a2fe7774bb09b0e30beb3c2", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a2fe93b227c3402353dc14c", title: "Structure of Atom 15 : Quantum Numbers" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a313965ce7b7412b388c8d9", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a313ad3bc37eb39376ecc7f", title: "Structure of Atom 16 : Quantum Numbers, Energy of Atomic Orbitals, Filling of Atomic Orbitals" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a328bbf56a80c5ca3449529", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a328cefbc37eb393770e5b9", title: "Structure of Atom 17 : Filling of Atomic Orbitals || Electronic Configuration" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a3abb977692882c0315f960", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a3beb53a0ade454eed7252b", title: "Structure of Atom 18 : Concept of Nodes" }
-  ],
+    <!-- ─── CHAPTERS ─── -->
+    <div class="chapters">
 
-  // 3: State of Matter (9 Lectures)
-  3: [
-    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68bec9ad0c5adc9235147354", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68becd0cf45f848b0660b2f7", title: "State of matter 01 : Introduction || Thermal Energy and Intermolecular Forces || Measurable Properties of Gases" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68c01ab3469bd9a44bdc9cd2", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68c01c7c1442085439ff44e8", title: "State of matter 02 : Measurable Properties of Gases || The Gas Laws" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68c4329e2941904b54465407", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68c430932d7145d9e5cd4c18", title: "State of matter 03 : The Gas Laws || Ideal Gas Equation" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68c580b1657e971e1148d633", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68c58354f8ed98db16f78465", title: "State of matter 04 : Ideal gas equation || Density of gas || Payload of a balloon || Dalton's Law of Partial Pressure" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68c8051a8ea521047d18e74f", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68c806e5d4418f29644f8584", title: "State of matter 05 : Dalton's law of partial pressure || Graham's law of Diffusion/Effusion" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68c956f594cb4de5aaec3f8f", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68c95ad294fd897fa505e25b", title: "State of matter 06 : Questions on Containers || Concepts of Connect Containers || Kinetic Theory of Gases" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68cd6c9de24d86543a2c6322", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68cd6e03c058f5714b50f6f6", title: "State of matter 07 : Kinetic Energy and Molecular Speeds || Maxwell-Boltzman Distribution Curves" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68cebbb85cc101a57edbfd44", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68cebcec516e4dfbbf5443bb", title: "State of matter 08 : Van der waal's Equation || Compressibility Factor" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68d13eae4dee9c1d182a07a5", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68d14242543ae9781f3f882f", title: "State of matter 09 : Compressibility Factor || Liquefaction of Gases" }
-  ],
+        <div class="grid">
 
-  // 4: Thermodynamics (13 Lectures)
-  4: [
-    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68d2905d25303412989a4e12", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68d292ad1d86f7e85bf1ed1c", title: "Thermodynamics 01 : Introduction || System and Surrounding || Extensive and Intensive Properties" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68d6a5a5d42aa063974f19c1", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68d6a8fd9e9a4a5982e3e555", title: "Thermodynamics 02 : Thermodynamic Process || Thermodynamic Equilibrium" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68d7fa035004bb981fb14ea6", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68d7fe1c0b7faa88fd525ee4", title: "Thermodynamics 03 : Internal Energy and FLOT || Degree of Freedom || Enthalpy (H)" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68da792854aae9cb2511e1fe", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68da7ac18d8796601bd3c008", title: "Thermodynamics 04 : Enthalpy || Calculation of Work" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68dbcb62ce504f1a03e74e81", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68dbcb2c0dd73ca2011d613b", title: "Thermodynamics 05 : Calculation of Work" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68dd2aa8d2d4905b3a1e3f48", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68ddf7df820db6ab0e115fa6", title: "Thermodynamics 06 : Work done in Adiabatic and Isothermal Process || Polytropic Process" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68dfe13a96f7a98dedb77e38", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68dfe2f3cb3ea08698c59341", title: "Thermodynamics 07 : Work done in Cyclic Process || Calorimetry || Enthalpy of Reaction" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68e1329a9b2f7c70ceb6d91f", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68e1343f804f5dd61deb5975", title: "Thermodynamics 08 : Enthalpy of Reaction || Enthalpy Change in Phase Transformation || Enthalpy of Formation and Combustion" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68e3b304bddbc217bcd32ed4", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68e3b48f775bda1e30bb6a4b", title: "Thermodynamics 09 : Enthalpy of Combustion || Enthalpy of Atomisation and Bond Enthalpy || Enthalpy of Hydration and Enthalpy of Solution" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68e505666edd1be4c1c71d29", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68e5070581985269afdf6474", title: "Thermodynamics 10 : Enthalpy of Solution and Dilution || Lattice Enthalpy, Enthalpy of Transition" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68ee3f1e7303e7846496c310", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68ee408fae640a0aa7ddace8", title: "Thermodynamics 11 : Spontaneity || Entropy || 2nd Law of Thermodynamics" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68f25fbf5f67be7488e45401", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68f260ae8d917a497a6d38eb", title: "Thermodynamics 12 : Entropy Change in Phase Transformation, Entropy Change for Ideal Gas, Entropy Change for Chemical Reaction, Gibbs Energy" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68f368a6df6763e109fddffe", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68f36fa362c9865fde333ba5", title: "Thermodynamics 13 : Gibb's Energy || 3rd Law of Thermodynamics" }
-  ],
+            <!-- 1. Mole Concept -->
+            <div class="chapter">
+                <span class="icon-wrap">🧪</span>
+                <h3>Mole Concept</h3>
+                <button class="btn toggleBtn" onclick="toggleChapter(1,this)">Open</button>
+                <div class="lectureBox"></div>
+            </div>
 
-  // 5: Chemical Equilibrium (7 Lectures)
-  5: [
-    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6909fd852928a38894baf2e3", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6909f9ae74af0a1649ee9501", title: "Chemical Equilibrium 01 : Titrations || Balancing of redox reactions || Concept of equilibrium" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_690e076a2632c216582d9902", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_690e086bf10f9a627cead323", title: "Chemical Equilibrium 02 : Concept of Equilibrium || Physical Equilibrium || Chemical Equilibrium" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_690f51cddc18e92d53952d34", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_690f52a6349d6fdf3093a621", title: "Chemical Equilibrium 03 : Chemical Equilibrium || Equilibrium Constant || Kp, Kc" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6911d821b9a47e1a92fe11a8", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6911d9d1369fea6b4add7ff1", title: "Chemical Equilibrium 04 : Expression of Equilibrium Constant || Degree of Dissociation || Characteristics of Equilibrium Constant" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_691329afca0018273a929c38", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69132ac1f1a359c14b75a084", title: "Chemical Equilibrium 05 : Effect of Temperature on Equilibrium Constant || Applications of Equilibrium Constant" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69174db80bf9082fd83be658", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6917448c4f046fc7a6e5d000", title: "Chemical Equilibrium 06 : Gibb's Energy and Equilibrium Constant || Factors Affecting Equilibria" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6919c5259ca52355a41dd70b", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_691abbe7f6aad1012f60b5b0", title: "Chemical Equilibrium 07 : Vapour density and degree of dissociation || Simultaneous equilibria || Acids and Bases" }
-  ],
+            <!-- 2. Atomic Structure -->
+            <div class="chapter">
+                <span class="icon-wrap">⚛</span>
+                <h3>Atomic Structure</h3>
+                <button class="btn toggleBtn" onclick="toggleChapter(2,this)">Open</button>
+                <div class="lectureBox"></div>
+            </div>
 
-  // 6: Ionic Equilibrium (7 Lectures)
-  6: [
-    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69189217e65811fdf68d74df", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6918934a94a2c6a90f03558c", title: "Ionic Equilibrium 01 : Factors Affecting Equilibria || Ionic Equilibrium || Ionic Product of Water, PH Scale" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6919898f07baacd00d47f81c", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_691b630f8699383bbc115792", title: "Ionic Equilibrium 02 : PH Scale || PH of Strong Acids and Strong Bases" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6920868e714905585c6280a1", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69207e3ae04c26755719dfe9", title: "Ionic Equilibrium 03 : PH of Weak Acids and Weak Bases || Common Ion Effect || PH of Mixture of Weak Acids and Weak Bases" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6921c6c75820b979d9509588", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6921c336faa034995ca97537", title: "Ionic Equilibrium 04 : PH of Polybasic Acids and Polyacidic Bases || Salt Hydrolysis || Buffer Solutions" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6922bdf9edafef5cffe280c3", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6922bcdae1cd4bfd9f0f4c89", title: "Ionic Equilibrium 05 : Buffer Solutions || Solubility Product || Ksp and Common Ion Effect on Solubility, Ionic Product and Selective Precipitation" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6925a20e2fd6b2dd23070346", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6925a1e5208d6bec202e081f", title: "Ionic Equilibrium 06 : Simultaneous Solubility || Condition for Precipitation || Complex Formation Effect on Solubility, Acids and Bases" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_693d7c3f16b788402c223df7", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69417a0cce54c3097ea1564c", title: "Ionic Equilibrium 07 : Amphiprotic Salts || PH Calculation || Concept of Indicator, Effect of Hydrolysis on Solubility" }
-  ],
+            <!-- 3. States of Matter -->
+            <div class="chapter">
+                <span class="icon-wrap">💧</span>
+                <h3>States of Matter</h3>
+                <button class="btn toggleBtn" onclick="toggleChapter(3,this)">Open</button>
+                <div class="lectureBox"></div>
+            </div>
 
-  // 7: Redox Reactions (5 Lectures)
-  7: [
-    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68fb934e1eba690b82a8656c", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68fb949a2c0a66abb7aad423", title: "Redox Reaction 01 : Introduction || Classical Concept || Electronic Concept || Oxidation Number" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68fd07c4876a69f3700b86a4", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68fce6e45844aa7004bd801f", title: "Redox Reaction 02 : Types of Redox Reactions || Special Cases of Oxidation Number" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68ff154301ca4f68b8258d8c", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68ff3551199e2f1a3af92a75", title: "Redox Reaction 03 : Normality || Equivalent Weight || N-Factor Calculation" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6904cd2738c2ea5ab3f24b7d", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6904ce5f3ba9a32effbdf5ea", title: "Redox Reaction 04 : N-Factor Calculation in Redox Reaction || Law of Equivalence" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69061d662e758dfc593dc3e3", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_690620ae9046b58c49e233dc", title: "Redox Reaction 05 : Law of Equivalence || Titrations" }
-  ],
+            <!-- 4. Thermodynamics -->
+            <div class="chapter">
+                <span class="icon-wrap">🔥</span>
+                <h3>Thermodynamics</h3>
+                <button class="btn toggleBtn" onclick="toggleChapter(4,this)">Open</button>
+                <div class="lectureBox"></div>
+            </div>
 
-  // 8: Revision (9 Lectures)
-  8: [
-    { lec: "https://asmultiverse.com/?tab=home&app=5eb393ee95fab7468a79d189&batchid=676e4dee1ec923bc192f38c9&subjectid=676fe3063ed82adddd00b394&topics=699719808628b3796017cf4b", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69971b241b4654709a38f1d0", title: "Mole Concept 01 : Mole concept || Percentage composition ||" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6995ae879d11cd1b166b377f", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69985d634941d7d3112d184a", title: "Mole Concept 02 : Stoichiometry || Limiting Reagent || Concentration" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69aa67333e7d93f288dd7c64", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69aa8c1e838c7dab79443073", title: "Structure of Atom 01 : Dual Nature of Electromagnetic Radiations ||" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69aa729d9b567517e48fbadc", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69abf5798508ac061dcd2159", title: "Structure of Atom 02 : Dual Nature of Matter || Heisenberg Uncertainty Principle || Quantum" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69aa7dbd56ab291566169649", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69ad5410947031b43111f8da", title: "Redox Reactions 01 : Complete Chapter" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69abe6d3eba97cd67d2c629c", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69aec7a7881af7a6e7e9c1db", title: "Thermodynamics 01 : Complete Chapter" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69abe72a96aa0aa5c2ca03aa", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69afdf1ee98d23d66c1316df", title: "Thermodynamics 02 : Complete Chapter (Part 02)" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69abe733f77776a6c0da7dce", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69b1384a29b879d3f569e92f", title: "Equilibrium 01 : Complete Chapter" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69abe83796aa0aa5c2ca0549", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69b289f5435633d5ac77d73b", title: "Equilibrium 02 : Complete Chapter (Part 02)" }
-  ]
-};
+            <!-- 5. Chemical Equilibrium -->
+            <div class="chapter">
+                <span class="icon-wrap">⚖️</span>
+                <h3>Chemical Equilibrium</h3>
+                <button class="btn toggleBtn" onclick="toggleChapter(5,this)">Open</button>
+                <div class="lectureBox"></div>
+            </div>
 
-function toggleChapter(ch, btn) {
-  let chapter = btn.parentElement;
-  let box = chapter.querySelector(".lectureBox");
+            <!-- 6. Ionic Equilibrium -->
+            <div class="chapter">
+                <span class="icon-wrap">🧂</span>
+                <h3>Ionic Equilibrium</h3>
+                <button class="btn toggleBtn" onclick="toggleChapter(6,this)">Open</button>
+                <div class="lectureBox"></div>
+            </div>
 
-  if (box.style.display === "block") {
-    box.style.display = "none";
-    btn.innerText = "Open";
-    return;
-  }
+            <!-- 7. Redox Reactions -->
+            <div class="chapter">
+                <span class="icon-wrap">🔋</span>
+                <h3>Redox Reactions</h3>
+                <button class="btn toggleBtn" onclick="toggleChapter(7,this)">Open</button>
+                <div class="lectureBox"></div>
+            </div>
 
-  document.querySelectorAll(".lectureBox").forEach(b => b.style.display = "none");
-  document.querySelectorAll(".toggleBtn").forEach(b => b.innerText = "Open");
+            <!-- 8. Revision -->
+            <div class="chapter">
+                <span class="icon-wrap">📚</span>
+                <h3>Revision</h3>
+                <button class="btn toggleBtn" onclick="toggleChapter(8,this)">Open</button>
+                <div class="lectureBox"></div>
+            </div>
 
-  box.innerHTML = "";
+        </div>
 
-  if (lectures[ch]) {
-    lectures[ch].forEach((item, i) => {
-      box.innerHTML += `
-        <button class="btn" onclick="openModal(${ch}, ${i})">
-          Lecture ${i + 1}
-        </button>
-      `;
-    });
-  }
+        <div class="back">
+            <a href="chemistrysection.html">⬅ Back to Chemistry</a>
+        </div>
 
-  box.style.display = "block";
-  btn.innerText = "Close";
-}
+    </div>
 
-function openModal(ch, index) {
-  let item = lectures[ch][index];
-  document.getElementById("modalTitle").innerText = `Lecture ${index + 1}`;
-  document.getElementById("modalCaption").innerText = item.title || "No Caption Available";
-  document.getElementById("lectureLink").href = item.lec || "#";
-  document.getElementById("notesLink").href = item.notes || "#";
+    <!-- ─── MODAL ─── -->
+    <div class="modal-overlay" id="optionModal">
+        <div class="modal-card">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <span class="modal-icon">📖</span>
+            <h3 id="modalTitle">Lecture 1</h3>
+            <p class="caption" id="modalCaption">Lecture Title Here</p>
+            <div class="modal-buttons">
+                <a id="lectureLink" class="modal-btn modal-btn-lec" href="#" target="_blank">🎥 Lecture</a>
+                <a id="notesLink" class="modal-btn modal-btn-notes" href="#" target="_blank">📄 Notes</a>
+            </div>
+        </div>
+    </div>
 
-  document.getElementById("optionModal").classList.add("active");
-}
+    <!-- ─── JAVASCRIPT (fully preserved, all links intact) ─── -->
+    <script>
+        // ─── LECTURE DATABASE (all links preserved exactly) ───
+        const lectures = {
 
-function closeModal() {
-  document.getElementById("optionModal").classList.remove("active");
-}
+            // 1: Mole Concept (21 Lectures)
+            1: [
+                { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_69de3abe81686cb766f6e3d7", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_69de32611ddfd200b425334b", title: "How to Study Physical Chemistry Effectively, Introduction, Matter and Its Classification" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_69e0d43e85357b7c92cd22dc", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_69e0d7102ce2c7a9a68de522", title: "Matter and Its Classification, Properties of Matter" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_69e2456a0672d5538792c49e", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_69e2472aba2a490f79471341", title: "Properties of Matter, Measurement of Properties, Mass and Weight, Volume, Temperature, Scientific Notation" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_69e76bb6aa753ae2b6c92f2b", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_69e2472aba2a490f79471341", title: "Homework Discussion, Scientific Notation, Precision and Accuracy, Atoms and Molecules" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_69ea0f2e01a802ad21dc6cf6", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_69ea10374775a439b265360f", title: "Atoms and Molecules || Ions || Formula of a Compound" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_69eb80a446eb626fd860b518", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_69eb82b4bad235a7fe617bc5", title: "Laws of Chemical Combinations" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_69f0a9a4e2423c508e014cff", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_69f0ab259caaa624a1cbdceb", title: "Gay-Lussac's Law of Gaseous Volume || Avogadro's Law || Law of Reciprocal Proportion" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_69f3492758c73c43dae33766", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_69f34a3834708c62da2ac23c", title: "Homework Discussion || Relative Atomic Mass, Relative Molecular Mass || Mole Concept" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_69f88f99f8d0f31c3325f005", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_69f89068c081f7955a95ae2d", title: "Gram Atomic Mass || Gram Molecular Mass || Mole Concept" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_69fb33ed8d2a8b0731017838", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_69fb374fc180537bb466e4d9", title: "Mole Concept" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_69fca42848b1e94bc46aba1b", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_69fca5036e40ee5be468c8ce", title: "Mole Concept || Percentage Composition" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_69fdf6bb36d446acf68fd619", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_69fdfb5f44b7e99c7e6caa1a", title: "Percentage Composition, Concepts Related to Density, Empirical and Molecular Formula" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a01d083186f5fbd91234311", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a01cc01aa02a2904845733b", title: "Empirical and Molecular Formula || Balancing of Chemical Reaction, Stoichiometry and Stoichiometric Calculations" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a031c5c41269b30df4fcfb7", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a031e4a300f35151f318b5e", title: "Stoichiometry and Stoichiometric Calculations, Contraction in Volume, Limiting Reagent" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a05e1e7d61c89e23f556eea", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a05e2fcc428e5eebc6ab4a0", title: "Contraction in Volume || Limiting Reagent" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a07008a350d58a1668188b0", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a0702db11f129cd7bbf0cc0", title: "Question Based on Percentage Yield, Questions Based on Percentage Purity" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a0b055cfa261ab5d322a517", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a0b064ba7ab576ebde541c1", title: "Concentration Terms, Percentage, Mole Fraction" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a0c5830282f633097a2056d", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a0c5911e5e5ba9edfeebe23", title: "Concentration Terms || Molarity" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a0f1bb50a3050959ab9c18e", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a0f1f2ea3518721035725a6", title: "Molarity || Molality" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a106d04af5010cc3ce16abb", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a106db0dedf9255a0cd436f", title: "Formality || Ppm, Ppb || Strength of Solution || Question Based on Sequential Reactions, POAC" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a1440276df6907a5c6e7dc0", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a1442d6430e5c2de3296077", title: "POAC || Questions Based on Parallel Reactions, Percentage Labelling of Oleum" }
+            ],
 
-window.onclick = function(event) {
-  let modal = document.getElementById("optionModal");
-  if (event.target == modal) {
-    closeModal();
-  }
-}
+            // 2: Atomic Structure (18 Lectures)
+            2: [
+                { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a1590261b11946cf3de1298", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a159213910f710406a2ca89", title: "Structure of Atom 01 : Introduction || Basic Terms || Discovery of Electron, Proton and Neutron" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a19a286c6c3b85fc1206351", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a1d7a83dd982441174a41d9", title: "Structure of Atom 02 : Discovery of Electron, Proton and Neutron, Atomic Models, Thomson Atomic Model" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a1d8df97cbbf5fe86ae554f", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a1d8f721f510f7654330c7f", title: "Structure of Atom 03 : Rutherford's Atomic Model" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a1ee02bb28676796d78c51d", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a1ee225b43ceaf89f2c11db", title: "Structure of Atom 04 : Rutherford's Atomic Model, Dual Nature of Electromagnetic Radiations" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a20327621d55fbf63c598fb", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a2033c11f510f765439da5d", title: "Structure of Atom 05 : Dual Nature of Electromagnetic Radiations, Electromagnetic Radiation, Particle Nature of Electromagnetic Radiation" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a216bd08d1156f2e510051d", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a216d7da3b742e0b85bc433", title: "Structure of Atom 06 : Particle Nature of Electromagnetic Radiation, Planck's Quantum Theory, Photoelectric Effect" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a2426572eec42fd79b522ed", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a2428930953c5638882b552", title: "Structure of Atom 07 : Photoelectric Effect" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a255e9e93453c7a2f72b9be", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a25683a5058eb67f89ec341", title: "Structure of Atom 08 : Photoelectric Effect, What is Spectrum" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a26c5f7864a7a37a1d0f179", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a26c7e5c2e49baa1ab8d2b6", title: "Structure of Atom 09 : Black Body Radiation, Bohr's Atomic Model" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a281632d7fcbc0927aca04e", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a281c41a7dfcdd777b650e7", title: "Structure of Atom 10 : Bohr's Atomic Model" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a29680b1e7bc4a0d8f77796", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a296bd288b3ef9091009b19", title: "Structure of Atom 11 : Bohr's Atomic Model, Spectrum of Hydrogen" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a2ab9f21fcaa6b7d864dd27", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a2abbcad7b0dcd77c3ac209", title: "Structure of Atom 12 : Spectrum of Hydrogen, Dual Nature of Matter" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a2c0b0fb3f6ba3091913868", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a2c0cf4bc37eb3937685421", title: "Structure of Atom 13 : Dual Nature of Matter || Heisenberg's Uncertainty Principle" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a2d5d260d2cc33c16ab611e", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a2d5f4324bf6ccd6a32835c", title: "Structure of Atom 14 : Heisenberg's Uncertainty Principle || Quantum Mechanical Model" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a2fe7774bb09b0e30beb3c2", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a2fe93b227c3402353dc14c", title: "Structure of Atom 15 : Quantum Numbers" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a313965ce7b7412b388c8d9", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a313ad3bc37eb39376ecc7f", title: "Structure of Atom 16 : Quantum Numbers, Energy of Atomic Orbitals, Filling of Atomic Orbitals" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a328bbf56a80c5ca3449529", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a328cefbc37eb393770e5b9", title: "Structure of Atom 17 : Filling of Atomic Orbitals || Electronic Configuration" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a3abb977692882c0315f960", notes: "https://t.me/AS_MultiverseRoBot?start=698ad3519549b300a5e1cc6a_6a3beb53a0ade454eed7252b", title: "Structure of Atom 18 : Concept of Nodes" }
+            ],
 
-</script>
+            // 3: State of Matter (9 Lectures)
+            3: [
+                { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68bec9ad0c5adc9235147354", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68becd0cf45f848b0660b2f7", title: "State of matter 01 : Introduction || Thermal Energy and Intermolecular Forces || Measurable Properties of Gases" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68c01ab3469bd9a44bdc9cd2", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68c01c7c1442085439ff44e8", title: "State of matter 02 : Measurable Properties of Gases || The Gas Laws" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68c4329e2941904b54465407", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68c430932d7145d9e5cd4c18", title: "State of matter 03 : The Gas Laws || Ideal Gas Equation" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68c580b1657e971e1148d633", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68c58354f8ed98db16f78465", title: "State of matter 04 : Ideal gas equation || Density of gas || Payload of a balloon || Dalton's Law of Partial Pressure" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68c8051a8ea521047d18e74f", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68c806e5d4418f29644f8584", title: "State of matter 05 : Dalton's law of partial pressure || Graham's law of Diffusion/Effusion" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68c956f594cb4de5aaec3f8f", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68c95ad294fd897fa505e25b", title: "State of matter 06 : Questions on Containers || Concepts of Connect Containers || Kinetic Theory of Gases" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68cd6c9de24d86543a2c6322", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68cd6e03c058f5714b50f6f6", title: "State of matter 07 : Kinetic Energy and Molecular Speeds || Maxwell-Boltzman Distribution Curves" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68cebbb85cc101a57edbfd44", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68cebcec516e4dfbbf5443bb", title: "State of matter 08 : Van der waal's Equation || Compressibility Factor" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68d13eae4dee9c1d182a07a5", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68d14242543ae9781f3f882f", title: "State of matter 09 : Compressibility Factor || Liquefaction of Gases" }
+            ],
+
+            // 4: Thermodynamics (13 Lectures)
+            4: [
+                { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68d2905d25303412989a4e12", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68d292ad1d86f7e85bf1ed1c", title: "Thermodynamics 01 : Introduction || System and Surrounding || Extensive and Intensive Properties" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68d6a5a5d42aa063974f19c1", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68d6a8fd9e9a4a5982e3e555", title: "Thermodynamics 02 : Thermodynamic Process || Thermodynamic Equilibrium" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68d7fa035004bb981fb14ea6", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68d7fe1c0b7faa88fd525ee4", title: "Thermodynamics 03 : Internal Energy and FLOT || Degree of Freedom || Enthalpy (H)" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68da792854aae9cb2511e1fe", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68da7ac18d8796601bd3c008", title: "Thermodynamics 04 : Enthalpy || Calculation of Work" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68dbcb62ce504f1a03e74e81", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68dbcb2c0dd73ca2011d613b", title: "Thermodynamics 05 : Calculation of Work" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68dd2aa8d2d4905b3a1e3f48", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68ddf7df820db6ab0e115fa6", title: "Thermodynamics 06 : Work done in Adiabatic and Isothermal Process || Polytropic Process" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68dfe13a96f7a98dedb77e38", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68dfe2f3cb3ea08698c59341", title: "Thermodynamics 07 : Work done in Cyclic Process || Calorimetry || Enthalpy of Reaction" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68e1329a9b2f7c70ceb6d91f", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68e1343f804f5dd61deb5975", title: "Thermodynamics 08 : Enthalpy of Reaction || Enthalpy Change in Phase Transformation || Enthalpy of Formation and Combustion" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68e3b304bddbc217bcd32ed4", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68e3b48f775bda1e30bb6a4b", title: "Thermodynamics 09 : Enthalpy of Combustion || Enthalpy of Atomisation and Bond Enthalpy || Enthalpy of Hydration and Enthalpy of Solution" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68e505666edd1be4c1c71d29", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68e5070581985269afdf6474", title: "Thermodynamics 10 : Enthalpy of Solution and Dilution || Lattice Enthalpy, Enthalpy of Transition" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68ee3f1e7303e7846496c310", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68ee408fae640a0aa7ddace8", title: "Thermodynamics 11 : Spontaneity || Entropy || 2nd Law of Thermodynamics" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68f25fbf5f67be7488e45401", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68f260ae8d917a497a6d38eb", title: "Thermodynamics 12 : Entropy Change in Phase Transformation, Entropy Change for Ideal Gas, Entropy Change for Chemical Reaction, Gibbs Energy" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68f368a6df6763e109fddffe", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68f36fa362c9865fde333ba5", title: "Thermodynamics 13 : Gibb's Energy || 3rd Law of Thermodynamics" }
+            ],
+
+            // 5: Chemical Equilibrium (7 Lectures)
+            5: [
+                { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6909fd852928a38894baf2e3", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6909f9ae74af0a1649ee9501", title: "Chemical Equilibrium 01 : Titrations || Balancing of redox reactions || Concept of equilibrium" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_690e076a2632c216582d9902", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_690e086bf10f9a627cead323", title: "Chemical Equilibrium 02 : Concept of Equilibrium || Physical Equilibrium || Chemical Equilibrium" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_690f51cddc18e92d53952d34", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_690f52a6349d6fdf3093a621", title: "Chemical Equilibrium 03 : Chemical Equilibrium || Equilibrium Constant || Kp, Kc" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6911d821b9a47e1a92fe11a8", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6911d9d1369fea6b4add7ff1", title: "Chemical Equilibrium 04 : Expression of Equilibrium Constant || Degree of Dissociation || Characteristics of Equilibrium Constant" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_691329afca0018273a929c38", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69132ac1f1a359c14b75a084", title: "Chemical Equilibrium 05 : Effect of Temperature on Equilibrium Constant || Applications of Equilibrium Constant" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69174db80bf9082fd83be658", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6917448c4f046fc7a6e5d000", title: "Chemical Equilibrium 06 : Gibb's Energy and Equilibrium Constant || Factors Affecting Equilibria" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6919c5259ca52355a41dd70b", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_691abbe7f6aad1012f60b5b0", title: "Chemical Equilibrium 07 : Vapour density and degree of dissociation || Simultaneous equilibria || Acids and Bases" }
+            ],
+
+            // 6: Ionic Equilibrium (7 Lectures)
+            6: [
+                { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69189217e65811fdf68d74df", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6918934a94a2c6a90f03558c", title: "Ionic Equilibrium 01 : Factors Affecting Equilibria || Ionic Equilibrium || Ionic Product of Water, PH Scale" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6919898f07baacd00d47f81c", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_691b630f8699383bbc115792", title: "Ionic Equilibrium 02 : PH Scale || PH of Strong Acids and Strong Bases" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6920868e714905585c6280a1", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69207e3ae04c26755719dfe9", title: "Ionic Equilibrium 03 : PH of Weak Acids and Weak Bases || Common Ion Effect || PH of Mixture of Weak Acids and Weak Bases" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6921c6c75820b979d9509588", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6921c336faa034995ca97537", title: "Ionic Equilibrium 04 : PH of Polybasic Acids and Polyacidic Bases || Salt Hydrolysis || Buffer Solutions" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6922bdf9edafef5cffe280c3", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6922bcdae1cd4bfd9f0f4c89", title: "Ionic Equilibrium 05 : Buffer Solutions || Solubility Product || Ksp and Common Ion Effect on Solubility, Ionic Product and Selective Precipitation" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6925a20e2fd6b2dd23070346", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6925a1e5208d6bec202e081f", title: "Ionic Equilibrium 06 : Simultaneous Solubility || Condition for Precipitation || Complex Formation Effect on Solubility, Acids and Bases" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_693d7c3f16b788402c223df7", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69417a0cce54c3097ea1564c", title: "Ionic Equilibrium 07 : Amphiprotic Salts || PH Calculation || Concept of Indicator, Effect of Hydrolysis on Solubility" }
+            ],
+
+            // 7: Redox Reactions (5 Lectures)
+            7: [
+                { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68fb934e1eba690b82a8656c", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68fb949a2c0a66abb7aad423", title: "Redox Reaction 01 : Introduction || Classical Concept || Electronic Concept || Oxidation Number" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68fd07c4876a69f3700b86a4", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68fce6e45844aa7004bd801f", title: "Redox Reaction 02 : Types of Redox Reactions || Special Cases of Oxidation Number" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68ff154301ca4f68b8258d8c", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68ff3551199e2f1a3af92a75", title: "Redox Reaction 03 : Normality || Equivalent Weight || N-Factor Calculation" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6904cd2738c2ea5ab3f24b7d", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6904ce5f3ba9a32effbdf5ea", title: "Redox Reaction 04 : N-Factor Calculation in Redox Reaction || Law of Equivalence" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69061d662e758dfc593dc3e3", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_690620ae9046b58c49e233dc", title: "Redox Reaction 05 : Law of Equivalence || Titrations" }
+            ],
+
+            // 8: Revision (9 Lectures)
+            8: [
+                { lec: "https://asmultiverse.com/?tab=home&app=5eb393ee95fab7468a79d189&batchid=676e4dee1ec923bc192f38c9&subjectid=676fe3063ed82adddd00b394&topics=699719808628b3796017cf4b", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69971b241b4654709a38f1d0", title: "Mole Concept 01 : Mole concept || Percentage composition ||" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6995ae879d11cd1b166b377f", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69985d634941d7d3112d184a", title: "Mole Concept 02 : Stoichiometry || Limiting Reagent || Concentration" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69aa67333e7d93f288dd7c64", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69aa8c1e838c7dab79443073", title: "Structure of Atom 01 : Dual Nature of Electromagnetic Radiations ||" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69aa729d9b567517e48fbadc", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69abf5798508ac061dcd2159", title: "Structure of Atom 02 : Dual Nature of Matter || Heisenberg Uncertainty Principle || Quantum" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69aa7dbd56ab291566169649", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69ad5410947031b43111f8da", title: "Redox Reactions 01 : Complete Chapter" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69abe6d3eba97cd67d2c629c", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69aec7a7881af7a6e7e9c1db", title: "Thermodynamics 01 : Complete Chapter" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69abe72a96aa0aa5c2ca03aa", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69afdf1ee98d23d66c1316df", title: "Thermodynamics 02 : Complete Chapter (Part 02)" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69abe733f77776a6c0da7dce", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69b1384a29b879d3f569e92f", title: "Equilibrium 01 : Complete Chapter" },
+                { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69abe83796aa0aa5c2ca0549", notes: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_69b289f5435633d5ac77d73b", title: "Equilibrium 02 : Complete Chapter (Part 02)" }
+            ]
+        };
+
+        // ─── TOGGLE CHAPTER ───
+        function toggleChapter(ch, btn) {
+            let chapter = btn.parentElement;
+            let box = chapter.querySelector(".lectureBox");
+
+            if (box.style.display === "block") {
+                box.style.display = "none";
+                btn.innerText = "Open";
+                return;
+            }
+
+            document.querySelectorAll(".lectureBox").forEach(b => b.style.display = "none");
+            document.querySelectorAll(".toggleBtn").forEach(b => b.innerText = "Open");
+
+            box.innerHTML = "";
+
+            if (lectures[ch]) {
+                lectures[ch].forEach((item, i) => {
+                    box.innerHTML += `
+                        <button class="btn" onclick="openModal(${ch}, ${i})">
+                            Lecture ${i + 1}
+                        </button>
+                    `;
+                });
+            }
+
+            box.style.display = "block";
+            btn.innerText = "Close";
+        }
+
+        // ─── OPEN MODAL ───
+        function openModal(ch, index) {
+            let item = lectures[ch][index];
+            document.getElementById("modalTitle").innerText = `Lecture ${index + 1}`;
+            document.getElementById("modalCaption").innerText = item.title || "No Caption Available";
+            document.getElementById("lectureLink").href = item.lec || "#";
+            document.getElementById("notesLink").href = item.notes || "#";
+
+            document.getElementById("optionModal").classList.add("active");
+        }
+
+        // ─── CLOSE MODAL ───
+        function closeModal() {
+            document.getElementById("optionModal").classList.remove("active");
+        }
+
+        // ─── CLOSE ON OVERLAY CLICK ───
+        window.onclick = function(event) {
+            let modal = document.getElementById("optionModal");
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+    </script>
 
 </body>
 </html>
