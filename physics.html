@@ -142,6 +142,53 @@ margin-top:15px;
 display:none;
 }
 
+/* ---- NEW: lecture row & completion toggle ---- */
+.lecture-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 6px 0;
+  flex-wrap: wrap;
+}
+
+.completion-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2.5px solid rgba(108, 92, 231, 0.4);
+  background: transparent;
+  color: transparent;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+  user-select: none;
+  background: rgba(255,255,255,0.1);
+}
+
+.completion-toggle:hover {
+  border-color: #6c5ce7;
+  transform: scale(1.1);
+  background: rgba(108, 92, 231, 0.1);
+}
+
+.completion-toggle.completed {
+  border-color: #00b894;
+  background: rgba(0, 184, 148, 0.2);
+  color: #00b894;
+  box-shadow: 0 0 12px rgba(0, 184, 148, 0.3);
+}
+
+.completion-toggle.completed:hover {
+  background: rgba(0, 184, 148, 0.3);
+  box-shadow: 0 0 20px rgba(0, 184, 148, 0.4);
+}
+
 /* back */
 
 .back{
@@ -413,6 +460,38 @@ box-shadow:0 0 10px #ff7675;
 
 <script>
 
+// ---- COMPLETION STORAGE ----
+function getCompletionKey(ch, idx) {
+  return `phy_lec_${ch}_${idx}`;
+}
+
+function isLectureCompleted(ch, idx) {
+  return localStorage.getItem(getCompletionKey(ch, idx)) === 'true';
+}
+
+function toggleCompletion(ch, idx) {
+  const key = getCompletionKey(ch, idx);
+  const current = localStorage.getItem(key) === 'true';
+  const newState = !current;
+  localStorage.setItem(key, newState ? 'true' : 'false');
+  // update UI
+  const toggle = document.querySelector(`.completion-toggle[data-ch="${ch}"][data-idx="${idx}"]`);
+  if (toggle) {
+    updateToggleUI(toggle, newState);
+  }
+}
+
+function updateToggleUI(toggle, completed) {
+  if (completed) {
+    toggle.classList.add('completed');
+    toggle.textContent = '✓';
+  } else {
+    toggle.classList.remove('completed');
+    toggle.textContent = '';
+  }
+}
+
+// ---- LECTURE DATA ----
 const lectures = {
   1: [
     { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_67fd01164c87d7cd348601d9", notes: "#", title: "Introduction & Physical Quantities" },
@@ -539,7 +618,7 @@ const lectures = {
     { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68e67b2d2da9a933e4d30426", notes: "#", title: "Impulse Concepts" },
     { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68e7cd4fa5dacee746b5ac70", notes: "#", title: "Explosion Problems" },
     { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68e905c18291e98c2576b224", notes: "#", title: "Cavity Problems in COM" },
-    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68ea5833b03494b238517cf6", notes: "#", title: "Variable Mass System (Rocket Motion)" },
+    { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68ea5838b03494b238517cf6", notes: "#", title: "Variable Mass System (Rocket Motion)" },
     { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68efb7a89903c64d9d6cdca8", notes: "#", title: "COM Frame Problems" },
     { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68f10e1a05addb215e3db7d6", notes: "#", title: "Spring-Block COM Problems" },
     { lec: "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_690f3a9362c0622ddad2bfdd", notes: "#", title: "Man-Plank Problems" },
@@ -653,6 +732,7 @@ const lectures = {
   ]
 };
 
+// ---- TOGGLE CHAPTER (with completion toggle) ----
 function toggleChapter(ch, btn) {
   let chapter = btn.parentElement;
   let box = chapter.querySelector(".lectureBox");
@@ -670,11 +750,32 @@ function toggleChapter(ch, btn) {
 
   if (lectures[ch]) {
     lectures[ch].forEach((item, i) => {
-      box.innerHTML += `
-        <button class="btn" onclick="openModal(${ch}, ${i})">
-          Lecture ${i + 1}
-        </button>
-      `;
+      const completed = isLectureCompleted(ch, i);
+      // Create a row
+      const row = document.createElement('div');
+      row.className = 'lecture-row';
+
+      // Lecture button
+      const lecBtn = document.createElement('button');
+      lecBtn.className = 'btn';
+      lecBtn.textContent = `Lecture ${i + 1}`;
+      lecBtn.onclick = (function(c, idx) {
+        return function() { openModal(c, idx); };
+      })(ch, i);
+
+      // Completion toggle
+      const toggle = document.createElement('span');
+      toggle.className = 'completion-toggle';
+      toggle.dataset.ch = ch;
+      toggle.dataset.idx = i;
+      toggle.onclick = (function(c, idx) {
+        return function() { toggleCompletion(c, idx); };
+      })(ch, i);
+      updateToggleUI(toggle, completed);
+
+      row.appendChild(lecBtn);
+      row.appendChild(toggle);
+      box.appendChild(row);
     });
   }
 
@@ -682,6 +783,7 @@ function toggleChapter(ch, btn) {
   btn.innerText = "Close";
 }
 
+// ---- MODAL FUNCTIONS ----
 function openModal(ch, index) {
   let item = lectures[ch][index];
   document.getElementById("modalTitle").innerText = `Lecture ${index + 1}`;
