@@ -85,18 +85,182 @@ display:none;
 margin-top:15px;
 }
 
-.lecture-btn{
-display:block;
-margin:5px 0;
-padding:8px;
-background:#0984e3;
-color:white;
-border-radius:10px;
-text-decoration:none;
+/* ─── LECTURE ROW (NEW) ─── */
+.lecture-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin: 6px 0;
+    padding: 4px 6px;
+    border-radius: 10px;
+    background: rgba(0,0,0,0.02);
 }
 
-.completed{
-background:#00b894 !important;
+.lecture-row .lecture-btn {
+    display: inline-block;
+    flex: 1;
+    margin: 0;
+    padding: 8px 12px;
+    background: #0984e3;
+    color: white;
+    border-radius: 10px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    text-align: left;
+    font-family: 'Fredoka', sans-serif;
+    transition: 0.2s;
+}
+
+.lecture-row .lecture-btn:hover {
+    transform: scale(1.02);
+    opacity: 0.9;
+}
+
+/* ─── COMPLETION TOGGLE ─── */
+.completion-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 2.5px solid rgba(108, 92, 231, 0.4);
+    background: transparent;
+    color: transparent;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+    user-select: none;
+    background: rgba(255,255,255,0.1);
+}
+
+.completion-toggle:hover {
+    border-color: #6c5ce7;
+    transform: scale(1.1);
+    background: rgba(108, 92, 231, 0.1);
+}
+
+.completion-toggle.completed {
+    border-color: #00b894;
+    background: rgba(0, 184, 148, 0.2);
+    color: #00b894;
+    box-shadow: 0 0 12px rgba(0, 184, 148, 0.3);
+}
+
+.completion-toggle.completed:hover {
+    background: rgba(0, 184, 148, 0.3);
+    box-shadow: 0 0 20px rgba(0, 184, 148, 0.4);
+}
+
+/* ─── MODAL ─── */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-card {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 20px;
+    text-align: center;
+    width: 90%;
+    max-width: 380px;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+    transform: scale(0.7);
+    transition: transform 0.3s ease;
+    position: relative;
+}
+
+.modal-overlay.active .modal-card {
+    transform: scale(1);
+}
+
+.modal-card h3 {
+    color: #222;
+    margin-bottom: 5px;
+    font-size: 22px;
+}
+
+.modal-card p.caption {
+    color: #666;
+    font-size: 15px;
+    margin-bottom: 20px;
+    font-weight: 400;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.modal-btn {
+    padding: 12px 24px;
+    border-radius: 25px;
+    border: none;
+    color: white;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.modal-btn-lec {
+    background: #6c5ce7;
+    box-shadow: 0 4px 15px rgba(108, 92, 231, 0.4);
+}
+
+.modal-btn-lec:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(108, 92, 231, 0.6);
+}
+
+.modal-btn-notes {
+    background: #00b894;
+    box-shadow: 0 4px 15px rgba(0, 184, 148, 0.4);
+}
+
+.modal-btn-notes:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 184, 148, 0.6);
+}
+
+.close-modal {
+    position: absolute;
+    top: 12px;
+    right: 18px;
+    font-size: 22px;
+    color: #aaa;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.close-modal:hover {
+    color: #222;
 }
 
 .back{text-align:center;margin-top:40px;}
@@ -134,17 +298,28 @@ border-radius:30px;
 
 </div>
 
+<!-- ═══════════ MODAL ═══════════ -->
+<div class="modal-overlay" id="optionModal">
+    <div class="modal-card">
+        <span class="close-modal" onclick="closeModal()">&times;</span>
+        <h3 id="modalTitle">Lecture 1</h3>
+        <p class="caption" id="modalCaption">Mathematics Lecture</p>
+        <div class="modal-buttons">
+            <a id="lectureLink" class="modal-btn modal-btn-lec" href="#" target="_blank">🎥 Lecture</a>
+            <a id="notesLink" class="modal-btn modal-btn-notes" href="#" target="_blank">📄 Notes</a>
+        </div>
+    </div>
+</div>
+
 <script>
 
 /* lecture numbers */
-
 const lectureCounts=[
 20,6,13,8,14,12,5,12,11,3,
 1,13,10,9,6,5,1,1,10,3,2
 ];
 
 /* chapter names */
-
 const chapterNames=[
 "Basic Maths","Sets","Trigonometric Functions","Trigonometric Equations","Quadratic Equations",
 "Sequences & Series","Permutations & Combinations","Binomial Theorem","Straight Lines",
@@ -153,274 +328,286 @@ const chapterNames=[
 "Vector Algebra","3D Geometry"
 ];
 
-/* ===== LECTURE LINKS ===== */
-
+/* ===== LECTURE LINKS (COMPLETE - NOTHING REMOVED) ===== */
 const lectureLinks=[
 
 /* Chapter 1 (20 lectures) */
-
 [
 "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_67fe529fa9977e96cba0d1ee","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6801270a7e1f0e4a195cbe16","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_680260958ecfab037416641b","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68078adaf05fb53edaa2a39e","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6808fd4b2c7d98da1cdb9a2b","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_680a4d9adb81c8ab9c27b48d","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6810e1b543716a2a71370923","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6814da918cba3f7b18670be0","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_681b6e74422dc619da678df9","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_681cc4d5b3e4dffb923fc8e2",
 "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_681e142cf046dd2ced145022","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6821e80e469cccef3ff2ccaf","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6824a91ace0d183ed81cadc8","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68274bddbe448014413a90b8","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_682c769e0dc7e70bea1a1cab","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_682dc612cbabbee772780930","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_683068932dca44066dd52166","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_683726abfd175998d3630831","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_683870deb09fc109df4ac08e","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6839c75268e151ade0ae0a57"
 ],
 
 /* Chapter 2 (6 lectures) */
-
 [
 "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68418de67c903ed497f25854","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6842fffc2988358fcdb89fe4","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_684841a40f26e3f2ccc97b75","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_684ae827823db0f21388f540","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_684ae827823db0f21388f540","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68503c5a3b758cb74d7cf479"
 ],
 
 /* Chapter 3 (13 lectures) */
-
 [
 "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68518dc47b52ef1ecf8758f0","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6852e0dace74688b24df15fd","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_685430541f2575b20e0ccc8a","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6855870421227b6a3c5365ea","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6856d471b9b7a4b39e0448b5","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_685979059f3ffdb6bb15812a","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_685ac98665d5f8996190da85","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_685c18e7c6dcc294ad8041bc","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_685d6a9c224ca375634e3653","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_685ec09df8c432b125dc70ce","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6862aa50387d70c95b830a2c","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6863f574832f096b88d84303","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_686549cb4f00510f30002093"
 ],
 
-/* Chapter 4 */
-
+/* Chapter 4 (8 lectures) */
 [
 "https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_686699c267cb012a006c578c","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_686be316edbe62a378c0c46a","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_686d318c6181419be68c6aa2","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_686e860a3e46f12493464509","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_687276e787ea10cc73e34049","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6874d45a29117578ad7d614e","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_6877c0aff51e01b6a9d6cfdb","https://t.me/AS_MultiverseRoBot?start=676e4dee1ec923bc192f38c9_68790d2c3d45073dec2b900d"
 ],
 
-/* Chapter 5 */
-
+/* Chapter 5 (14 lectures) */
 [
 "#","#","#","#","#","#","#","#","#","#","#","#","#","#"
 ],
 
-/* Chapter 6 */
-
+/* Chapter 6 (12 lectures) */
 [
 "#","#","#","#","#","#","#","#","#","#","#","#"
 ],
 
-/* Chapter 7 */
-
+/* Chapter 7 (5 lectures) */
 [
 "#","#","#","#","#"
 ],
 
-/* Chapter 8 */
-
+/* Chapter 8 (12 lectures) */
 [
 "#","#","#","#","#","#","#","#","#","#","#","#"
 ],
 
-/* Chapter 9 */
-
+/* Chapter 9 (11 lectures) */
 [
 "#","#","#","#","#","#","#","#","#","#","#"
 ],
 
-/* Chapter 10 */
-
+/* Chapter 10 (3 lectures) */
 [
 "#","#","#"
 ],
 
-/* Chapter 11 */
-
+/* Chapter 11 (1 lecture) */
 ["#"],
 
-/* Chapter 12 */
-
+/* Chapter 12 (13 lectures) */
 [
 "#","#","#","#","#","#","#","#","#","#","#","#","#"
 ],
 
-/* Chapter 13 */
-
+/* Chapter 13 (10 lectures) */
 [
 "#","#","#","#","#","#","#","#","#","#"
 ],
 
-/* Chapter 14 */
-
+/* Chapter 14 (9 lectures) */
 [
 "#","#","#","#","#","#","#","#","#"
 ],
 
-/* Chapter 15 */
-
+/* Chapter 15 (6 lectures) */
 [
 "#","#","#","#","#","#"
 ],
 
-/* Chapter 16 */
-
+/* Chapter 16 (5 lectures) */
 [
 "#","#","#","#","#"
 ],
 
-/* Chapter 17 */
-
+/* Chapter 17 (1 lecture) */
 ["#"],
 
-/* Chapter 18 */
-
+/* Chapter 18 (1 lecture) */
 ["#"],
 
-/* Chapter 19 */
-
+/* Chapter 19 (10 lectures) */
 [
 "#","#","#","#","#","#","#","#","#","#"
 ],
 
-/* Chapter 20 */
-
+/* Chapter 20 (3 lectures) */
 [
 "#","#","#"
 ],
 
-/* Chapter 21 */
-
+/* Chapter 21 (2 lectures) */
 [
 "#","#"
 ]
 
 ];
 
-/* ===== SCRIPT ===== */
+/* ===== NOTES/PDF PLACEHOLDER (USER CAN ADD MANUALLY) ===== */
+const notesLinks = lectureLinks.map(chapterLinks => chapterLinks.map(() => '#'));
+
+/* ======================================================== */
 
 const grid=document.getElementById("chapterGrid");
 let openChapter=null;
 
-chapterNames.forEach((name,index)=>{
-
-let chapter=document.createElement("div");
-chapter.className="chapter";
-chapter.dataset.name=name.toLowerCase();
-
-let btnId="btn"+index;
-let listId="list"+index;
-let progressId="progress"+index;
-
-chapter.innerHTML=`
-
-<h3>${name}</h3>
-
-<div class="progressText" id="text${index}">
-Progress: 0%
-</div>
-
-<div class="progressBar">
-<div class="progressFill" id="${progressId}"></div>
-</div>
-
-<button class="btn" id="${btnId}" onclick="toggleChapter(${index})">
-Open
-</button>
-
-<div class="lecture-list" id="${listId}"></div>
-
-`;
-
-grid.appendChild(chapter);
-
-let list=document.getElementById(listId);
-
-for(let i=1;i<=lectureCounts[index];i++){
-
-let a=document.createElement("a");
-
-a.className="lecture-btn";
-a.href=lectureLinks[index][i-1];   // LINK AUTO
-a.dataset.chapter=index;
-a.dataset.lecture=i;
-
-a.innerText="Lecture "+i;
-
-a.onclick=function(){
-markComplete(index,i,this);
-};
-
-list.appendChild(a);
-
+/* ─── TOGGLE COMPLETION ─── */
+function toggleCompletion(ch, idx) {
+    let key = `lec_${ch}_${idx+1}`;  // 1-based storage
+    let current = localStorage.getItem(key) === '1';
+    let newState = !current;
+    if (newState) {
+        localStorage.setItem(key, '1');
+    } else {
+        localStorage.removeItem(key);
+    }
+    updateToggleUI(ch, idx, newState);
+    updateProgress(ch);
 }
 
-updateProgress(index);
+function updateToggleUI(ch, idx, completed) {
+    let toggle = document.querySelector(`.completion-toggle[data-ch="${ch}"][data-idx="${idx}"]`);
+    if (toggle) {
+        if (completed) {
+            toggle.classList.add('completed');
+            toggle.textContent = '✓';
+        } else {
+            toggle.classList.remove('completed');
+            toggle.textContent = '';
+        }
+    }
+}
 
+/* ─── INITIAL LOAD: SYNC UI WITH STORAGE ─── */
+function syncAllToggles() {
+    chapterNames.forEach((_, ch) => {
+        let total = lectureCounts[ch];
+        for (let i = 0; i < total; i++) {
+            let key = `lec_${ch}_${i+1}`;
+            let completed = localStorage.getItem(key) === '1';
+            let toggle = document.querySelector(`.completion-toggle[data-ch="${ch}"][data-idx="${i}"]`);
+            if (toggle) {
+                if (completed) {
+                    toggle.classList.add('completed');
+                    toggle.textContent = '✓';
+                } else {
+                    toggle.classList.remove('completed');
+                    toggle.textContent = '';
+                }
+            }
+        }
+    });
+}
+
+/* ─── UPDATE PROGRESS ─── */
+function updateProgress(ch) {
+    let total = lectureCounts[ch];
+    let done = 0;
+    for (let i = 1; i <= total; i++) {
+        if (localStorage.getItem(`lec_${ch}_${i}`) === '1') done++;
+    }
+    let percent = Math.floor((done / total) * 100);
+    let textEl = document.getElementById("text"+ch);
+    let fillEl = document.getElementById("progress"+ch);
+    if (textEl) textEl.innerText = "Progress: " + percent + "%";
+    if (fillEl) fillEl.style.width = percent + "%";
+}
+
+/* ─── MODAL ─── */
+function openModal(ch, idx) {
+    let link = lectureLinks[ch][idx] || '#';
+    let noteLink = notesLinks[ch][idx] || '#';
+    document.getElementById("modalTitle").innerText = `Lecture ${idx+1}`;
+    document.getElementById("modalCaption").innerText = chapterNames[ch] + " · Lecture " + (idx+1);
+    document.getElementById("lectureLink").href = link;
+    document.getElementById("notesLink").href = noteLink;
+    document.getElementById("optionModal").classList.add("active");
+}
+
+function closeModal() {
+    document.getElementById("optionModal").classList.remove("active");
+}
+
+window.onclick = function(event) {
+    let modal = document.getElementById("optionModal");
+    if (event.target == modal) closeModal();
+}
+
+/* ─── TOGGLE CHAPTER ─── */
+function toggleChapter(i) {
+    let list = document.getElementById("list"+i);
+    let btn = document.getElementById("btn"+i);
+    if (openChapter !== null && openChapter !== i) {
+        document.getElementById("list"+openChapter).style.display = "none";
+        document.getElementById("btn"+openChapter).innerText = "Open";
+    }
+    if (list.style.display === "block") {
+        list.style.display = "none";
+        btn.innerText = "Open";
+        openChapter = null;
+    } else {
+        list.style.display = "block";
+        btn.innerText = "Close";
+        openChapter = i;
+    }
+}
+
+/* ─── BUILD GRID ─── */
+chapterNames.forEach((name, index) => {
+    let chapter = document.createElement("div");
+    chapter.className = "chapter";
+    chapter.dataset.name = name.toLowerCase();
+
+    let btnId = "btn"+index;
+    let listId = "list"+index;
+    let progressId = "progress"+index;
+
+    chapter.innerHTML = `
+        <h3>${name}</h3>
+        <div class="progressText" id="text${index}">Progress: 0%</div>
+        <div class="progressBar">
+            <div class="progressFill" id="${progressId}"></div>
+        </div>
+        <button class="btn" id="${btnId}" onclick="toggleChapter(${index})">Open</button>
+        <div class="lecture-list" id="${listId}"></div>
+    `;
+
+    grid.appendChild(chapter);
+
+    let list = document.getElementById(listId);
+
+    for (let i = 0; i < lectureCounts[index]; i++) {
+        let row = document.createElement("div");
+        row.className = "lecture-row";
+
+        let btn = document.createElement("button");
+        btn.className = "btn lecture-btn";
+        btn.innerText = "Lecture " + (i+1);
+        btn.onclick = (function(ch, idx) {
+            return function() { openModal(ch, idx); };
+        })(index, i);
+
+        let toggle = document.createElement("span");
+        toggle.className = "completion-toggle";
+        toggle.dataset.ch = index;
+        toggle.dataset.idx = i;
+        toggle.onclick = (function(ch, idx) {
+            return function(e) {
+                e.stopPropagation();
+                toggleCompletion(ch, idx);
+            };
+        })(index, i);
+
+        row.appendChild(btn);
+        row.appendChild(toggle);
+        list.appendChild(row);
+    }
+
+    updateProgress(index);
 });
 
-function toggleChapter(i){
-
-let list=document.getElementById("list"+i);
-let btn=document.getElementById("btn"+i);
-
-if(openChapter!==null && openChapter!==i){
-
-document.getElementById("list"+openChapter).style.display="none";
-document.getElementById("btn"+openChapter).innerText="Open";
-
-}
-
-if(list.style.display==="block"){
-
-list.style.display="none";
-btn.innerText="Open";
-openChapter=null;
-
-}else{
-
-list.style.display="block";
-btn.innerText="Close";
-openChapter=i;
-
-}
-
-}
-
-function markComplete(ch,lec,el){
-
-let key="lec_"+ch+"_"+lec;
-localStorage.setItem(key,"1");
-el.classList.add("completed");
-updateProgress(ch);
-
-}
-
-function updateProgress(ch){
-
-let total=lectureCounts[ch];
-let done=0;
-
-for(let i=1;i<=total;i++){
-
-let key="lec_"+ch+"_"+i;
-
-if(localStorage.getItem(key)){
-
-done++;
-
-let btn=document.querySelector(`[data-chapter="${ch}"][data-lecture="${i}"]`);
-
-if(btn) btn.classList.add("completed");
-
-}
-
-}
-
-let percent=Math.floor((done/total)*100);
-
-document.getElementById("text"+ch).innerText="Progress: "+percent+"%";
-
-document.getElementById("progress"+ch).style.width=percent+"%";
-
-}
-
-document.getElementById("searchInput").addEventListener("keyup",function(){
-
-let value=this.value.toLowerCase();
-
-document.querySelectorAll(".chapter").forEach(ch=>{
-
-let name=ch.dataset.name;
-
-ch.style.display=name.includes(value)?"block":"none";
-
+/* ─── SEARCH ─── */
+document.getElementById("searchInput").addEventListener("keyup", function() {
+    let value = this.value.toLowerCase();
+    document.querySelectorAll(".chapter").forEach(ch => {
+        let name = ch.dataset.name;
+        ch.style.display = name.includes(value) ? "block" : "none";
+    });
 });
 
-});
+/* ─── SYNC ON LOAD ─── */
+syncAllToggles();
+chapterNames.forEach((_, i) => updateProgress(i));
 
 </script>
 
